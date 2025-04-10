@@ -1,0 +1,15 @@
+name: Test Workflows
+run-name: I want to know this node's specification
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test_job:
+    name: Node Information
+    runs-on: self-hosted
+    steps:
+      - name: check the node version
+        run: cat /etc/issue && uname -a
+      - name: check the node spec
+        run: lscpu ; lsmem
