@@ -3,6 +3,6 @@
 
 int main() {
     Person p("Alice", 30);
-    std::cout << p.getName() << " is " << p.getAge() << " years old." << std::endl;
+    std::cout << "Hello World!!" << std::endl;
     return 0;
 }
