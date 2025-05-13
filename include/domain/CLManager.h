@@ -9,5 +9,7 @@ private:
 public:
     void showItems();
     void buy(const std::string& itemName, int quantity);
+    void pay();
     void prePay(Payment& payment);
+    void enterPrePayCode();
 };
