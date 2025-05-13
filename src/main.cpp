@@ -1,8 +1,11 @@
 #include <iostream>
-#include "person.h"
+#include "json.hpp"
 
 int main() {
-    Person p("Junkyu", 26);
-    std::cout << p.getName() << " is " << p.getAge() << " years old." << std::endl;
+    nlohmann::json jsonData;
+    jsonData["Name"] = "Junkyu";
+    jsonData["Age"] = "26";
+
+    std::cout << jsonData << std::endl;
     return 0;
 }
