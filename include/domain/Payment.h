@@ -4,11 +4,12 @@
 #include <utility>
 #include "Validator.h"
 #include "PaymentMethod.h"
+#include <memory>
 
 class Payment {
 private:
-    std::vector<std::pair<std::string, int>> items;
-    std::vector<Validator> validatorList;
+    std::pair<std::string, int> items;
+    std::vector<std::unique_ptr<Validator>> validatorList;
     //buy type
     PaymentMethod *buyContent;
     int prepayCode;
@@ -18,7 +19,7 @@ public:
 
     }
     void addItem(const std::string& name, int quantity);
-    std::vector<std::pair<std::string, int>> getItems() const;
+    std::pair<std::string, int> getItems() const;
 
     void setPrepayCode(int code);
     int getPrepayCode() const;

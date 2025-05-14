@@ -16,3 +16,9 @@
 //     }
 //     return { "SUCCESS", true };
 // }
+
+bool LocalItemValidateAdapter::validate(const Payment& p) const{
+    auto [itemName, quantity] = p.getItems();
+
+    return itemManager->isValid(itemName, quantity);
+}

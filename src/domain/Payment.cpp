@@ -2,7 +2,8 @@
 
 void Payment::addItem(const std::string &name, int quantity)
 {
-    items.emplace_back(name, quantity);
+    items.first = name;
+    items.second = quantity;
 }
 
 void Payment::setPrepayCode(int code)
@@ -13,4 +14,8 @@ void Payment::setPrepayCode(int code)
 int Payment::getPrepayCode() const
 {
     return prepayCode;
+}
+
+std::pair<std::string, int> Payment::getItems() const{
+    return items;
 }
