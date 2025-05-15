@@ -1,10 +1,10 @@
 #pragma once
 #include "ItemValidator.h"
 #include "ItemManager.h"
-#include "Validator.h"
+#include "LocalValidator.h"
 #include "Payment.h"
 
-class LocalItemValidateAdapter : public Validator {
+class LocalItemValidateAdapter : public LocalValidator {
   private:
     ItemValidator* itemManager = &ItemManager::getInstance();
 
