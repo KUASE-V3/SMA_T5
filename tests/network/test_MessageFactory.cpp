@@ -1,7 +1,5 @@
 #include <gtest/gtest.h>
 
-#include <iostream>
-
 #include "MessageFactory.h"
 
 using namespace std;
@@ -42,20 +40,6 @@ TEST(MessageFactoryTest, CreateRequestPrepayJson) {
   EXPECT_EQ(code, foundCode);
   EXPECT_EQ(num, foundNum);
   EXPECT_EQ(certficationCode, foundCertificationCode);
-}
-
-TEST(MessageFactoryTest, CreateRequestPrepayResultJson) {
-  int certficationCode = 5001;
-  bool result = true;
-
-  nlohmann::json json =
-      nlohmann::json::parse(MessageFactory::createPrepayResultJson(certficationCode, result));
-
-  int foundCertificationCode = json["cert_code"];
-  int foundResult = json["result"];
-
-  EXPECT_EQ(certficationCode, foundCertificationCode);
-  EXPECT_EQ(result, foundResult);
 }
 
 TEST(MessageFactoryTest, CreateResponseStockJson) {

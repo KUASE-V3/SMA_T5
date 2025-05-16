@@ -39,14 +39,6 @@ class MessageFactory {
           return requestPrepayJson.dump();
         }
 
-        static std::string createPrepayResultJson(int certificationCode, bool result) {
-            json prepayResultJson = {
-                {"cert_code", certificationCode},
-                {"result", result}};
-
-            return prepayResultJson.dump();
-        }
-
         static std::string createResponseStockJson(std::string messageType, int code, int num, int xCoor, int yCoor) {
           json responseStockJson = {
               {"msg_type", messageType},
