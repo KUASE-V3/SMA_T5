@@ -23,7 +23,7 @@ TEST(CLManagerTest, ShowItemsPrintsCorrectly) {
     EXPECT_NE(output.find("2200"), std::string::npos);
 }
 
-TEST(CLManagerTest, OrderReturnsCorrectStatusForValidLocalPurchase) {
+TEST(CLManagerTest, OrderReturnsAnyValidStatus) {
     CLManager &manager = CLManager::getInstance();
 
     int itemCode = 1; // 예: 콜라
