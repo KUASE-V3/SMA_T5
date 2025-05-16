@@ -5,12 +5,12 @@ void Payment::addItem(const std::string &name, int quantity)
     items.emplace_back(name, quantity);
 }
 
-void Payment::setPrepayCode(int code)
+void Payment::setCertCode(int code)
 {
-    prepayCode = code;
+    certCode = code;
 }
 
-int Payment::getPrepayCode() const
+int Payment::getCertCode() const
 {
-    return prepayCode;
+    return certCode;
 }

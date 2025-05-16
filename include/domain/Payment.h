@@ -11,7 +11,7 @@ private:
     std::vector<Validator> validatorList;
     //buy type
     PaymentMethod *buyContent;
-    int prepayCode;
+    int certCode;
 
 public:
     Payment() {
@@ -20,6 +20,6 @@ public:
     void addItem(const std::string& name, int quantity);
     std::vector<std::pair<std::string, int>> getItems() const;
 
-    void setPrepayCode(int code);
-    int getPrepayCode() const;
+    void setCertCode(int code);
+    int getCertCode() const;
 };
