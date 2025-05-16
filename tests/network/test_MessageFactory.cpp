@@ -8,7 +8,7 @@ TEST(MessageFactoryTest, CreateRequestStockJson) {
   string msgType = "req_stock";
   int code = 1;
   int num = 20;
-  nlohmann::json json = nlohmann::json::parse(MessageFactory::createRequestStockJson(msgType, code, num));
+  nlohmann::json json = nlohmann::json::parse(MessageFactory::createRequestStockJson(code, num));
 
   string foundMessage = json["msg_type"];
   int foundCode = json["msg_content"]["item_code"];
@@ -27,7 +27,7 @@ TEST(MessageFactoryTest, CreateRequestPrepayJson) {
   int certficationCode = 5001;
 
   nlohmann::json json = nlohmann::json::parse(
-      MessageFactory::createRequestPrepayJson(msgType, destination, code, num, certficationCode));
+      MessageFactory::createRequestPrepayJson(destination, code, num, certficationCode));
 
   string foundMessage = json["msg_type"];
   int foundDestination = json["dst_id"];
@@ -49,7 +49,7 @@ TEST(MessageFactoryTest, CreateResponseStockJson) {
   int xCoor = 3;
   int yCoor = 4;
   nlohmann::json json = nlohmann::json::parse(
-      MessageFactory::createResponseStockJson(msgType, code, num, xCoor, yCoor));
+      MessageFactory::createResponseStockJson(code, num, xCoor, yCoor));
 
   string foundMessage = json["msg_type"];
   int foundCode = json["msg_content"]["item_code"];
@@ -72,8 +72,7 @@ TEST(MessageFactoryTest, CreateResponsePrepayJson) {
   bool availability = true;
 
   nlohmann::json json =
-      nlohmann::json::parse(MessageFactory::createResponsePrepayJson(
-          msgType, destination, code, num, availability));
+      nlohmann::json::parse(MessageFactory::createResponsePrepayJson(destination, code, num, availability));
 
   string foundMessage = json["msg_type"];
   int foundDestination = json["dst_id"];

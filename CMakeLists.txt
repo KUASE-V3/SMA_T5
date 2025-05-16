@@ -32,6 +32,7 @@ add_library(MyLibrary STATIC
   src/domain/Payment.cpp
   src/external/Bank.cpp
   src/validator/LocalItemValidateAdapter.cpp
+  src/domain/CertificationCodeFactory.cpp
 )
 # target_include_directories(MyLibrary PUBLIC ${PROJECT_SOURCE_DIR}/include)
 target_include_directories(MyLibrary PUBLIC
@@ -61,6 +62,8 @@ if(BUILD_TESTS)
     tests/domain/test_CLManager.cpp
     tests/domain/test_Item.cpp
     tests/domain/test_ItemManager.cpp
+    tests/domain/test_CertificationCodeFactory.cpp
+
     tests/network/test_MessageFactory.cpp
   )
 
