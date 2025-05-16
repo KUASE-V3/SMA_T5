@@ -28,6 +28,9 @@ bool Item::isValid(int reqCount) const {
     return count >= reqCount;
 }
 
+int Item::getCode() const{
+    return code;
+}
 // bool Item::add(int addCount) {
 //     if (addCount <= 0) return false;
 //     count += addCount;
