@@ -37,11 +37,11 @@ class MessageFactory {
           return requestPrepayJson.dump();
         }
 
-        static std::string createResponseStockJson(int code, int num, int xCoor, int yCoor) {
+        static std::string createResponseStockJson(int destination, int code, int num, int xCoor, int yCoor) {
           json responseStockJson = {
               {"msg_type", "res_stock"},
               {"src_id", 5},
-              {"dst_id", 0},
+              {"dst_id", destination},
               {"msg_content", {
                 {"item_code", code},
                 {"item_num", num},
