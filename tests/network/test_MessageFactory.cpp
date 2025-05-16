@@ -44,20 +44,23 @@ TEST(MessageFactoryTest, CreateRequestPrepayJson) {
 
 TEST(MessageFactoryTest, CreateResponseStockJson) {
   string msgType = "res_stock";
+  int destination = 6;
   int code = 1;
   int num = 20;
   int xCoor = 3;
   int yCoor = 4;
   nlohmann::json json = nlohmann::json::parse(
-      MessageFactory::createResponseStockJson(code, num, xCoor, yCoor));
+      MessageFactory::createResponseStockJson(destination, code, num, xCoor, yCoor));
 
   string foundMessage = json["msg_type"];
+  int foundDestination = json["dst_id"];
   int foundCode = json["msg_content"]["item_code"];
   int foundNum = json["msg_content"]["item_num"];
   int foundXCoor = json["msg_content"]["coor_x"];
   int foundYCoor = json["msg_content"]["coor_y"];
 
   EXPECT_EQ(msgType, foundMessage);
+  EXPECT_EQ(destination, foundDestination);
   EXPECT_EQ(code, foundCode);
   EXPECT_EQ(num, foundNum);
   EXPECT_EQ(xCoor, foundXCoor);
