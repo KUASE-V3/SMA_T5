@@ -14,7 +14,7 @@ class Item {
     std::string toString() const;
     std::string getName() const;
     int getPrice() const;
-    // bool isValid(int reqCount) const;
+    bool isValid(int reqCount) const;
     // bool add(int addCount);
     // bool buy(int reqCount);
 };

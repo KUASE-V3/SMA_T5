@@ -24,9 +24,9 @@ int Item::getPrice() const {
     return price;
 }
 
-// bool Item::isValid(int reqCount) const {
-//     return count >= reqCount;
-// }
+bool Item::isValid(int reqCount) const {
+    return count >= reqCount;
+}
 
 // bool Item::add(int addCount) {
 //     if (addCount <= 0) return false;
