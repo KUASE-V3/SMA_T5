@@ -48,6 +48,10 @@ target_link_libraries(MyApp MyLibrary)
 # 테스트 빌드를 선택적으로 활성화하는 옵션 추가
 option(BUILD_TESTS "Build tests" OFF)
 
+file(GLOB_RECURSE DOMAIN_FILES src/domain/*.cpp)
+file(GLOB_RECURSE VALIDATOR_FILES src/validator/*.cpp)
+file(GLOB_RECURSE EXTERNAL_FILES src/external/*.cpp)
+
 if(BUILD_TESTS)
   # GoogleTest 서브모듈 추가 (테스트 빌드는 기본 ALL에서 제외)
   add_subdirectory(lib/googletest EXCLUDE_FROM_ALL)
@@ -56,10 +60,10 @@ if(BUILD_TESTS)
   # 테스트 실행 파일 생성 (test_main.cpp 포함) - 기본 빌드에서 제외
   # add_executable(RunTests tests/test_person.cpp)
   add_executable(RunTests
-    tests/test_person.cpp
-    tests/domain/test_CLManager.cpp
-    tests/domain/test_Item.cpp
-    tests/domain/test_ItemManager.cpp
+    tests/validator/test_CardPayValidateAdapter.cpp
+    ${DOMAIN_FILES}
+    ${VALIDATOR_FILES}
+    ${EXTERNAL_FILES}
   )
 
   #

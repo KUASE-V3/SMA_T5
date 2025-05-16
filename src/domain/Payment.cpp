@@ -1,12 +1,7 @@
 #include "Payment.h"
 #include "RemoteValidator.h"
 #include "LocalValidator.h"
-
-void Payment::addItem(const std::string &name, int quantity)
-{
-    items.first = name;
-    items.second = quantity;
-}
+#include "ValidatorFactory.h"
 
 void Payment::setPrepayCode(int code)
 {
@@ -18,17 +13,8 @@ int Payment::getPrepayCode() const
     return prepayCode;
 }
 
-std::pair<std::string, int> Payment::getItems() const{
+std::pair<int, int> Payment::getItems() const{
     return items;
-}
-
-
-std::map<std::type_index, bool> Payment::validate() const{
-    std::map<std::type_index, bool> result;
-    
-    for (const auto& [type, validator] : validatorList){
-        result[type] = validator -> validate(*this);
-    }
 }
 
 bool Payment::canlocalbuy() const{
@@ -51,8 +37,17 @@ bool Payment::canremotebuy() const{
         if(!ptr->validate(*this)){
             return false;
         }
-        return true;
     }
+    return true;
 }
 
+const PaymentMethod* Payment::getbuyContent() const{
+    return buyContent.get();
+}
 
+Payment::Payment(int itemcode, int quantity, std::unique_ptr<PaymentMethod> buytype)
+    : items{itemcode, quantity},
+      validatorList(std::move(ValidatorFactory::getInstance().setValidatorList())),
+      buyContent(std::move(buytype)),
+      prepayCode(0)
+{}

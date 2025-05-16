@@ -5,5 +5,5 @@ class ItemValidator{
     public:
     virtual ~ItemValidator() = default;
 
-    virtual bool isValid(const std::string& itemName, int quantity) const = 0;
+    virtual bool isValid(int itemcode, int quantity) const = 0;
 };

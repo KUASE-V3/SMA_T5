@@ -18,7 +18,7 @@
 // }
 
 bool LocalItemValidateAdapter::validate(const Payment& p) const{
-    auto [itemName, quantity] = p.getItems();
+    auto [itemcode, quantity] = p.getItems();
 
-    return itemManager->isValid(itemName, quantity);
+    return itemManager->isValid(itemcode, quantity);
 }

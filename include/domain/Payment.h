@@ -10,23 +10,18 @@
 
 class Payment {
 private:
-    std::pair<std::string, int> items;
+    std::pair<int, int> items;
     std::map<std::type_index, std::unique_ptr<Validator>> validatorList;
     //buy type
-    PaymentMethod *buyContent;
+    std::unique_ptr<PaymentMethod> buyContent;
     int prepayCode;
     
-    std::map<std::type_index, bool> validate() const;
 public:
-    Payment() {
-
-    }
-    void addItem(const std::string& name, int quantity);
-    std::pair<std::string, int> getItems() const;
-
+    Payment(int itemcode, int quantity, std::unique_ptr<PaymentMethod> buytype);
+    std::pair<int, int> getItems() const;
     void setPrepayCode(int code);
     int getPrepayCode() const;
-    PaymentMethod* getbuyContent() const;
+    const PaymentMethod* getbuyContent() const;
     bool canlocalbuy() const;
     bool canremotebuy() const;
 };

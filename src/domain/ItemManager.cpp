@@ -18,9 +18,9 @@ std::vector<Item> ItemManager::getItems() const {
     return items;
 }
 
-bool ItemManager::isValid(const std::string& itemName, int quantity) const{
-    auto it = std::find_if(items.begin(), items.end(), [&itemName](const Item& item){
-        return item.getName() == itemName;
+bool ItemManager::isValid(int itemcode, int quantity) const{
+    auto it = std::find_if(items.begin(), items.end(), [&itemcode](const Item& item){
+        return item.getCode() == itemcode;
     });
 
     if (it != items.end()){
