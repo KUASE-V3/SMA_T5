@@ -1,7 +1,9 @@
 #include "Payment.h"
+#include "ItemManager.h"
 #include "LocalValidator.h"
 #include "RemoteValidator.h"
 #include "ValidatorFactory.h"
+#include <algorithm>
 
 void Payment::setPrepayCode(int code) {
     prepayCode = code;
@@ -11,8 +13,8 @@ int Payment::getPrepayCode() const {
     return prepayCode;
 }
 
-std::pair<int, int> Payment::getItems() const {
-    return items;
+std::pair<int, int> Payment::getOrder() const {
+    return order;
 }
 
 bool Payment::canLocalBuy() const {
@@ -44,6 +46,26 @@ const PaymentMethod *Payment::getbuyContent() const {
 }
 
 Payment::Payment(int itemcode, int quantity, std::unique_ptr<PaymentMethod> buytype)
-    : items{itemcode, quantity},
+    : order{itemcode, quantity},
       validatorList(std::move(ValidatorFactory::getInstance().setValidatorList())),
       buyContent(std::move(buytype)), prepayCode(0) {}
+
+bool Payment::pay() {
+    Bank &bank = Bank::getInstance();
+    return bank.pay(*this);
+}
+
+int Payment::getTotalPrice() const {
+    ItemManager &itemManager = ItemManager::getInstance();
+
+    auto items = itemManager.getItems();
+    auto it = std::find_if(items.begin(), items.end(), [this](const Item &item) {
+        return item.getCode() == this->order.first;
+    });
+
+    if (it != items.end()) {
+        return it->getPrice() * order.second;
+    }
+
+    return 0;
+}
