@@ -39,12 +39,15 @@ void CLManager::run() {
             showItems();
         } else if (select == 2) {
             std::cout << orderMenuText;
+
             int itemCode = readInt("음료 코드: ");
             int quantity = readInt("개수 : ");
             std::cout << "카드 정보: ";
             std::string card;
             std::cin >> card;
-            ORDER_STATUS status = order(itemCode, quantity, card);
+            std::unique_ptr<Payment> payment;
+
+            ORDER_STATUS status = order(itemCode, quantity, card, payment);
 
             if (status == ORDER_STATUS::LOCAL) {
                 // todo : pay();
@@ -68,13 +71,14 @@ void CLManager::showItems() {
     }
 }
 
-ORDER_STATUS CLManager::order(int itemCode, int quantity, std::string card) {
+ORDER_STATUS CLManager::order(int itemCode, int quantity, const std::string &card,
+                              std::unique_ptr<Payment> &payment) {
     auto method = std::make_unique<CardPay>(card);
-    Payment payment(itemCode, quantity, std::move(method));
+    payment = std::make_unique<Payment>(itemCode, quantity, std::move(method));
 
-    if (payment.canLocalBuy()) {
+    if (payment->canLocalBuy()) {
         return ORDER_STATUS::LOCAL;
-    } else if (payment.canRemoteBuy()) {
+    } else if (payment->canRemoteBuy()) {
         return ORDER_STATUS::REMOTE;
     } else {
         return ORDER_STATUS::FAIL;

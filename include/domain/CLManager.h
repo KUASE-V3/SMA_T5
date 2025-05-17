@@ -20,8 +20,10 @@ class CLManager {
     static CLManager &getInstance();
     void run();
     void showItems();
-    ORDER_STATUS order(int code, int quantity, std::string card);
-    void pay();
-    void prePay(Payment &payment);
+    // CLManager.h
+    ORDER_STATUS order(int itemCode, int quantity, const std::string &card,
+                       std::unique_ptr<Payment> &payment);
+    void pay(std::unique_ptr<Payment> &payment);
+    void prePay(std::unique_ptr<Payment> &payment);
     void enterPrePayCode();
 };
