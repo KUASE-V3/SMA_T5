@@ -18,8 +18,8 @@ class ItemManager : public ItemValidator {
 
     std::vector<Item> getItems() const;
     bool isValid(int itemcode, int quantity) const;
-
-    bool modifyStock(const int itemCode, int quantity);
+    bool increaseStock(const int itemCode, int quantity);
+    bool decreaseStock(const int itemCode, int quantity);
     std::string getName(int itemCode) const;
     // void add(const std::string &name, int price, int count);
     //  Item *findByName(const std::string &name);

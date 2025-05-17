@@ -28,12 +28,22 @@ bool ItemManager::isValid(int itemcode, int quantity) const {
     return false;
 }
 
-bool ItemManager::modifyStock(const int itemCode, int quantity) {
+bool ItemManager::increaseStock(const int itemCode, int quantity) {
     auto it = std::find_if(items.begin(), items.end(),
                            [&itemCode](Item &item) { return item.getCode() == itemCode; });
 
     if (it != items.end()) {
-        return it->modifyCount(quantity);
+        return it->add(quantity);
+    }
+    return false;
+}
+
+bool ItemManager::decreaseStock(const int itemCode, int quantity) {
+    auto it = std::find_if(items.begin(), items.end(),
+                           [&itemCode](Item &item) { return item.getCode() == itemCode; });
+
+    if (it != items.end()) {
+        return it->consume(quantity);
     }
     return false;
 }
@@ -48,11 +58,3 @@ std::string ItemManager::getName(int itemCode) const {
 
     return "";
 }
-// void ItemManager::add(const std::string &name, int price, int count) {
-//     int id = items.size() + 1;
-//     items.emplace_back(id, name, price, count);
-// }
-
-// Item *ItemManager::findByName(const std::string &name) {
-//     return nullptr;
-// }

@@ -56,7 +56,7 @@ void CLManager::run() {
                     std::pair<int, int> items = payment->getItems();
                     int itemCode = items.first;
                     int quantity = items.second;
-                    if (itemManager->modifyStock(itemCode, -quantity)) {
+                    if (itemManager->decreaseStock(itemCode, quantity)) {
                         std::string itemName = itemManager->getName(itemCode);
                         std::cout << "음료 제공: " << itemName << " " << quantity << "개\n";
                     } else {

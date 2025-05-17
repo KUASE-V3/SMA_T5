@@ -17,6 +17,6 @@ class Item {
     bool isValid(int reqCount) const;
     int getCode() const;
     bool add(int addCount);
-    bool buy(int reqCount);
-    bool modifyCount(int reqCount);
+    bool consume(int reqCount);
+    int getCount() const;
 };
