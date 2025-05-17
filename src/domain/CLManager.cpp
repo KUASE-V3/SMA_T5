@@ -20,6 +20,7 @@ int CLManager::readInt(std::string text) {
 
 CLManager::CLManager() {
     itemManager = &ItemManager::getInstance();
+    prepaymentStock = &PrepaymentStock::getInstance();
 }
 
 CLManager &CLManager::getInstance() {
@@ -73,6 +74,13 @@ void CLManager::run() {
             }
         } else if (select == 3) {
             // todo : check cert
+            /*
+            if(enterCertCode(certCode).has_value()) {
+
+            }else {
+
+            }
+            */
         } else {
             std::cout << invalidMenuMsg << std::endl;
         }
@@ -97,7 +105,7 @@ void CLManager::prePay(Payment& payment){
 
     std::pair<int, int> item = payment.getItems();
 
-    // std::string requestMessage = MessageFactory::createRequestPrepayJson(item.first, item.second, certCode);
+//     std::string requestMessage = MessageFactory::createRequestPrepayJson(item.first, item.second, certCode);
 
     // std::string responseMessage = NetworkManager::sendMessage(requestMessage);
 
@@ -121,4 +129,8 @@ ORDER_STATUS CLManager::order(int itemCode, int quantity, const std::string &car
 
 bool CLManager::pay(std::unique_ptr<Payment> &payment) {
     return false;
+}
+
+optional<Payment> CLManager::enterCertCode(int certCode) {
+    return prepaymentStock->findPaymentBycertCode(certCode);
 }

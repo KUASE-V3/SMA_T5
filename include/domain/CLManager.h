@@ -1,6 +1,7 @@
 #pragma once
 #include "ItemManager.h"
 #include "Payment.h"
+#include "PrepaymentStock.h"
 #include <string>
 
 enum class ORDER_STATUS { LOCAL, REMOTE, FAIL };
@@ -8,6 +9,8 @@ enum class ORDER_STATUS { LOCAL, REMOTE, FAIL };
 class CLManager {
   private:
     ItemManager *itemManager;
+    PrepaymentStock *prepaymentStock;
+
     int readInt(std::string text);
 
     // 싱글톤
@@ -25,5 +28,5 @@ class CLManager {
                        std::unique_ptr<Payment> &payment);
     bool pay(std::unique_ptr<Payment> &payment);
     void prePay(Payment &payment);
-    void enterCerntCode();
+    optional<Payment> enterCertCode(int certCode);
 };
