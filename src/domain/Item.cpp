@@ -28,7 +28,7 @@ bool Item::isValid(int reqCount) const {
     return count >= reqCount;
 }
 
-int Item::getCode() const{
+int Item::getCode() const {
     return code;
 }
 bool Item::add(int addCount) {
@@ -41,4 +41,12 @@ bool Item::buy(int reqCount) {
     if (reqCount <= 0 || count < reqCount) return false;
     count -= reqCount;
     return true;
+}
+
+bool Item::modifyCount(int reqCount) {
+    if (count + reqCount >= 0) {
+        count += reqCount;
+        return true;
+    }
+    return false;
 }

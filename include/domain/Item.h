@@ -18,4 +18,5 @@ class Item {
     int getCode() const;
     bool add(int addCount);
     bool buy(int reqCount);
+    bool modifyCount(int reqCount);
 };

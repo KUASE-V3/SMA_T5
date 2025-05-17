@@ -15,7 +15,9 @@ int CLManager::readInt(std::string text) {
     return input;
 }
 
-CLManager::CLManager() {}
+CLManager::CLManager() {
+    itemManager = &ItemManager::getInstance();
+}
 
 CLManager &CLManager::getInstance() {
     static CLManager instance;
@@ -50,7 +52,17 @@ void CLManager::run() {
             ORDER_STATUS status = order(itemCode, quantity, card, payment);
 
             if (status == ORDER_STATUS::LOCAL) {
-                // todo : pay();
+                if (pay(payment)) {
+                    std::pair<int, int> items = payment->getItems();
+                    int itemCode = items.first;
+                    int quantity = items.second;
+                    if (itemManager->modifyStock(itemCode, -quantity)) {
+                        std::string itemName = itemManager->getName(itemCode);
+                        std::cout << "음료 제공: " << itemName << " " << quantity << "개\n";
+                    } else {
+                        std::cout << "음료 제공 실패";
+                    }
+                }
             } else if (status == ORDER_STATUS::REMOTE) {
                 // todo : prePay();
             } else if (status == ORDER_STATUS::FAIL) {
@@ -65,7 +77,7 @@ void CLManager::run() {
 }
 
 void CLManager::showItems() {
-    auto items = itemManager.getItems();
+    auto items = itemManager->getItems();
     for (const auto &item : items) {
         std::cout << item.toString() << '\n';
     }
@@ -83,4 +95,8 @@ ORDER_STATUS CLManager::order(int itemCode, int quantity, const std::string &car
     } else {
         return ORDER_STATUS::FAIL;
     }
+}
+
+bool CLManager::pay(std::unique_ptr<Payment> &payment) {
+    return false;
 }
