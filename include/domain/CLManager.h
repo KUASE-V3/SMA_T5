@@ -7,7 +7,7 @@ enum class ORDER_STATUS { LOCAL, REMOTE, FAIL };
 
 class CLManager {
   private:
-    ItemManager itemManager;
+    ItemManager *itemManager;
     int readInt(std::string text);
 
     // 싱글톤
@@ -20,8 +20,10 @@ class CLManager {
     static CLManager &getInstance();
     void run();
     void showItems();
-    ORDER_STATUS order(int code, int quantity, std::string card);
-    void pay();
+    // CLManager.h
+    ORDER_STATUS order(int itemCode, int quantity, const std::string &card,
+                       std::unique_ptr<Payment> &payment);
+    bool pay(std::unique_ptr<Payment> &payment);
     void prePay(Payment &payment);
     void enterPrePayCode();
 };

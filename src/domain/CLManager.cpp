@@ -15,7 +15,9 @@ int CLManager::readInt(std::string text) {
     return input;
 }
 
-CLManager::CLManager() {}
+CLManager::CLManager() {
+    itemManager = &ItemManager::getInstance();
+}
 
 CLManager &CLManager::getInstance() {
     static CLManager instance;
@@ -39,15 +41,28 @@ void CLManager::run() {
             showItems();
         } else if (select == 2) {
             std::cout << orderMenuText;
+
             int itemCode = readInt("음료 코드: ");
             int quantity = readInt("개수 : ");
             std::cout << "카드 정보: ";
             std::string card;
             std::cin >> card;
-            ORDER_STATUS status = order(itemCode, quantity, card);
+            std::unique_ptr<Payment> payment;
+
+            ORDER_STATUS status = order(itemCode, quantity, card, payment);
 
             if (status == ORDER_STATUS::LOCAL) {
-                // todo : pay();
+                if (pay(payment)) {
+                    std::pair<int, int> items = payment->getItems();
+                    int itemCode = items.first;
+                    int quantity = items.second;
+                    if (itemManager->modifyStock(itemCode, -quantity)) {
+                        std::string itemName = itemManager->getName(itemCode);
+                        std::cout << "음료 제공: " << itemName << " " << quantity << "개\n";
+                    } else {
+                        std::cout << "음료 제공 실패";
+                    }
+                }
             } else if (status == ORDER_STATUS::REMOTE) {
                 // todo : prePay();
             } else if (status == ORDER_STATUS::FAIL) {
@@ -62,21 +77,26 @@ void CLManager::run() {
 }
 
 void CLManager::showItems() {
-    auto items = itemManager.getItems();
+    auto items = itemManager->getItems();
     for (const auto &item : items) {
         std::cout << item.toString() << '\n';
     }
 }
 
-ORDER_STATUS CLManager::order(int itemCode, int quantity, std::string card) {
+ORDER_STATUS CLManager::order(int itemCode, int quantity, const std::string &card,
+                              std::unique_ptr<Payment> &payment) {
     auto method = std::make_unique<CardPay>(card);
-    Payment payment(itemCode, quantity, std::move(method));
+    payment = std::make_unique<Payment>(itemCode, quantity, std::move(method));
 
-    if (payment.canLocalBuy()) {
+    if (payment->canLocalBuy()) {
         return ORDER_STATUS::LOCAL;
-    } else if (payment.canRemoteBuy()) {
+    } else if (payment->canRemoteBuy()) {
         return ORDER_STATUS::REMOTE;
     } else {
         return ORDER_STATUS::FAIL;
     }
+}
+
+bool CLManager::pay(std::unique_ptr<Payment> &payment) {
+    return false;
 }

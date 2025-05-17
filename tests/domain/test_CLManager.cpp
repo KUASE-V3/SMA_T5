@@ -29,8 +29,9 @@ TEST(CLManagerTest, OrderReturnsAnyValidStatus) {
     int itemCode = 1; // 예: 콜라
     int quantity = 1;
     std::string card = "12345678123456789";
+    std::unique_ptr<Payment> payment;
 
-    ORDER_STATUS status = manager.order(itemCode, quantity, card);
+    ORDER_STATUS status = manager.order(itemCode, quantity, card, payment);
 
     EXPECT_TRUE(status == ORDER_STATUS::LOCAL || status == ORDER_STATUS::REMOTE ||
                 status == ORDER_STATUS::FAIL);
