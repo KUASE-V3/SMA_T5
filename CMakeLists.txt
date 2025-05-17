@@ -55,6 +55,7 @@ option(BUILD_TESTS "Build tests" OFF)
 # 테스트 디렉토리 관리
 file(GLOB_RECURSE DOMAIN_FILES_TEST tests/domain/*.cpp)
 file(GLOB_RECURSE VALIDATOR_FILES_TEST tests/validator/*.cpp)
+file(GLOB_RECURSE NETWORK_FILES_TEST tests/network/*.cpp)
 
 if(BUILD_TESTS)
   # GoogleTest 서브모듈 추가 (테스트 빌드는 기본 ALL에서 제외)
@@ -75,7 +76,6 @@ if(BUILD_TESTS)
   add_executable(RunNetworkTests
     ${NETWORK_FILES}
   )
-
   #
   set_target_properties(RunTests PROPERTIES EXCLUDE_FROM_ALL TRUE)
   target_link_libraries(RunTests MyLibrary gtest_main gtest pthread)

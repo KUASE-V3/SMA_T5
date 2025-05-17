@@ -4,13 +4,15 @@
 #include "NetworkManager.h"
 
 int main() {
-    std::thread serverThread(runServer);
+  NetworkManager& networkManager = NetworkManager::getInstance();
 
-    sleep(1);
+  std::thread serverThread(&NetworkManager::runServer, &networkManager);
 
-    // main
+  sleep(1);
 
-    serverThread.detach();
-    return 0;
+  // main
+
+  serverThread.detach();
+  return 0;
 }
 

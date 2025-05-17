@@ -18,7 +18,10 @@ TEST(PaymentBasicFieldsTest, ItemsAndPrepay) {
 }
 
 TEST(PaymentValidatorTest, CanLocalBuyTrue) {
+    ItemManager &manager = ItemManager::getInstance();
+    manager.increaseStock(1, 3); // 재고 3개 이상 확보
     auto method = std::make_unique<CardPay>("1234567812345678");
+
     Payment payment(1, 3, std::move(method)); // 수량 3 요청 → 충분함
 
     EXPECT_TRUE(payment.canLocalBuy());
@@ -39,8 +42,12 @@ TEST(PaymentValidatorTest, CanLocalBuyFalseCard) {
 }
 
 TEST(PaymentValidatorTest, CanLocalBuyFalseItem) {
-
     auto method = std::make_unique<CardPay>("1111222233334444");
+
+    ItemManager &manager = ItemManager::getInstance();
+
+    while (manager.decreaseStock(1, 50)) {
+    } // 재고 50개 이하로
     Payment payment(1, 50, std::move(method)); // 수량 50 요청
 
     EXPECT_FALSE(payment.canLocalBuy());

@@ -1,5 +1,5 @@
-#include <gtest/gtest.h>
 #include "Item.h"
+#include <gtest/gtest.h>
 
 TEST(ItemTest, GettersReturnCorrectValues) {
     Item item(1, "콜라", 1500, 10);
@@ -24,10 +24,10 @@ TEST(ItemTest, AddIncreasesStock) {
 
 TEST(ItemTest, BuyReducesStockCorrectly) {
     Item item(1, "콜라", 1500, 10);
-    EXPECT_TRUE(item.buy(3));  // 성공
-    EXPECT_FALSE(item.buy(20)); // 실패: 수량 초과
-    EXPECT_FALSE(item.buy(0));  // 실패: 0개
-    EXPECT_FALSE(item.buy(-5)); // 실패: 음수
+    EXPECT_TRUE(item.consume(3));   // 성공
+    EXPECT_FALSE(item.consume(20)); // 실패: 수량 초과
+    EXPECT_FALSE(item.consume(0));  // 실패: 0개
+    EXPECT_FALSE(item.consume(-5)); // 실패: 음수
 }
 
 TEST(ItemTest, ToStringFormatsCorrectly) {

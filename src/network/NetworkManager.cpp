@@ -7,24 +7,39 @@
 
 #include "json.hpp"
 #include "MessageFactory.h"
+#include "Payment.h"
+#include "LocalItemValidateAdapter.h"
 
 using namespace std;
 
 using json = nlohmann::json;
 
-NetworkManager::NetworkManager() { 
 
+NetworkManager::NetworkManager() {
+  addresses.emplace(1, "127.0.0.1");
+  addresses.emplace(2, "127.0.0.1");
+  addresses.emplace(3, "127.0.0.1");
+  addresses.emplace(4, "127.0.0.1");
+  addresses.emplace(5, "127.0.0.1");
+  addresses.emplace(6, "127.0.0.1");
+  addresses.emplace(7, "127.0.0.1");
+  itemManager = &ItemManager::getInstance();
+  prepaymentStock = &PrepaymentStock::getInstance();
 }
 
-// NetworkManager& NetworkManager::getInstance() {
-//     static NetworkManager instance;
-//     return instance;
-// }
+NetworkManager& NetworkManager::getInstance() {
+    static NetworkManager instance;
+    return instance;
+}
 
 string NetworkManager::sendMessage(string message) {
   int sock = 0;
   char buffer[1024] = {0};
   sockaddr_in serverAddress{};
+
+  json jsonMessage = json::parse(message);
+
+  string address = addresses.find(jsonMessage["dst_id"])->second;
 
   sock = socket(AF_INET, SOCK_STREAM, 0);
   if (sock < 0) {
@@ -35,7 +50,7 @@ string NetworkManager::sendMessage(string message) {
   serverAddress.sin_family = AF_INET;
   serverAddress.sin_port = htons(PORT);
 
-  if (inet_pton(AF_INET, "127.0.0.1", &serverAddress.sin_addr) <= 0) {
+  if (inet_pton(AF_INET, address.c_str(), &serverAddress.sin_addr) <= 0) {
     perror("Invalid address / Address not supported");
     return nullptr;
   }
@@ -56,7 +71,46 @@ string NetworkManager::sendMessage(string message) {
   return buffer;
 }
 
-void runServer() {
+void NetworkManager::sendBroadcastMessage(string message) {
+  for (pair<int, string> iter : addresses) {
+    int sock = 0;
+    char buffer[1024] = {0};
+    sockaddr_in serverAddress{};
+
+    sock = socket(AF_INET, SOCK_STREAM, 0);
+    if (sock < 0) {
+      perror("Socket creation error");
+      return;
+    }
+
+    serverAddress.sin_family = AF_INET;
+    serverAddress.sin_port = htons(PORT);
+
+    const char *address = iter.second.c_str();
+
+    if (inet_pton(AF_INET, address, &serverAddress.sin_addr) <= 0) {
+      perror("Invalid address / Address not supported");
+      return;
+    }
+
+    if (connect(sock, (sockaddr*)&serverAddress, sizeof(serverAddress)) < 0) {
+      perror("Connection Failed");
+      return;
+    }
+
+    const char* msg = message.c_str();
+
+    send(sock, msg, strlen(msg), 0);
+
+    read(sock, buffer, sizeof(buffer));
+
+    json responseJson = json::parse(buffer);
+
+    close(sock);
+  }
+}
+
+void NetworkManager::runServer() {
   int server_fd, client_fd;
   sockaddr_in address{};
   int addrlen = sizeof(address);
@@ -96,18 +150,35 @@ void runServer() {
     string responseMessage;
 
     if (msgType == "req_stock") {
-      // TODO xCoor, yCoor
+      // TODO xCoor, yCoor, 재고 확인 이후 어떻게 알려줌??
 
       responseMessage = MessageFactory::createResponseStockJson(requestMessage["src_id"],
                                               requestMessage["msg_content"]["item_code"], 
                                               requestMessage["msg_content"]["item_num"], 5, 5);
+
     } else if (msgType == "req_prepay") {
-      // TODO availability
+      int code = requestMessage["msg_content"]["item_code"];
+      int num = requestMessage["msg_content"]["item_num"];
+      Payment payment(code, num, nullptr);
+
+      LocalItemValidateAdapter adapter;
+
+      bool availability = adapter.validate(payment);
+
+      if(availability) {
+        if(itemManager->decreaseStock(code, -num)) {
+          int certCode = requestMessage["msg_content"]["cert_code"];
+          prepaymentStock->addPayment(certCode, payment);
+        } else {
+          availability = false;
+        }
+      }
 
       responseMessage = MessageFactory::createResponsePrepayJson(requestMessage["src_id"],
                                                requestMessage["msg_content"]["item_code"],
-                                               requestMessage["msg_content"]["item_num"], true);
-    }else {
+                                               requestMessage["msg_content"]["item_num"], availability);
+
+    } else {
       // err
     }
 
