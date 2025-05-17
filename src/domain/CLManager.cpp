@@ -2,6 +2,7 @@
 #include "CertificationCodeFactory.h"
 #include "MessageFactory.h"
 #include "CardPay.h"
+#include "NetworkManager.h"
 #include <iostream>
 #include <limits>
 
@@ -63,7 +64,6 @@ void CLManager::run() {
     }
 }
 
-using namespace std;
 
 void CLManager::showItems() {
     auto items = itemManager.getItems();
@@ -80,12 +80,11 @@ void CLManager::prePay(Payment& payment){
 
     payment.setCertCode(certCode);
 
-    //payment.getItems
-    string message = MessageFactory::createRequestStockJson(3, 4);
+    std::pair<int, int> item = payment.getItems();
 
-    // request 전송
+    // std::string requestMessage = MessageFactory::createRequestPrepayJson(item.first, item.second, certCode);
 
-    // response 대기
+    // std::string responseMessage = NetworkManager::sendMessage(requestMessage);
 
     // T F 따라서 반환값 다르게 또는 payment 값세팅
 

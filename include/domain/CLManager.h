@@ -23,5 +23,5 @@ class CLManager {
     ORDER_STATUS order(int code, int quantity, std::string card);
     void pay();
     void prePay(Payment &payment);
-    void enterPrePayCode();
+    void enterCerntCode();
 };

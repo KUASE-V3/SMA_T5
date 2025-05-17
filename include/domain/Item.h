@@ -16,6 +16,6 @@ class Item {
     int getPrice() const;
     bool isValid(int reqCount) const;
     int getCode() const;
-    // bool add(int addCount);
-    // bool buy(int reqCount);
+    bool add(int addCount);
+    bool buy(int reqCount);
 };
