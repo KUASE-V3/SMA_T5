@@ -19,6 +19,15 @@ TEST(CardPayValidateAdapterTest, InvalidCardReturnsFalse) {
     EXPECT_FALSE(adapter.validate(payment));
 }
 
+TEST(CardPayValidateAdapterTest, EmptyCardNumberIsInvalid) {
+    auto method = std::make_unique<CardPay>("");  // 없음
+    Payment payment(1, 1, std::move(method));
+    CardPayValidateAdapter adapter;
+
+    EXPECT_FALSE(adapter.validate(payment));
+}
+
+
 TEST(CardPayValidateAdapterTest, NotCardPayReturnsTrue) {
     class DummyMethod : public PaymentMethod {
         bool isValid() const override { return false; }

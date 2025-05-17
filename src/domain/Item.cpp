@@ -31,14 +31,14 @@ bool Item::isValid(int reqCount) const {
 int Item::getCode() const{
     return code;
 }
-// bool Item::add(int addCount) {
-//     if (addCount <= 0) return false;
-//     count += addCount;
-//     return true;
-// }
+bool Item::add(int addCount) {
+    if (addCount <= 0) return false;
+    count += addCount;
+    return true;
+}
 
-// bool Item::buy(int reqCount) {
-//     if (reqCount <= 0 || count < reqCount) return false;
-//     count -= reqCount;
-//     return true;
-// }
+bool Item::buy(int reqCount) {
+    if (reqCount <= 0 || count < reqCount) return false;
+    count -= reqCount;
+    return true;
+}
