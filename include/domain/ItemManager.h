@@ -5,16 +5,17 @@
 #include <unordered_map>
 #include <vector>
 
-class ItemManager : public ItemValidator{
+class ItemManager : public ItemValidator {
   private:
     std::vector<Item> items;
-    ItemManager();
-  public:
-    ItemManager(const ItemManager&) = delete;
-    ItemManager& operator = (const ItemManager&) = delete;
 
-    static ItemManager& getInstance();
-    
+  public:
+    ItemManager();
+    ItemManager(const ItemManager &) = delete;
+    ItemManager &operator=(const ItemManager &) = delete;
+
+    static ItemManager &getInstance();
+
     std::vector<Item> getItems() const;
     bool isValid(int itemcode, int quantity) const;
     // void add(const std::string &name, int price, int count);
