@@ -11,7 +11,7 @@ TEST(PaymentBasicFieldsTest, ItemsAndPrepay) {
     Payment payment(42, 3, std::move(method));
     payment.setPrepayCode(101);
 
-    auto [itemcode, quantity] = payment.getItems();
+    auto [itemcode, quantity] = payment.getOrder();
     EXPECT_EQ(itemcode, 42);
     EXPECT_EQ(quantity, 3);
     EXPECT_EQ(payment.getPrepayCode(), 101);
@@ -80,5 +80,38 @@ TEST(PaymentBasicFieldsTest, BuyContentIsCorrectlyStored) {
     ASSERT_NE(card, nullptr) << "buyContent가 CardPay가 아님";
 
     // 카드 번호가 잘 보존됐는지 확인
-    EXPECT_EQ(card->getCardNumber(), cardNum);
+    EXPECT_EQ(card->getCardInfo(), cardNum);
+}
+
+TEST(PaymentTest, PaySuccess) {
+    // 유효한 카드 번호 (Bank 클래스 내부 목록과 일치해야 함)
+    std::string validCard = "1234567812345678";
+    std::unique_ptr<PaymentMethod> method = std::make_unique<CardPay>(validCard);
+    Payment payment(1, 1, std::move(method));
+
+    bool result = payment.pay();
+
+    EXPECT_TRUE(result);
+}
+
+TEST(PaymentTest, PayFailsWhenCardHasNoBalance) {
+    // 유효한 카드 번호 (Bank 클래스 내부 목록과 일치해야 함)
+    std::string validCard = "0000000000000000";
+    std::unique_ptr<PaymentMethod> method = std::make_unique<CardPay>(validCard);
+    Payment payment(1, 1, std::move(method));
+
+    bool result = payment.pay();
+
+    EXPECT_FALSE(result);
+}
+
+TEST(PaymentTest, PayFailsWhenCardIsNotRegistered) {
+    // 존재하지 않는 카드 번호
+    std::string invalidCard = "1111111111111111";
+    std::unique_ptr<PaymentMethod> method = std::make_unique<CardPay>(invalidCard);
+    Payment payment(1, 1, std::move(method));
+
+    bool result = payment.pay();
+
+    EXPECT_FALSE(result);
 }
