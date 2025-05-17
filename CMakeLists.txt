@@ -33,6 +33,7 @@ add_library(MyLibrary STATIC
   src/external/Bank.cpp
   src/validator/LocalItemValidateAdapter.cpp
   src/domain/CertificationCodeFactory.cpp
+  src/network/NetworkManager.cpp
 )
 # target_include_directories(MyLibrary PUBLIC ${PROJECT_SOURCE_DIR}/include)
 target_include_directories(MyLibrary PUBLIC

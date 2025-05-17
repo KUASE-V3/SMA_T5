@@ -1,12 +1,16 @@
-#include <iostream>
-#include "json.hpp"
+#include <unistd.h>
+#include <thread>
+
+#include "NetworkManager.h"
 
 int main() {
-    nlohmann::json jsonData;
-    jsonData["Name"] = "Junkyu";
-    jsonData["Age"] = "26";
+    std::thread serverThread(runServer);
 
-    std::cout << jsonData << std::endl;
+    sleep(1);
+
+    // main
+
+    serverThread.detach();
     return 0;
 }
 

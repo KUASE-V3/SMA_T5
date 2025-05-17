@@ -18,9 +18,9 @@ void CLManager::prePay(Payment& payment){
 
     int certCode = CertificationCodeFactory::createCertificationCode();
 
-    // payment.setCertCode(certCode);
+    payment.setCertCode(certCode);
 
-    // TODO: getItems
+    //payment.getItems
     string message = MessageFactory::createRequestStockJson(3, 4);
 
     // request 전송
