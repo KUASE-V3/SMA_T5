@@ -17,8 +17,8 @@
 //     return { "SUCCESS", true };
 // }
 
-bool LocalItemValidateAdapter::validate(const Payment& p) const{
-    auto [itemcode, quantity] = p.getItems();
+bool LocalItemValidateAdapter::validate(const Payment &p) const {
+    auto [itemcode, quantity] = p.getOrder();
 
     return itemManager->isValid(itemcode, quantity);
 }

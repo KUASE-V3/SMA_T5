@@ -1,12 +1,11 @@
 #include "CardPay.h"
 
-CardPay::CardPay(const std::string& cardNum) : cardNumber(cardNum) {}
+CardPay::CardPay(const std::string &cardNum) : cardInfo(cardNum) {}
 
-std::string CardPay::getCardNumber() const {
-    return cardNumber;
+std::string CardPay::getCardInfo() const {
+    return cardInfo;
 }
 
 bool CardPay::isValid() const {
-    // 단순한 예시: 길이가 충분한지만 체크
-    return !cardNumber.empty() && cardNumber.length() >= 16;
+    return !cardInfo.empty() && cardInfo.length() >= 16;
 }

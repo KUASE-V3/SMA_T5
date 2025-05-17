@@ -59,7 +59,7 @@ void CLManager::run() {
 
             if (status == ORDER_STATUS::LOCAL) {
                 if (pay(payment)) {
-                    std::pair<int, int> items = payment->getItems();
+                    std::pair<int, int> items = payment->getOrder();
                     int itemCode = items.first;
                     int quantity = items.second;
                     if (itemManager->decreaseStock(itemCode, quantity)) {
@@ -105,7 +105,7 @@ void CLManager::prePay(Payment& payment){
 
     payment.setCertCode(certCode);
 
-    std::pair<int, int> item = payment.getItems();
+    std::pair<int, int> item = payment.getOrder();
 
 //     std::string requestMessage = messageFactory.createRequestPrepayJson(item.first, item.second, certCode);
 
@@ -130,7 +130,7 @@ ORDER_STATUS CLManager::order(int itemCode, int quantity, const std::string &car
 }
 
 bool CLManager::pay(std::unique_ptr<Payment> &payment) {
-    return false;
+    return payment->pay();
 }
 
 optional<Payment> CLManager::enterCertCode(int certCode) {

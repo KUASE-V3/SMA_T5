@@ -14,8 +14,8 @@ TEST(PrepaymentStockTest, FindPaymentBycertCode) {
 
   Payment foundPayment = prepaymentStock.findPaymentBycertCode(5001).value();
 
-  pair<int, int> item = payment.getItems();
-  pair<int, int> foundItem = foundPayment.getItems();
+  pair<int, int> item = payment.getOrder();
+  pair<int, int> foundItem = foundPayment.getOrder();
 
   EXPECT_EQ(item, foundItem);
 };
