@@ -5,6 +5,7 @@
 
 #include "ItemManager.h"
 #include "PrepaymentStock.h"
+#include "MessageFactory.h"
 
 using namespace std;
 
@@ -13,6 +14,7 @@ class NetworkManager {
      map<int, string> addresses;
      ItemManager* itemManager;
      PrepaymentStock* prepaymentStock;
+     MessageFactory* messageFactory;
 
      static const int PORT = 8080;
      NetworkManager();
@@ -25,5 +27,3 @@ class NetworkManager {
         void sendBroadcastMessage(string message);
         void runServer();
 };
-
-void runServer();

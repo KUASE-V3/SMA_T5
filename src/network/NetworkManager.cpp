@@ -6,7 +6,6 @@
 #include <string.h>
 
 #include "json.hpp"
-#include "MessageFactory.h"
 #include "Payment.h"
 #include "LocalItemValidateAdapter.h"
 
@@ -25,6 +24,7 @@ NetworkManager::NetworkManager() {
   addresses.emplace(7, "127.0.0.1");
   itemManager = &ItemManager::getInstance();
   prepaymentStock = &PrepaymentStock::getInstance();
+  messageFactory = &MessageFactory::getInstance();
 }
 
 NetworkManager& NetworkManager::getInstance() {
@@ -152,7 +152,7 @@ void NetworkManager::runServer() {
     if (msgType == "req_stock") {
       // TODO xCoor, yCoor, 재고 확인 이후 어떻게 알려줌??
 
-      responseMessage = MessageFactory::createResponseStockJson(requestMessage["src_id"],
+      responseMessage = messageFactory->createResponseStockJson(requestMessage["src_id"],
                                               requestMessage["msg_content"]["item_code"], 
                                               requestMessage["msg_content"]["item_num"], 5, 5);
 
@@ -174,7 +174,7 @@ void NetworkManager::runServer() {
         }
       }
 
-      responseMessage = MessageFactory::createResponsePrepayJson(requestMessage["src_id"],
+      responseMessage = messageFactory->createResponsePrepayJson(requestMessage["src_id"],
                                                requestMessage["msg_content"]["item_code"],
                                                requestMessage["msg_content"]["item_num"], availability);
 

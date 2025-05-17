@@ -2,6 +2,8 @@
 #include "ItemManager.h"
 #include "Payment.h"
 #include "PrepaymentStock.h"
+#include "MessageFactory.h"
+#include "CertificationCodeFactory.h"
 #include <string>
 
 enum class ORDER_STATUS { LOCAL, REMOTE, FAIL };
@@ -10,6 +12,8 @@ class CLManager {
   private:
     ItemManager *itemManager;
     PrepaymentStock *prepaymentStock;
+    MessageFactory *messageFactory;
+    CertificationCodeFactory *certificationCodeFactory;
 
     int readInt(std::string text);
 

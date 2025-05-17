@@ -21,6 +21,8 @@ int CLManager::readInt(std::string text) {
 CLManager::CLManager() {
     itemManager = &ItemManager::getInstance();
     prepaymentStock = &PrepaymentStock::getInstance();
+    messageFactory = &MessageFactory::getInstance();
+    certificationCodeFactory = &CertificationCodeFactory::getInstance();
 }
 
 CLManager &CLManager::getInstance() {
@@ -99,15 +101,15 @@ void CLManager::prePay(Payment& payment){
 
     // 결제 성공 시
 
-    int certCode = CertificationCodeFactory::createCertificationCode();
+    int certCode = certificationCodeFactory->createCertificationCode();
 
     payment.setCertCode(certCode);
 
     std::pair<int, int> item = payment.getItems();
 
-//     std::string requestMessage = MessageFactory::createRequestPrepayJson(item.first, item.second, certCode);
+//     std::string requestMessage = messageFactory.createRequestPrepayJson(item.first, item.second, certCode);
 
-    // std::string responseMessage = NetworkManager::sendMessage(requestMessage);
+//     std::string responseMessage = messageFactory.sendMessage(requestMessage);
 
     // T F 따라서 반환값 다르게 또는 payment 값세팅
 

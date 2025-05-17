@@ -5,10 +5,12 @@
 using namespace std;
 
 TEST(MessageFactoryTest, CreateRequestStockJson) {
+
+    MessageFactory &messageFactory = MessageFactory::getInstance();
   string msgType = "req_stock";
   int code = 1;
   int num = 20;
-  nlohmann::json json = nlohmann::json::parse(MessageFactory::createRequestStockJson(code, num));
+  nlohmann::json json = nlohmann::json::parse(messageFactory.createRequestStockJson(code, num));
 
   string foundMessage = json["msg_type"];
   int foundCode = json["msg_content"]["item_code"];
@@ -20,6 +22,8 @@ TEST(MessageFactoryTest, CreateRequestStockJson) {
 }
 
 TEST(MessageFactoryTest, CreateRequestPrepayJson) {
+
+MessageFactory &messageFactory = MessageFactory::getInstance();
   string msgType = "req_stock";
   int destination = 6;
   int code = 4;
@@ -27,7 +31,7 @@ TEST(MessageFactoryTest, CreateRequestPrepayJson) {
   int certficationCode = 5001;
 
   nlohmann::json json = nlohmann::json::parse(
-      MessageFactory::createRequestPrepayJson(destination, code, num, certficationCode));
+      messageFactory.createRequestPrepayJson(destination, code, num, certficationCode));
 
   string foundMessage = json["msg_type"];
   int foundDestination = json["dst_id"];
@@ -43,6 +47,7 @@ TEST(MessageFactoryTest, CreateRequestPrepayJson) {
 }
 
 TEST(MessageFactoryTest, CreateResponseStockJson) {
+MessageFactory &messageFactory = MessageFactory::getInstance();
   string msgType = "res_stock";
   int destination = 6;
   int code = 1;
@@ -50,7 +55,7 @@ TEST(MessageFactoryTest, CreateResponseStockJson) {
   int xCoor = 3;
   int yCoor = 4;
   nlohmann::json json = nlohmann::json::parse(
-      MessageFactory::createResponseStockJson(destination, code, num, xCoor, yCoor));
+      messageFactory.createResponseStockJson(destination, code, num, xCoor, yCoor));
 
   string foundMessage = json["msg_type"];
   int foundDestination = json["dst_id"];
@@ -68,6 +73,7 @@ TEST(MessageFactoryTest, CreateResponseStockJson) {
 }
 
 TEST(MessageFactoryTest, CreateResponsePrepayJson) {
+MessageFactory &messageFactory = MessageFactory::getInstance();
   string msgType = "res_stock";
   int destination = 6;
   int code = 4;
@@ -75,7 +81,7 @@ TEST(MessageFactoryTest, CreateResponsePrepayJson) {
   bool availability = true;
 
   nlohmann::json json =
-      nlohmann::json::parse(MessageFactory::createResponsePrepayJson(destination, code, num, availability));
+      nlohmann::json::parse(messageFactory.createResponsePrepayJson(destination, code, num, availability));
 
   string foundMessage = json["msg_type"];
   int foundDestination = json["dst_id"];

@@ -9,5 +9,6 @@ class CertificationCodeFactory {
      CertificationCodeFactory& operator=(const CertificationCodeFactory&) = delete;
 
     public:
-     static int createCertificationCode();
+     static CertificationCodeFactory& getInstance();
+     int createCertificationCode();
 };
