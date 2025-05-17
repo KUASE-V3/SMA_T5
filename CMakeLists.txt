@@ -76,6 +76,7 @@ if(BUILD_TESTS)
   add_executable(RunNetworkTests
     ${NETWORK_FILES}
   )
+  
   #
   set_target_properties(RunTests PROPERTIES EXCLUDE_FROM_ALL TRUE)
   target_link_libraries(RunTests MyLibrary gtest_main gtest pthread)
