@@ -9,16 +9,18 @@ class ItemManager : public ItemValidator {
   private:
     std::vector<Item> items;
 
-  public:
     ItemManager();
     ItemManager(const ItemManager &) = delete;
     ItemManager &operator=(const ItemManager &) = delete;
 
+  public:
     static ItemManager &getInstance();
 
     std::vector<Item> getItems() const;
     bool isValid(int itemcode, int quantity) const;
-    //void add(const std::string &name, int price, int count);
-    // Item *findByName(const std::string &name);
-    // bool modifyStock(ModifyType type, const std::string& itemName, int quantity);
+
+    bool modifyStock(const int itemCode, int quantity);
+    std::string getName(int itemCode) const;
+    // void add(const std::string &name, int price, int count);
+    //  Item *findByName(const std::string &name);
 };
