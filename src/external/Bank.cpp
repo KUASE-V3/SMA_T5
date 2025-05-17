@@ -1,28 +1,47 @@
 #include "Bank.h"
+#include "CardPay.h"
+#include "Payment.h"
 #include <iostream>
 
 Bank::Bank() {
-    // 예시용 유효 카드 번호 추가
-    cardInfoList.push_back("1234-5678-9012-3456");
-    cardInfoList.push_back("9876-5432-1098-7654");
+    // 유효 카드 번호 추가
+    cardBalanceMap["1234567812345678"] = 1000000000;
+    cardBalanceMap["0000000000000000"] = 0;
 }
 
-bool Bank::isValid(const std::string& cardNumber) const {
-    for (const auto& card : cardInfoList) {
-        if (card == cardNumber) return true;
+Bank &Bank::getInstance() {
+    static Bank instance;
+    return instance;
+}
+
+bool Bank::isValid(const std::string &cardInfo) const {
+    return cardBalanceMap.find(cardInfo) != cardBalanceMap.end();
+}
+
+bool Bank::hasEnoughBalance(const std::string &cardInfo, int amount) const {
+    auto it = cardBalanceMap.find(cardInfo);
+    return it != cardBalanceMap.end() && it->second >= amount;
+}
+
+bool Bank::pay(const Payment &payment) {
+    const PaymentMethod *method = payment.getbuyContent();
+    const CardPay *cardPay = dynamic_cast<const CardPay *>(method);
+
+    if (cardPay) {
+        std::string card = cardPay->getCardInfo();
+        int amount = payment.getTotalPrice();
+
+        if (!isValid(card)) {
+            return false;
+        }
+
+        if (!hasEnoughBalance(card, amount)) {
+            return false;
+        }
+
+        cardBalanceMap[card] -= amount;
+        return true;
     }
+
     return false;
-}
-
-bool Bank::pay(const Payment& payment) {
-    // 예시: 카드 번호가 "1234-5678-9012-3456"일 때만 결제 성공 처리
-    std::string dummyCard = "1234-5678-9012-3456";  // 실제 구현에서는 PaymentMethod에서 받아야 함
-
-    if (!isValid(dummyCard)) {
-        std::cout << "Card is not valid.\n";
-        return false;
-    }
-
-    std::cout << "Payment successful!\n";
-    return true;
 }

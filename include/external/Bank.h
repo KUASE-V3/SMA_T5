@@ -1,14 +1,19 @@
 #pragma once
 #include <string>
-#include <vector>
-#include "Payment.h"
+#include <unordered_map>
+
+class Payment;
 
 class Bank {
-private:
-    std::vector<std::string> cardInfoList;
+  private:
+    std::unordered_map<std::string, int> cardBalanceMap;
+    Bank();
+    bool isValid(const std::string &cardInfo) const;
+    bool hasEnoughBalance(const std::string &cardNumber, int amount) const;
 
-public:
-    Bank();  // 기본 카드 목록 초기화
-    bool isValid(const std::string& cardNumber) const;
-    bool pay(const Payment& payment);
-};  
+  public:
+    Bank(const Bank &) = delete;
+    Bank &operator=(const Bank &) = delete;
+    static Bank &getInstance();
+    bool pay(const Payment &payment);
+};

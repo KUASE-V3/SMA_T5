@@ -53,7 +53,7 @@ void CLManager::run() {
 
             if (status == ORDER_STATUS::LOCAL) {
                 if (pay(payment)) {
-                    std::pair<int, int> items = payment->getItems();
+                    std::pair<int, int> items = payment->getOrder();
                     int itemCode = items.first;
                     int quantity = items.second;
                     if (itemManager->decreaseStock(itemCode, quantity)) {
@@ -98,5 +98,5 @@ ORDER_STATUS CLManager::order(int itemCode, int quantity, const std::string &car
 }
 
 bool CLManager::pay(std::unique_ptr<Payment> &payment) {
-    return false;
+    return payment->pay();
 }
