@@ -37,16 +37,12 @@ bool Item::add(int addCount) {
     return true;
 }
 
-bool Item::buy(int reqCount) {
+bool Item::consume(int reqCount) {
     if (reqCount <= 0 || count < reqCount) return false;
     count -= reqCount;
     return true;
 }
 
-bool Item::modifyCount(int reqCount) {
-    if (count + reqCount >= 0) {
-        count += reqCount;
-        return true;
-    }
-    return false;
+int Item::getCount() const {
+    return count;
 }
