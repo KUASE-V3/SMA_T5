@@ -26,7 +26,7 @@ class MessageFactory {
 
         static std::string createRequestPrepayJson(int destination, int code, int num, int certificationCode) {
           json requestPrepayJson = {
-              {"msg_type", "req_stock"},
+              {"msg_type", "req_prepay"},
               {"src_id", 5},  // TODO: 하드코딩 지우기
               {"dst_id", destination},
               {"msg_content", {
@@ -54,7 +54,7 @@ class MessageFactory {
 
         static std::string createResponsePrepayJson(int destination, int code, int num, bool availability) {
           json responsePrepayJson = {
-            {"msg_type", "res_stock"},
+            {"msg_type", "res_prepay"},
             {"src_id", 5},  // TODO: 하드코딩 지우기
             {"dst_id", destination},
             {"msg_content",
