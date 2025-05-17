@@ -61,10 +61,8 @@ if(BUILD_TESTS)
   # 테스트 실행 파일 생성 (test_main.cpp 포함) - 기본 빌드에서 제외
   # add_executable(RunTests tests/test_person.cpp)
   add_executable(RunTests
-    tests/domain/test_ClManager.cpp
-    tests/domain/test_ItemManager.cpp
-    tests/domain/test_Item.cpp
-    tests/validator/test_CardPayValidateAdapter.cpp
+    ${DOMAIN_FILES_TEST}
+    ${VALIDATOR_FILES_TEST}
     ${DOMAIN_FILES}
     ${VALIDATOR_FILES}
     ${EXTERNAL_FILES}
