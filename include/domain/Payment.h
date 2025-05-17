@@ -1,32 +1,27 @@
 #pragma once
-#include <string>
-#include <vector>
-#include <utility>
-#include <map>
-#include <typeindex>
-#include "Validator.h"
 #include "PaymentMethod.h"
+#include "Validator.h"
+#include <map>
 #include <memory>
+#include <string>
+#include <typeindex>
+#include <utility>
+#include <vector>
 
 class Payment {
-private:
-    std::pair<std::string, int> items;
+  private:
+    std::pair<int, int> items;
     std::map<std::type_index, std::unique_ptr<Validator>> validatorList;
-    //buy type
-    PaymentMethod *buyContent;
+    // buy type
+    std::unique_ptr<PaymentMethod> buyContent;
     int certCode;
-    std::map<std::type_index, bool> validate() const;
-    
-public:
-    Payment() {
 
-    }
-    void addItem(const std::string& name, int quantity);
-    std::pair<std::string, int> getItems() const;
-
+  public:
+    Payment(int itemcode, int quantity, std::unique_ptr<PaymentMethod> buytype);
+    std::pair<int, int> getItems() const;
     void setCertCode(int code);
     int getCertCode() const;
-    PaymentMethod* getbuyContent() const;
-    bool canlocalbuy() const;
-    bool canremotebuy() const;
+    const PaymentMethod *getbuyContent() const;
+    bool canLocalBuy() const;
+    bool canRemoteBuy() const;
 };

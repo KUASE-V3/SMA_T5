@@ -1,56 +1,49 @@
 #include "Payment.h"
-#include "RemoteValidator.h"
 #include "LocalValidator.h"
+#include "RemoteValidator.h"
+#include "ValidatorFactory.h"
 
-void Payment::addItem(const std::string &name, int quantity)
-{
-    items.first = name;
-    items.second = quantity;
-}
-
-void Payment::setCertCode(int code)
-{
+void Payment::setCertCode(int code) {
     certCode = code;
 }
 
-int Payment::getCertCode() const
-{
+int Payment::getCertCode() const {
     return certCode;
 }
 
-std::pair<std::string, int> Payment::getItems() const{
+std::pair<int, int> Payment::getItems() const {
     return items;
 }
 
-
-std::map<std::type_index, bool> Payment::validate() const{
-    std::map<std::type_index, bool> result;
-    
-    for (const auto& [type, validator] : validatorList){
-        result[type] = validator -> validate(*this);
-    }
-}
-
-bool Payment::canlocalbuy() const{
-    for (const auto&  [type, ptr] : validatorList){
-        if (dynamic_cast<const RemoteValidator*>(ptr.get())){
+bool Payment::canLocalBuy() const {
+    for (const auto &[type, ptr] : validatorList) {
+        if (dynamic_cast<const RemoteValidator *>(ptr.get())) {
             continue;
         }
-        if (!ptr->validate(*this)){
+        if (!ptr->validate(*this)) {
             return false;
         }
     }
     return true;
 }
 
-bool Payment::canremotebuy() const{
-    for (const auto& [type, ptr] : validatorList){
-        if (dynamic_cast<const LocalValidator*>(ptr.get())){
+bool Payment::canRemoteBuy() const {
+    for (const auto &[type, ptr] : validatorList) {
+        if (dynamic_cast<const LocalValidator *>(ptr.get())) {
             continue;
         }
-        if(!ptr->validate(*this)){
+        if (!ptr->validate(*this)) {
             return false;
         }
-        return true;
     }
+    return true;
 }
+
+const PaymentMethod *Payment::getbuyContent() const {
+    return buyContent.get();
+}
+
+Payment::Payment(int itemcode, int quantity, std::unique_ptr<PaymentMethod> buytype)
+    : items{itemcode, quantity},
+      validatorList(std::move(ValidatorFactory::getInstance().setValidatorList())),
+      buyContent(std::move(buytype)), certCode(0) {}
