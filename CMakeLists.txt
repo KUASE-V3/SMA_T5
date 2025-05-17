@@ -17,6 +17,11 @@ if(ENABLE_COVERAGE)
   add_link_options(--coverage)
 endif()
 
+#디디렉토리 관리리
+file(GLOB_RECURSE DOMAIN_FILES src/domain/*.cpp)
+file(GLOB_RECURSE VALIDATOR_FILES src/validator/*.cpp)
+file(GLOB_RECURSE EXTERNAL_FILES src/external/*.cpp)
+
 # 헤더 파일 디렉터리 추가
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
@@ -24,15 +29,11 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 # add_library(MyLibrary STATIC src/person.cpp)
 add_library(MyLibrary STATIC
   src/person.cpp
-  src/domain/CardPay.cpp
-  src/domain/CLManager.cpp
-  src/domain/Item.cpp
-  src/domain/ItemFactory.cpp
-  src/domain/ItemManager.cpp
-  src/domain/Payment.cpp
-  src/external/Bank.cpp
-  src/validator/LocalItemValidateAdapter.cpp
+  ${DOMAIN_FILES}
+  ${VALIDATOR_FILES}
+  ${EXTERNAL_FILES}
 )
+
 # target_include_directories(MyLibrary PUBLIC ${PROJECT_SOURCE_DIR}/include)
 target_include_directories(MyLibrary PUBLIC
   ${PROJECT_SOURCE_DIR}/include
@@ -48,9 +49,9 @@ target_link_libraries(MyApp MyLibrary)
 # 테스트 빌드를 선택적으로 활성화하는 옵션 추가
 option(BUILD_TESTS "Build tests" OFF)
 
-file(GLOB_RECURSE DOMAIN_FILES src/domain/*.cpp)
-file(GLOB_RECURSE VALIDATOR_FILES src/validator/*.cpp)
-file(GLOB_RECURSE EXTERNAL_FILES src/external/*.cpp)
+# 테스트 디렉토리 관리
+file(GLOB_RECURSE DOMAIN_FILES_TEST tests/domain/*.cpp)
+file(GLOB_RECURSE VALIDATOR_FILES_TEST tests/validator/*.cpp)
 
 if(BUILD_TESTS)
   # GoogleTest 서브모듈 추가 (테스트 빌드는 기본 ALL에서 제외)
