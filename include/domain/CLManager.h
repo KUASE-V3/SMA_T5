@@ -39,5 +39,5 @@ class CLManager {
     bool pay(std::unique_ptr<Payment> &payment);
     std::optional < std::reference_wrapper<const Dvm>> prePay(
                         std::unique_ptr<Payment> &payment);
-    optional<Payment> enterCertCode(int certCode);
+    optional<Payment> enterCertCode(string certCode);
 };

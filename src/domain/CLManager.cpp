@@ -84,12 +84,15 @@ void CLManager::run() {
                 std::cout << orderFailMsg;
             }
         } else if (select == 3) {
-            // TODO 사용자로부터 certCode 입력받고
-            // if(enterCertCode().has_value()) {
-
-            // }else {
-
-            // }
+          string certCode;
+          cin >> certCode;
+          optional<Payment> payment = enterCertCode(certCode);
+          if (payment.has_value()) {
+            pair<int, int> order = payment.value().getOrder();
+            std::cout << "음료 제공: " << order.first << " " << order.second << "개\n";
+          } else {
+            cout << "음료 제공 실패";
+          }
 
         } else {
             std::cout << invalidMenuMsg << std::endl;
@@ -113,7 +116,7 @@ std::optional < std::reference_wrapper<const Dvm>> CLManager::prePay(
     return nullopt;
   }
 
-  int certCode = certificationCodeFactory->createCertificationCode();
+  string certCode = certificationCodeFactory->createCertificationCode();
 
   payment->setCertCode(certCode);
 
@@ -151,6 +154,6 @@ bool CLManager::pay(std::unique_ptr<Payment> &payment) {
     return payment->pay();
 }
 
-optional<Payment> CLManager::enterCertCode(int certCode) {
+optional<Payment> CLManager::enterCertCode(string certCode) {
     return prepaymentStock->findPaymentBycertCode(certCode);
 }

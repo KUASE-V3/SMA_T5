@@ -19,7 +19,7 @@ string MessageFactory::createRequestStockJson(int code, int num) {
   return requestStockJson.dump();
 }
 
-string MessageFactory::createRequestPrepayJson(int destination, int code, int num, int certificationCode) {
+string MessageFactory::createRequestPrepayJson(int destination, int code, int num, string certificationCode) {
     json requestPrepayJson = {
             {"msg_type", "req_prepay"},
             {"src_id", Dvm::vmId},

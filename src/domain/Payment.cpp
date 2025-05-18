@@ -5,11 +5,11 @@
 #include "ValidatorFactory.h"
 #include <algorithm>
 
-void Payment::setCertCode(int code) {
+void Payment::setCertCode(std::string code) {
     certCode = code;
 }
 
-int Payment::getCertCode() const {
+std::string Payment::getCertCode() const {
     return certCode;
 }
 
@@ -48,7 +48,7 @@ const PaymentMethod *Payment::getbuyContent() const {
 Payment::Payment(int itemcode, int quantity, std::unique_ptr<PaymentMethod> buytype)
     : order{itemcode, quantity},
       validatorList(std::move(ValidatorFactory::getInstance().setValidatorList())),
-      buyContent(std::move(buytype)), certCode(0) {}
+      buyContent(std::move(buytype)), certCode("") {}
 
 bool Payment::pay() {
     Bank &bank = Bank::getInstance();

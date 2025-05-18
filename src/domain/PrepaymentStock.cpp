@@ -8,11 +8,11 @@ PrepaymentStock& PrepaymentStock::getInstance() {
     return instance;
 };
 
-void PrepaymentStock::addPayment(int certCode, Payment& payment) {
+void PrepaymentStock::addPayment(string certCode, Payment& payment) {
   prepayments.emplace(certCode, move(payment));
 }
 
-optional<Payment> PrepaymentStock::findPaymentBycertCode(int certCode) {
+optional<Payment> PrepaymentStock::findPaymentBycertCode(string certCode) {
   auto it = prepayments.find(certCode);
   if (it != prepayments.end()) {
     Payment payment = move(it->second);
