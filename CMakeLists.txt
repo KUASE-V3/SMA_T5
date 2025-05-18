@@ -21,6 +21,7 @@ endif()
 file(GLOB_RECURSE DOMAIN_FILES src/domain/*.cpp)
 file(GLOB_RECURSE VALIDATOR_FILES src/validator/*.cpp)
 file(GLOB_RECURSE EXTERNAL_FILES src/external/*.cpp)
+file(GLOB_RECURSE NETWORK_FILES src/network/*.cpp)
 
 # 헤더 파일 디렉터리 추가
 include_directories(${PROJECT_SOURCE_DIR}/include)
@@ -32,6 +33,7 @@ add_library(MyLibrary STATIC
   ${DOMAIN_FILES}
   ${VALIDATOR_FILES}
   ${EXTERNAL_FILES}
+  ${NETWORK_FILES}
 )
 
 # target_include_directories(MyLibrary PUBLIC ${PROJECT_SOURCE_DIR}/include)
@@ -40,6 +42,7 @@ target_include_directories(MyLibrary PUBLIC
   ${PROJECT_SOURCE_DIR}/include/domain
   ${PROJECT_SOURCE_DIR}/include/external
   ${PROJECT_SOURCE_DIR}/include/validator
+  ${PROJECT_SOURCE_DIR}/include/network
 )
 
 # 메인 애플리케이션 생성 (main.cpp는 라이브러리의 함수 호출)
@@ -52,6 +55,7 @@ option(BUILD_TESTS "Build tests" OFF)
 # 테스트 디렉토리 관리
 file(GLOB_RECURSE DOMAIN_FILES_TEST tests/domain/*.cpp)
 file(GLOB_RECURSE VALIDATOR_FILES_TEST tests/validator/*.cpp)
+file(GLOB_RECURSE NETWORK_FILES_TEST tests/network/*.cpp)
 
 if(BUILD_TESTS)
   # GoogleTest 서브모듈 추가 (테스트 빌드는 기본 ALL에서 제외)
@@ -66,16 +70,27 @@ if(BUILD_TESTS)
     ${DOMAIN_FILES}
     ${VALIDATOR_FILES}
     ${EXTERNAL_FILES}
+    ${NETWORK_FILES}
   )
+
+  add_executable(RunNetworkTests
+    ${NETWORK_FILES}
+  )
+  
   #
   set_target_properties(RunTests PROPERTIES EXCLUDE_FROM_ALL TRUE)
   target_link_libraries(RunTests MyLibrary gtest_main gtest pthread)
+
+  set_target_properties(RunNetworkTests PROPERTIES EXCLUDE_FROM_ALL TRUE)
+  target_link_libraries(RunNetworkTests MyLibrary gtest_main gtest pthread)
   
   enable_testing()
   add_test(NAME GoogleTests COMMAND RunTests)
+  add_test(NAME NetworkTests COMMAND RunNetworkTests)
   
   # "googletest"라는 custom target을 만들어 필요 시 테스트를 따로 빌드할 수 있도록 함
   add_custom_target(googletest DEPENDS RunTests)
+  add_custom_target(network DEPENDS RunNetworkTests)
 endif()
 
 # cppcheck 실행 커스텀 타깃 추가

@@ -15,13 +15,13 @@ class Payment {
     std::map<std::type_index, std::unique_ptr<Validator>> validatorList;
     // buy type
     std::unique_ptr<PaymentMethod> buyContent;
-    int prepayCode;
+    int certCode;
 
   public:
     Payment(int itemcode, int quantity, std::unique_ptr<PaymentMethod> buyContent);
     std::pair<int, int> getOrder() const;
-    void setPrepayCode(int code);
-    int getPrepayCode() const;
+    void setCertCode(int code);
+    int getCertCode() const;
     const PaymentMethod *getbuyContent() const;
     bool canLocalBuy() const;
     bool canRemoteBuy() const;
