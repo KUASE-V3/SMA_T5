@@ -1,7 +1,7 @@
 #include "CLManager.h"
+#include "CardPay.h"
 #include "CertificationCodeFactory.h"
 #include "MessageFactory.h"
-#include "CardPay.h"
 #include "NetworkManager.h"
 #include <iostream>
 #include <limits>
@@ -35,8 +35,8 @@ void CLManager::run() {
     std::string mainMenuText = "메뉴 선택\n1.음료 목록\n2.음료 주문\n3.선결제 코드 확인\n0.종료\n";
     std::string listMenutext = "1.음료 목록\n";
     std::string orderMenuText = "2.음료 주문\n";
-    std::string invalidMenuMsg = "존재하지 않는 메뉴 입니다.";
-    std::string orderFailMsg = "음료 주문 불가";
+    std::string invalidMenuMsg = "존재하지 않는 메뉴 입니다.\n";
+    std::string orderFailMsg = "음료 주문 실패\n";
 
     while (true) {
         std::cout << mainMenuText;
@@ -70,16 +70,16 @@ void CLManager::run() {
                         std::string itemName = itemManager->getName(itemCode);
                         std::cout << "음료 제공: " << itemName << " " << quantity << "개\n";
                     } else {
-                        std::cout << "음료 제공 실패";
+                        std::cout << orderFailMsg;
                     }
                 }
             } else if (status == ORDER_STATUS::REMOTE) {
-              auto result = prePay(payment);
-              if (result.has_value()) {
-                const Dvm &dvm = result->get();
-              } else {
-                // 선결제 실패 재고 없어서 or 통신 실패
-              }
+                auto result = prePay(payment);
+                if (result.has_value()) {
+                    const Dvm &dvm = result->get();
+                } else {
+                    // 선결제 실패 재고 없어서 or 통신 실패
+                }
             } else if (status == ORDER_STATUS::FAIL) {
                 std::cout << orderFailMsg;
             }
@@ -92,12 +92,11 @@ void CLManager::run() {
             // }
 
         } else {
-            std::cout << invalidMenuMsg << std::endl;
+            std::cout << invalidMenuMsg;
         }
         dvmNavigator.reset();
     }
 }
-
 
 void CLManager::showItems() {
     auto items = itemManager->getItems();
@@ -106,31 +105,31 @@ void CLManager::showItems() {
     }
 }
 
-std::optional < std::reference_wrapper<const Dvm>> CLManager::prePay(
-                    std::unique_ptr<Payment> &payment) {
-  // 결제 성공 시
-  if(!pay(payment)) {
-    return nullopt;
-  }
-
-  int certCode = certificationCodeFactory->createCertificationCode();
-
-  payment->setCertCode(certCode);
-
-  std::pair<int, int> item = payment->getOrder();
-
-  for (const Dvm &dvm : *dvmNavigator) {
-    std::string requestMessage = messageFactory->createRequestPrepayJson(
-        dvm.id, item.first, item.second, certCode);
-
-    std::string responseMessage = networkManager->sendMessage(requestMessage);
-
-    json responseJson = json::parse(responseMessage);
-    if (responseJson["msg_content"]["availability"]) {
-      return dvm;
+std::optional<std::reference_wrapper<const Dvm>>
+CLManager::prePay(std::unique_ptr<Payment> &payment) {
+    // 결제 성공 시
+    if (!pay(payment)) {
+        return nullopt;
     }
-  }
-  return nullopt;
+
+    int certCode = certificationCodeFactory->createCertificationCode();
+
+    payment->setCertCode(certCode);
+
+    std::pair<int, int> item = payment->getOrder();
+
+    for (const Dvm &dvm : *dvmNavigator) {
+        std::string requestMessage =
+            messageFactory->createRequestPrepayJson(dvm.id, item.first, item.second, certCode);
+
+        std::string responseMessage = networkManager->sendMessage(requestMessage);
+
+        json responseJson = json::parse(responseMessage);
+        if (responseJson["msg_content"]["availability"]) {
+            return dvm;
+        }
+    }
+    return nullopt;
 }
 
 ORDER_STATUS CLManager::order(int itemCode, int quantity, const std::string &card,
