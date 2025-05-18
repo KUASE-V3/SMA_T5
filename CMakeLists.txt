@@ -29,7 +29,6 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 # 공통 모듈을 라이브러리로 생성 (module.cpp)
 # add_library(MyLibrary STATIC src/person.cpp)
 add_library(MyLibrary STATIC
-  src/person.cpp
   ${DOMAIN_FILES}
   ${VALIDATOR_FILES}
   ${EXTERNAL_FILES}
