@@ -1,11 +1,23 @@
 #include "CertificationCodeFactory.h"
-
-
-// TODO: 인증 코드 대소문자+숫자 5자리 문자열
+#include <cmath>
 
 CertificationCodeFactory::CertificationCodeFactory() {
 
 };
+
+string const CertificationCodeFactory::base62 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+string CertificationCodeFactory::toBase62(int num) {
+  // 5번 Dvm이 생성하는 코드
+  string result;
+  for (int i = 0; i < 4; ++i) {
+    result = base62[num % 62] + result;
+    num /= 62;
+  }
+
+  result = "5" + result;
+  return result;
+}
 
 CertificationCodeFactory& CertificationCodeFactory::getInstance() {
   static CertificationCodeFactory instance;
@@ -14,8 +26,9 @@ CertificationCodeFactory& CertificationCodeFactory::getInstance() {
 
 int CertificationCodeFactory::prepaymentQuantity = 0;
 
-int CertificationCodeFactory::createCertificationCode() {
+string CertificationCodeFactory::createCertificationCode() {
+  string certCode = toBase62(prepaymentQuantity);
   prepaymentQuantity++;
-  prepaymentQuantity %= 1000;
-  return 5000 + prepaymentQuantity;
+  prepaymentQuantity %= (int) pow(62, 4);
+  return certCode;
 }

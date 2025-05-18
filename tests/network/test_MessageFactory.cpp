@@ -28,7 +28,7 @@ MessageFactory &messageFactory = MessageFactory::getInstance();
   int destination = 6;
   int code = 4;
   int num = 5;
-  int certficationCode = 5001;
+  string certficationCode = "5AAAA";
 
   nlohmann::json json = nlohmann::json::parse(
       messageFactory.createRequestPrepayJson(destination, code, num, certficationCode));

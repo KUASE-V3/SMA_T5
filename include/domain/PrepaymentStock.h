@@ -9,13 +9,13 @@ using namespace std;
 class PrepaymentStock {
 
     private:
-     map<int, Payment> prepayments;
+     map<string, Payment> prepayments;
      PrepaymentStock();
      PrepaymentStock(const PrepaymentStock&) = delete;
      PrepaymentStock& operator=(const PrepaymentStock&) = delete;
 
     public:
      static PrepaymentStock& getInstance();
-     void addPayment(int certCode, Payment& payment);
-     optional<Payment> findPaymentBycertCode(int certCode);
+     void addPayment(string certCode, Payment& payment);
+     optional<Payment> findPaymentBycertCode(string certCode);
 };

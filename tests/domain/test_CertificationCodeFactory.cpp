@@ -1,19 +1,23 @@
 #include <gtest/gtest.h>
 
 #include "CertificationCodeFactory.h"
+#include <cmath>
 
 TEST(CertificationCodeFactoryTest, CreateCertificationCode) {
     CertificationCodeFactory &certificationCodeFactory = CertificationCodeFactory::getInstance();
-  int certCode1 = certificationCodeFactory.createCertificationCode();
-  int certCode2 = certificationCodeFactory.createCertificationCode();
+  string certCode1 = certificationCodeFactory.createCertificationCode();
+  string certCode2 = certificationCodeFactory.createCertificationCode();
 
-  for (int i = 0; i < 1000; i++) {
+  int cycle = pow(62, 4);
+
+  for (int i = 0; i < cycle; i++) {
     certificationCodeFactory.createCertificationCode();
   }
 
-  int certCode1003 = certificationCodeFactory.createCertificationCode();
+  string certCode3 = certificationCodeFactory.createCertificationCode();
 
-  EXPECT_EQ(certCode1, 5001);
-  EXPECT_EQ(certCode2, 5002);
-  EXPECT_EQ(certCode1003, 5003);
+  EXPECT_EQ(certCode1, "5AAAA");
+  EXPECT_EQ(certCode2, "5AAAB");
+  EXPECT_EQ(certCode3, "5AAAC");
+
 };
