@@ -18,7 +18,7 @@ class MessageFactory {
          static MessageFactory& getInstance();
          string createRequestStockJson(int code, int num);
 
-        string createRequestPrepayJson(int destination, int code, int num, int certificationCode);
+        string createRequestPrepayJson(int destination, int code, int num, string certificationCode);
 
         string createResponseStockJson(int destination, int code, int num, int xCoor, int yCoor);
 

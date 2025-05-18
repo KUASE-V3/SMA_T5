@@ -9,12 +9,12 @@
 TEST(PaymentBasicFieldsTest, ItemsAndPrepay) {
     auto method = std::make_unique<CardPay>("1234567812345678");
     Payment payment(42, 3, std::move(method));
-    payment.setCertCode(101);
+    payment.setCertCode("5AAAA");
 
     auto [itemcode, quantity] = payment.getOrder();
     EXPECT_EQ(itemcode, 42);
     EXPECT_EQ(quantity, 3);
-    EXPECT_EQ(payment.getCertCode(), 101);
+    EXPECT_EQ(payment.getCertCode(), "5AAAA");
 }
 
 TEST(PaymentValidatorTest, CanLocalBuyTrue) {

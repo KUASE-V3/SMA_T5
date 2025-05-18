@@ -178,7 +178,7 @@ void NetworkManager::runServer() {
 
       if(availability) {
         if(itemManager->decreaseStock(code, -num)) {
-          int certCode = requestMessage["msg_content"]["cert_code"];
+          string certCode = requestMessage["msg_content"]["cert_code"];
           prepaymentStock->addPayment(certCode, payment);
         } else {
           availability = false;

@@ -10,9 +10,9 @@ TEST(PrepaymentStockTest, FindPaymentBycertCode) {
 
   Payment payment(1, 1, nullptr);
 
-  prepaymentStock.addPayment(5001, payment);
+  prepaymentStock.addPayment("5AAAA", payment);
 
-  Payment foundPayment = prepaymentStock.findPaymentBycertCode(5001).value();
+  Payment foundPayment = prepaymentStock.findPaymentBycertCode("5AAAA").value();
 
   pair<int, int> item = payment.getOrder();
   pair<int, int> foundItem = foundPayment.getOrder();
@@ -25,9 +25,9 @@ TEST(PrepaymentStockTest, CanNotFindPaymentBycertCode) {
 
   Payment payment(1, 1, nullptr);
 
-  prepaymentStock.addPayment(5001, payment);
+  prepaymentStock.addPayment("5AAAA", payment);
 
-  optional<Payment> foundPayment = prepaymentStock.findPaymentBycertCode(5002);
+  optional<Payment> foundPayment = prepaymentStock.findPaymentBycertCode("5AAAB");
 
   EXPECT_FALSE(foundPayment.has_value());
 }
