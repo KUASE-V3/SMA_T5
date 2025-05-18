@@ -4,7 +4,10 @@
 #include "PrepaymentStock.h"
 #include "MessageFactory.h"
 #include "CertificationCodeFactory.h"
+#include "Dvm.h"
+#include "NetworkManager.h"
 #include <string>
+#include <set>
 
 enum class ORDER_STATUS { LOCAL, REMOTE, FAIL };
 
@@ -14,6 +17,9 @@ class CLManager {
     PrepaymentStock *prepaymentStock;
     MessageFactory *messageFactory;
     CertificationCodeFactory *certificationCodeFactory;
+    NetworkManager *networkManager;
+
+    std::unique_ptr<std::set<Dvm>> dvmNavigator;
 
     int readInt(std::string text);
 
@@ -28,9 +34,10 @@ class CLManager {
     void run();
     void showItems();
     // CLManager.h
-    ORDER_STATUS order(int itemCode, int quantity, const std::string &card,
+    ORDER_STATUS order(int itemCode, int quantity, const std::string &,
                        std::unique_ptr<Payment> &payment);
     bool pay(std::unique_ptr<Payment> &payment);
-    void prePay(Payment &payment);
+    std::optional < std::reference_wrapper<const Dvm>> prePay(
+                        std::unique_ptr<Payment> &payment);
     optional<Payment> enterCertCode(int certCode);
 };

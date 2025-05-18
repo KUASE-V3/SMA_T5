@@ -73,24 +73,24 @@ if(BUILD_TESTS)
     ${NETWORK_FILES}
   )
 
-  add_executable(RunNetworkTests
-    ${NETWORK_FILES}
-  )
+  # add_executable(RunNetworkTests
+  #  ${NETWORK_FILES}
+  # )
   
   #
   set_target_properties(RunTests PROPERTIES EXCLUDE_FROM_ALL TRUE)
   target_link_libraries(RunTests MyLibrary gtest_main gtest pthread)
 
-  set_target_properties(RunNetworkTests PROPERTIES EXCLUDE_FROM_ALL TRUE)
-  target_link_libraries(RunNetworkTests MyLibrary gtest_main gtest pthread)
+  # set_target_properties(RunNetworkTests PROPERTIES EXCLUDE_FROM_ALL TRUE)
+  # target_link_libraries(RunNetworkTests MyLibrary gtest_main gtest pthread)
   
   enable_testing()
   add_test(NAME GoogleTests COMMAND RunTests)
-  add_test(NAME NetworkTests COMMAND RunNetworkTests)
+  # add_test(NAME NetworkTests COMMAND RunNetworkTests)
   
   # "googletest"라는 custom target을 만들어 필요 시 테스트를 따로 빌드할 수 있도록 함
   add_custom_target(googletest DEPENDS RunTests)
-  add_custom_target(network DEPENDS RunNetworkTests)
+  # add_custom_target(network DEPENDS RunNetworkTests)
 endif()
 
 # cppcheck 실행 커스텀 타깃 추가

@@ -48,7 +48,7 @@ MessageFactory &messageFactory = MessageFactory::getInstance();
 
 TEST(MessageFactoryTest, CreateResponseStockJson) {
 MessageFactory &messageFactory = MessageFactory::getInstance();
-  string msgType = "res_stock";
+  string msgType = "resp_stock";
   int destination = 6;
   int code = 1;
   int num = 20;
@@ -74,7 +74,7 @@ MessageFactory &messageFactory = MessageFactory::getInstance();
 
 TEST(MessageFactoryTest, CreateResponsePrepayJson) {
 MessageFactory &messageFactory = MessageFactory::getInstance();
-  string msgType = "res_stock";
+  string msgType = "resp_prepay";
   int destination = 6;
   int code = 4;
   int num = 5;

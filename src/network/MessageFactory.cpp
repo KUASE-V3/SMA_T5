@@ -1,4 +1,5 @@
 #include "MessageFactory.h"
+#include "Dvm.h"
 
 MessageFactory::MessageFactory() {
 
@@ -12,7 +13,7 @@ MessageFactory& MessageFactory::getInstance() {
 string MessageFactory::createRequestStockJson(int code, int num) {
   json requestStockJson = {
       {"msg_type", "req_stock"},
-      {"src_id", 5},
+      {"src_id", Dvm::vmId},
       {"dst_id", 0},
       {"msg_content", {{"item_code", code}, {"item_num", num}}}};
   return requestStockJson.dump();
@@ -21,7 +22,7 @@ string MessageFactory::createRequestStockJson(int code, int num) {
 string MessageFactory::createRequestPrepayJson(int destination, int code, int num, int certificationCode) {
     json requestPrepayJson = {
             {"msg_type", "req_prepay"},
-            {"src_id", 5},  // TODO: 하드코딩 지우기
+            {"src_id", Dvm::vmId},
             {"dst_id", destination},
             {"msg_content", {
                                  {"item_code", code},
@@ -33,8 +34,8 @@ string MessageFactory::createRequestPrepayJson(int destination, int code, int nu
 
 string MessageFactory::createResponseStockJson(int destination, int code, int num, int xCoor, int yCoor) {
     json responseStockJson = {
-            {"msg_type", "res_stock"},
-            {"src_id", 5},
+            {"msg_type", "resp_stock"},
+            {"src_id", Dvm::vmId},
             {"dst_id", destination},
             {"msg_content", {
                                  {"item_code", code},
@@ -48,8 +49,8 @@ string MessageFactory::createResponseStockJson(int destination, int code, int nu
 
 string MessageFactory::createResponsePrepayJson(int destination, int code, int num, bool availability) {
     json responsePrepayJson = {
-            {"msg_type", "res_prepay"},
-            {"src_id", 5},  // TODO: 하드코딩 지우기
+            {"msg_type", "resp_prepay"},
+            {"src_id", Dvm::vmId},
             {"dst_id", destination},
             {"msg_content",
                          {{"item_code", code},
