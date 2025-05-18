@@ -1,13 +1,13 @@
 #pragma once
-#include "ItemManager.h"
-#include "Payment.h"
-#include "PrepaymentStock.h"
-#include "MessageFactory.h"
 #include "CertificationCodeFactory.h"
 #include "Dvm.h"
+#include "ItemManager.h"
+#include "MessageFactory.h"
 #include "NetworkManager.h"
-#include <string>
+#include "Payment.h"
+#include "PrepaymentStock.h"
 #include <set>
+#include <string>
 
 enum class ORDER_STATUS { LOCAL, REMOTE, FAIL };
 
@@ -34,7 +34,7 @@ class CLManager {
     void run();
     void showItems();
     // CLManager.h
-    ORDER_STATUS order(int itemCode, int quantity, const std::string &,
+    ORDER_STATUS order(int itemCode, int quantity, const std::string &card,
                        std::unique_ptr<Payment> &payment);
     bool pay(std::unique_ptr<Payment> &payment);
     std::optional < std::reference_wrapper<const Dvm>> prePay(
