@@ -22,6 +22,7 @@ CLManager::CLManager() {
     itemManager = &ItemManager::getInstance();
     prepaymentStock = &PrepaymentStock::getInstance();
     messageFactory = &MessageFactory::getInstance();
+    networkManager = &NetworkManager::getInstance();
     certificationCodeFactory = &CertificationCodeFactory::getInstance();
 }
 
@@ -55,6 +56,9 @@ void CLManager::run() {
             std::cin >> card;
             std::unique_ptr<Payment> payment;
 
+            dvmNavigator = std::make_unique<std::set<Dvm>>();
+            networkManager->setDvmNavigator(dvmNavigator.get());
+
             ORDER_STATUS status = order(itemCode, quantity, card, payment);
 
             if (status == ORDER_STATUS::LOCAL) {
@@ -70,22 +74,27 @@ void CLManager::run() {
                     }
                 }
             } else if (status == ORDER_STATUS::REMOTE) {
-                // todo : prePay();
+              auto result = prePay(payment);
+              if (result.has_value()) {
+                const Dvm &dvm = result->get();
+              } else {
+                // 선결제 실패 재고 없어서 or 통신 실패
+              }
             } else if (status == ORDER_STATUS::FAIL) {
                 std::cout << orderFailMsg;
             }
         } else if (select == 3) {
-            // todo : check cert
-            /*
-            if(enterCertCode(certCode).has_value()) {
+            // TODO 사용자로부터 certCode 입력받고
+            // if(enterCertCode().has_value()) {
 
-            }else {
+            // }else {
 
-            }
-            */
+            // }
+
         } else {
             std::cout << invalidMenuMsg << std::endl;
         }
+        dvmNavigator.reset();
     }
 }
 
@@ -97,22 +106,31 @@ void CLManager::showItems() {
     }
 }
 
-void CLManager::prePay(Payment& payment){
+std::optional < std::reference_wrapper<const Dvm>> CLManager::prePay(
+                    std::unique_ptr<Payment> &payment) {
+  // 결제 성공 시
+  if(!pay(payment)) {
+    return nullopt;
+  }
 
-    // 결제 성공 시
+  int certCode = certificationCodeFactory->createCertificationCode();
 
-    int certCode = certificationCodeFactory->createCertificationCode();
+  payment->setCertCode(certCode);
 
-    payment.setCertCode(certCode);
+  std::pair<int, int> item = payment->getOrder();
 
-    std::pair<int, int> item = payment.getOrder();
+  for (const Dvm &dvm : *dvmNavigator) {
+    std::string requestMessage = messageFactory->createRequestPrepayJson(
+        dvm.id, item.first, item.second, certCode);
 
-//     std::string requestMessage = messageFactory.createRequestPrepayJson(item.first, item.second, certCode);
+    std::string responseMessage = networkManager->sendMessage(requestMessage);
 
-//     std::string responseMessage = messageFactory.sendMessage(requestMessage);
-
-    // T F 따라서 반환값 다르게 또는 payment 값세팅
-
+    json responseJson = json::parse(responseMessage);
+    if (responseJson["msg_content"]["availability"]) {
+      return dvm;
+    }
+  }
+  return nullopt;
 }
 
 ORDER_STATUS CLManager::order(int itemCode, int quantity, const std::string &card,

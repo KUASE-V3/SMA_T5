@@ -13,7 +13,6 @@ using namespace std;
 
 using json = nlohmann::json;
 
-
 NetworkManager::NetworkManager() {
   addresses.emplace(1, "127.0.0.1");
   addresses.emplace(2, "127.0.0.1");
@@ -25,12 +24,15 @@ NetworkManager::NetworkManager() {
   itemManager = &ItemManager::getInstance();
   prepaymentStock = &PrepaymentStock::getInstance();
   messageFactory = &MessageFactory::getInstance();
+  dvmNavigator = nullptr;
 }
 
 NetworkManager& NetworkManager::getInstance() {
-    static NetworkManager instance;
-    return instance;
+  static NetworkManager instance;
+  return instance;
 }
+
+void NetworkManager::setDvmNavigator(std::set<Dvm>* dvmNav) { dvmNavigator = dvmNav; }
 
 string NetworkManager::sendMessage(string message) {
   int sock = 0;
@@ -71,7 +73,8 @@ string NetworkManager::sendMessage(string message) {
   return buffer;
 }
 
-void NetworkManager::sendBroadcastMessage(string message) {
+bool NetworkManager::sendBroadcastMessage(string message) {
+  bool canPrepay = false;
   for (pair<int, string> iter : addresses) {
     int sock = 0;
     char buffer[1024] = {0};
@@ -80,7 +83,7 @@ void NetworkManager::sendBroadcastMessage(string message) {
     sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock < 0) {
       perror("Socket creation error");
-      return;
+      return canPrepay;
     }
 
     serverAddress.sin_family = AF_INET;
@@ -90,12 +93,12 @@ void NetworkManager::sendBroadcastMessage(string message) {
 
     if (inet_pton(AF_INET, address, &serverAddress.sin_addr) <= 0) {
       perror("Invalid address / Address not supported");
-      return;
+      return canPrepay;
     }
 
     if (connect(sock, (sockaddr*)&serverAddress, sizeof(serverAddress)) < 0) {
       perror("Connection Failed");
-      return;
+      return canPrepay;
     }
 
     const char* msg = message.c_str();
@@ -106,8 +109,14 @@ void NetworkManager::sendBroadcastMessage(string message) {
 
     json responseJson = json::parse(buffer);
 
+    if(responseJson["msg_content"]["item_code"] != 0) {
+      canPrepay = true;
+      dvmNavigator->insert({responseJson["msg_content"]["coor_x"], responseJson["msg_content"]["coor_y"], responseJson["src_id"]});
+    }
+
     close(sock);
   }
+  return canPrepay;
 }
 
 void NetworkManager::runServer() {
@@ -150,20 +159,22 @@ void NetworkManager::runServer() {
     string responseMessage;
 
     if (msgType == "req_stock") {
-      // TODO xCoor, yCoor, 재고 확인 이후 어떻게 알려줌??
+      int code = requestMessage["msg_content"]["item_code"];
+      int num = requestMessage["msg_content"]["item_num"];
+      if (!itemManager->isValid(code, num)) {
+        code = 0;
+        num = 0;
+      }
 
-      responseMessage = messageFactory->createResponseStockJson(requestMessage["src_id"],
-                                              requestMessage["msg_content"]["item_code"], 
-                                              requestMessage["msg_content"]["item_num"], 5, 5);
+      responseMessage = messageFactory->createResponseStockJson(
+          requestMessage["src_id"], code, num, Dvm::vmX, Dvm::vmY);
 
     } else if (msgType == "req_prepay") {
       int code = requestMessage["msg_content"]["item_code"];
       int num = requestMessage["msg_content"]["item_num"];
       Payment payment(code, num, nullptr);
 
-      LocalItemValidateAdapter adapter;
-
-      bool availability = adapter.validate(payment);
+      bool availability = itemManager->isValid(code, num);
 
       if(availability) {
         if(itemManager->decreaseStock(code, -num)) {

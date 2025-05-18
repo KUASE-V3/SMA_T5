@@ -1,5 +1,8 @@
 #include "CertificationCodeFactory.h"
 
+
+// TODO: 인증 코드 대소문자+숫자 5자리 문자열
+
 CertificationCodeFactory::CertificationCodeFactory() {
 
 };

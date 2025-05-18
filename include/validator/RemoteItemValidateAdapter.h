@@ -1,8 +1,11 @@
 #pragma once
+#include "NetworkManager.h"
 #include "RemoteValidator.h"
 
 class RemoteItemValidateAdapter : public RemoteValidator{
-    // TODO network manager 추가 필요
+    private:
+     NetworkManager* networkManager = &NetworkManager::getInstance();
+     MessageFactory* messageFactory = &MessageFactory::getInstance();
 
     public:
     bool validate(const Payment& p) const override;
