@@ -1,7 +1,6 @@
 #include "RemoteItemValidateAdapter.h"
 
 bool RemoteItemValidateAdapter::validate(const Payment& p) const{
-  pair<int, int> order = p.getOrder();
-  string requestMessage = messageFactory->createRequestStockJson(order.first, order.second);
+  string requestMessage = messageFactory->createRequestStockJson(p.getItemCode().value(), p.getItemQuantity().value());
   return networkManager->sendBroadcastMessage(requestMessage);
 };

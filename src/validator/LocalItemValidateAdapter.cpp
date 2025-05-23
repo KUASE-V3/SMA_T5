@@ -1,5 +1,6 @@
 #include "LocalItemValidateAdapter.h"
 #include <iostream>
+#include <optional>
 
 // LocalItemValidateAdapter::LocalItemValidateAdapter(ItemManager& manager)
 //     : itemManager(manager) {}
@@ -18,7 +19,6 @@
 // }
 
 bool LocalItemValidateAdapter::validate(const Payment &p) const {
-    auto [itemcode, quantity] = p.getOrder();
 
-    return itemManager->isValid(itemcode, quantity);
+    return itemManager->isValid(p.getItemCode().value(), p.getItemQuantity().value());
 }

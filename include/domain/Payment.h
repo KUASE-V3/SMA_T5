@@ -8,10 +8,12 @@
 #include <typeindex>
 #include <utility>
 #include <vector>
+#include <optional>
 
 class Payment {
   private:
-    std::pair<int, int> order;
+    std::optional<int> itemcode;
+    std::optional<int> quantity;
     std::map<std::type_index, std::unique_ptr<Validator>> validatorList;
     // buy type
     std::unique_ptr<PaymentMethod> buyContent;
@@ -19,7 +21,10 @@ class Payment {
 
   public:
     Payment(int itemcode, int quantity, std::unique_ptr<PaymentMethod> buyContent);
-    std::pair<int, int> getOrder() const;
+    Payment(int itemcode);
+    Payment(int itemcode, int quantity);
+    std::optional<int> getItemCode() const;
+    std::optional<int> getItemQuantity() const;
     void setCertCode(int code);
     int getCertCode() const;
     const PaymentMethod *getbuyContent() const;
@@ -27,4 +32,5 @@ class Payment {
     bool canRemoteBuy() const;
     bool pay();
     int getTotalPrice() const;
+    bool validate() const;
 };

@@ -16,5 +16,6 @@ class ValidatorFactory{
     }
     ValidatorFactory(const ValidatorFactory&) = delete;
     ValidatorFactory& operator = (const ValidatorFactory&) = delete;
-    std::map<std::type_index, std::unique_ptr<Validator>> setValidatorList() const;
+    std::map<std::type_index, std::unique_ptr<Validator>> setValidatorFullList() const;
+    std::map<std::type_index, std::unique_ptr<Validator>> setValidatorItemList() const;
 };
