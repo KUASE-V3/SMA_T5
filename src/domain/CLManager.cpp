@@ -82,13 +82,18 @@ void CLManager::run() {
                 auto result = prePay(payment);
                 if (result.has_value()) {
                   const Dvm &dvm = result->get();
+                  std::cout << "가장 가까운 자판기 좌표는 ("
+                            << dvmNavigator->begin()->x << ", "
+                            << dvmNavigator->begin()->y << ")입니다." << endl
+                            << "인증 코드는 "  << payment->getCertCode() << "입니다." << endl;
+
                 } else {
                   // 선결제 실패 재고 없어서 or 통신 실패
                 }
               } else if(select == 2) {
                 std::cout << "가장 가까운 자판기 좌표는 ("
                           << dvmNavigator->begin()->x << ", "
-                          << dvmNavigator->begin()->y << endl;
+                          << dvmNavigator->begin()->y << ")입니다." << endl;
               } else {
                 std::cout << invalidMenuMsg << std::endl;
               }
@@ -96,6 +101,8 @@ void CLManager::run() {
                 std::cout << orderFailMsg;
             }
         } else if (select == 3) {
+          cout << "선결제 코드를 입력해주십시오" << endl
+          << "입력:";
           string certCode;
           cin >> certCode;
           optional<Payment> payment = enterCertCode(certCode);

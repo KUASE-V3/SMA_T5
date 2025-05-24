@@ -8,12 +8,13 @@
 #include "PrepaymentStock.h"
 #include "MessageFactory.h"
 #include "Dvm.h"
+#include "Address.h"
 
 using namespace std;
 
 class NetworkManager {
     private:
-     map<int, string> addresses;
+     map<int, Address> addresses;
      ItemManager* itemManager;
      PrepaymentStock* prepaymentStock;
      MessageFactory* messageFactory;

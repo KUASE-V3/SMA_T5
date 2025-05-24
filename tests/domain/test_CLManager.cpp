@@ -1,11 +1,33 @@
 #include "domain/CLManager.h"
 #include "domain/CardPay.h"
+#include "ItemFactory.h"
 #include <climits> // INT_MAX
 #include <gtest/gtest.h>
 #include <iostream>
+#include <fstream>
 #include <sstream>
 
-TEST(CLManagerTest, ShowItemsPrintsCorrectly) {
+using json = nlohmann::json;
+
+using namespace std;
+
+class CLManagerTest : public ::testing::Test {
+ protected:
+  void SetUp() override {
+    ifstream file("T5.json", std::ios::in);
+
+    json j;
+
+    if (!file.is_open()) {
+      std::cerr << "Error opening file.\n";
+      return;
+    }
+    file >> j;
+    ItemFactory::itemList = j;
+  }
+};
+
+  TEST_F(CLManagerTest, ShowItemsPrintsCorrectly) {
     CLManager &clManager = CLManager::getInstance();
 
     // 출력 캡처
@@ -21,7 +43,7 @@ TEST(CLManagerTest, ShowItemsPrintsCorrectly) {
     EXPECT_NE(output.find("콜라"), std::string::npos);
     EXPECT_NE(output.find("카페라떼"), std::string::npos);
     EXPECT_NE(output.find("1500"), std::string::npos);
-    EXPECT_NE(output.find("2200"), std::string::npos);
+    EXPECT_NE(output.find("1200"), std::string::npos);
 }
 
 // TEST(CLManagerTest, OrderReturnsAnyValidStatus) {
@@ -39,7 +61,7 @@ TEST(CLManagerTest, ShowItemsPrintsCorrectly) {
 // }
 
 // Local 조건 테스트
-TEST(CLManagerTest, OrderReturnsLocalWhenCanLocalBuyIsTrue) {
+TEST_F(CLManagerTest, OrderReturnsLocalWhenCanLocalBuyIsTrue) {
     CLManager &manager = CLManager::getInstance();
 
     int itemCode = 1;
@@ -70,7 +92,7 @@ TEST(CLManagerTest, OrderReturnsLocalWhenCanLocalBuyIsTrue) {
 // }
 
 // FAIL 조건 테스트
-TEST(CLManagerTest, OrderReturnsFailWhenNeitherLocalNorRemoteValid) {
+TEST_F(CLManagerTest, OrderReturnsFailWhenNeitherLocalNorRemoteValid) {
     CLManager &manager = CLManager::getInstance();
 
     std::string invalidCard = "0000000000000000";
@@ -83,7 +105,7 @@ TEST(CLManagerTest, OrderReturnsFailWhenNeitherLocalNorRemoteValid) {
     EXPECT_EQ(status, ORDER_STATUS::FAIL);
 }
 
-TEST(CLManagerTest, PayTrueWhenPaymentSucceess) {
+TEST_F(CLManagerTest, PayTrueWhenPaymentSucceess) {
     // Bank에 충분한 잔고가 있는 카드
     std::string validCard = "1234567812345678";
     auto method = std::make_unique<CardPay>(validCard);
@@ -95,7 +117,7 @@ TEST(CLManagerTest, PayTrueWhenPaymentSucceess) {
     EXPECT_TRUE(result);
 }
 
-TEST(CLManagerTest, PayReturnsFalseWhenCardHasNoBalance) {
+TEST_F(CLManagerTest, PayReturnsFalseWhenCardHasNoBalance) {
     // Bank에 등록되지 않은 카드
     std::string invalidCard = "0000000000000000"; // 잔액 없는 카드
     auto method = std::make_unique<CardPay>(invalidCard);
@@ -107,7 +129,7 @@ TEST(CLManagerTest, PayReturnsFalseWhenCardHasNoBalance) {
     EXPECT_FALSE(result);
 }
 
-TEST(CLManagerTest, PayReturnsFalseWhenInvalidCard) {
+TEST_F(CLManagerTest, PayReturnsFalseWhenInvalidCard) {
     // Bank에 등록되지 않은 카드
     std::string invalidCard = "9999999999999999";
     auto method = std::make_unique<CardPay>(invalidCard);

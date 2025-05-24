@@ -32,5 +32,5 @@ TEST(ItemTest, BuyReducesStockCorrectly) {
 
 TEST(ItemTest, ToStringFormatsCorrectly) {
     Item item(1, "콜라", 1500, 10);
-    EXPECT_EQ(item.toString(), "01) 콜라 : 1500");
+    EXPECT_EQ(item.toString(), " 1) 콜라                   가격 : 1500    재고 : 10");
 }
