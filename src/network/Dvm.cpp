@@ -1,9 +1,10 @@
 #include "Dvm.h"
 
-int Dvm::vmX = 5;
-int Dvm::vmY = 5;
+int Dvm::vmX;
+int Dvm::vmY;
 // TODO: 팀명 T5
-int Dvm::vmId = 5;
+int Dvm::vmId;
+int Dvm::portNumber;
 
 double Dvm::distance() const {
   return std::hypot(x - vmX, y - vmY);

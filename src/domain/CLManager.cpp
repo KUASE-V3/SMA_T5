@@ -74,16 +74,35 @@ void CLManager::run() {
                     }
                 }
             } else if (status == ORDER_STATUS::REMOTE) {
-              auto result = prePay(payment);
-              if (result.has_value()) {
-                const Dvm &dvm = result->get();
+              std::cout << "선결제 하시겠습니까?" << endl
+                        << "1. 네" << endl
+                        << "2. 아니오" << endl;
+              int select = readInt("입력:");
+              if(select == 1) {
+                auto result = prePay(payment);
+                if (result.has_value()) {
+                  const Dvm &dvm = result->get();
+                  std::cout << "가장 가까운 자판기 좌표는 ("
+                            << dvmNavigator->begin()->x << ", "
+                            << dvmNavigator->begin()->y << ")입니다." << endl
+                            << "인증 코드는 "  << payment->getCertCode() << "입니다." << endl;
+
+                } else {
+                  // 선결제 실패 재고 없어서 or 통신 실패
+                }
+              } else if(select == 2) {
+                std::cout << "가장 가까운 자판기 좌표는 ("
+                          << dvmNavigator->begin()->x << ", "
+                          << dvmNavigator->begin()->y << ")입니다." << endl;
               } else {
-                // 선결제 실패 재고 없어서 or 통신 실패
+                std::cout << invalidMenuMsg << std::endl;
               }
             } else if (status == ORDER_STATUS::FAIL) {
                 std::cout << orderFailMsg;
             }
         } else if (select == 3) {
+          cout << "선결제 코드를 입력해주십시오" << endl
+          << "입력:";
           string certCode;
           cin >> certCode;
           optional<Payment> payment = enterCertCode(certCode);
