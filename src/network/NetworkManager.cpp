@@ -8,19 +8,20 @@
 #include "json.hpp"
 #include "Payment.h"
 #include "LocalItemValidateAdapter.h"
+#include "Dvm.h"
 
 using namespace std;
 
 using json = nlohmann::json;
 
 NetworkManager::NetworkManager() {
-  addresses.emplace(1, "127.0.0.1");
-  addresses.emplace(2, "127.0.0.1");
-  addresses.emplace(3, "127.0.0.1");
-  addresses.emplace(4, "127.0.0.1");
-  addresses.emplace(5, "127.0.0.1");
-  addresses.emplace(6, "127.0.0.1");
-  addresses.emplace(7, "127.0.0.1");
+  addresses.emplace(1, Address{"127.0.0.1", 8080});
+  addresses.emplace(2, Address{"127.0.0.1", 8080});
+  addresses.emplace(3, Address{"127.0.0.1", 8080});
+  addresses.emplace(4, Address{"127.0.0.1", 8080});
+  addresses.emplace(5, Address{"127.0.0.1", 8080});
+  addresses.emplace(6, Address{"127.0.0.1", 9090});
+  addresses.emplace(7, Address{"127.0.0.1", 8080});
   itemManager = &ItemManager::getInstance();
   prepaymentStock = &PrepaymentStock::getInstance();
   messageFactory = &MessageFactory::getInstance();
@@ -41,7 +42,9 @@ string NetworkManager::sendMessage(string message) {
 
   json jsonMessage = json::parse(message);
 
-  string address = addresses.find(jsonMessage["dst_id"])->second;
+  auto address = addresses.find(jsonMessage["dst_id"]);
+
+  string ipAddress = address->second.address;
 
   sock = socket(AF_INET, SOCK_STREAM, 0);
   if (sock < 0) {
@@ -50,9 +53,9 @@ string NetworkManager::sendMessage(string message) {
   }
 
   serverAddress.sin_family = AF_INET;
-  serverAddress.sin_port = htons(PORT);
+  serverAddress.sin_port = htons(address->second.portNumber);
 
-  if (inet_pton(AF_INET, address.c_str(), &serverAddress.sin_addr) <= 0) {
+  if (inet_pton(AF_INET, address->second.address.c_str(), &serverAddress.sin_addr) <= 0) {
     perror("Invalid address / Address not supported");
     return nullptr;
   }
@@ -75,7 +78,8 @@ string NetworkManager::sendMessage(string message) {
 
 bool NetworkManager::sendBroadcastMessage(string message) {
   bool canPrepay = false;
-  for (pair<int, string> iter : addresses) {
+  for (pair<int, Address> iter : addresses) {
+    if (iter.first == Dvm::vmId) continue;
     int sock = 0;
     char buffer[1024] = {0};
     sockaddr_in serverAddress{};
@@ -89,7 +93,7 @@ bool NetworkManager::sendBroadcastMessage(string message) {
     serverAddress.sin_family = AF_INET;
     serverAddress.sin_port = htons(PORT);
 
-    const char *address = iter.second.c_str();
+    const char *address = iter.second.address.c_str();
 
     if (inet_pton(AF_INET, address, &serverAddress.sin_addr) <= 0) {
       perror("Invalid address / Address not supported");
@@ -133,7 +137,7 @@ void NetworkManager::runServer() {
 
   address.sin_family = AF_INET;
   address.sin_addr.s_addr = INADDR_ANY;
-  address.sin_port = htons(8080);
+  address.sin_port = htons(Dvm::portNumber);
 
   if (bind(server_fd, (sockaddr*)&address, sizeof(address)) < 0) {
     perror("bind failed");
@@ -177,7 +181,7 @@ void NetworkManager::runServer() {
       bool availability = itemManager->isValid(code, num);
 
       if(availability) {
-        if(itemManager->decreaseStock(code, -num)) {
+        if (itemManager->decreaseStock(code, num)) {
           string certCode = requestMessage["msg_content"]["cert_code"];
           prepaymentStock->addPayment(certCode, payment);
         } else {

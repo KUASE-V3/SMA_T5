@@ -1,19 +1,18 @@
 #include "Item.h"
+
 #include <iomanip>
 #include <iostream>
-#include <sstream>
+#include <cstdio>
+#include <string>
 
 Item::Item(int code, const std::string &name, int price, int count)
     : code(code), name(name), price(price), count(count) {}
 
 std::string Item::toString() const {
-    std::ostringstream oss;
-
-    // ex: 01) 콜라       : 1500
-    oss << std::setw(2) << std::setfill('0') << code << ") " << name << " : " << std::right
-        << std::setw(4) << price;
-
-    return oss.str();
+  char buf[100];
+  sprintf(buf, "%2d) %-20s     가격 : %d    재고 : %d", code, name.c_str(), price, count);
+  std::string str(buf);
+  return str;
 }
 
 std::string Item::getName() const {
