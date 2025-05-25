@@ -6,6 +6,7 @@
 #include <iostream>
 #include <limits>
 
+/*
 int CLManager::readInt(std::string text) {
     while (true) {
         std::cout << text;
@@ -36,6 +37,7 @@ CLManager &CLManager::getInstance() {
 }
 
 void CLManager::run() {
+    
     std::string mainMenuText = "메뉴 선택\n1.음료 목록\n2.음료 주문\n3.선결제 코드 확인\n0.종료\n";
     std::string listMenutext = "1.음료 목록\n";
     std::string orderMenuText = "2.음료 주문\n";
@@ -161,3 +163,5 @@ bool CLManager::pay(std::unique_ptr<Payment> &payment) {
 optional<Payment> CLManager::enterCertCode(string certCode) {
     return prepaymentStock->findPaymentBycertCode(certCode);
 }
+
+*/

@@ -4,6 +4,10 @@
 #include "NetworkManager.h"
 #include "CLManager.h"
 
+int main(){
+  return 0;
+}
+/*
 int main() {
   NetworkManager& networkManager = NetworkManager::getInstance();
 
@@ -19,3 +23,4 @@ int main() {
   return 0;
 }
 
+*/

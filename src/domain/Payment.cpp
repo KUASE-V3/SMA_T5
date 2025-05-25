@@ -13,8 +13,12 @@ std::string Payment::getCertCode() const {
     return certCode;
 }
 
-std::pair<int, int> Payment::getOrder() const {
-    return order;
+std::optional<int> Payment::getItemCode() const {
+    return itemcode;
+}
+
+std::optional<int> Payment::getItemQuantity() const {
+    return quantity;
 }
 
 bool Payment::canLocalBuy() const {
@@ -41,14 +45,33 @@ bool Payment::canRemoteBuy() const {
     return true;
 }
 
+bool Payment::validate() const {
+    for (const auto &[type, ptr] : validatorList) {
+        if (!ptr->validate(*this)) {
+            return false;
+        }
+    }
+    return true;
+}
+
 const PaymentMethod *Payment::getbuyContent() const {
     return buyContent.get();
 }
 
 Payment::Payment(int itemcode, int quantity, std::unique_ptr<PaymentMethod> buytype)
-    : order{itemcode, quantity},
-      validatorList(std::move(ValidatorFactory::getInstance().setValidatorList())),
-      buyContent(std::move(buytype)), certCode("") {}
+    : itemcode(itemcode), quantity(quantity),
+      validatorList(std::move(ValidatorFactory::getInstance().setValidatorFullList())),
+      buyContent(std::move(buytype)), certCode(0) {}
+
+Payment::Payment(int itemcode)
+    : itemcode(itemcode),
+      validatorList(std::move(ValidatorFactory::getInstance().setValidatorItemList())),
+      certCode(0) {}
+
+Payment::Payment(int itemcode, int quantity)
+    : itemcode(itemcode), quantity(quantity),
+      validatorList(std::move(ValidatorFactory::getInstance().setValidatorItemList())),
+      certCode(0) {}
 
 bool Payment::pay() {
     Bank &bank = Bank::getInstance();
@@ -59,12 +82,11 @@ int Payment::getTotalPrice() const {
     ItemManager &itemManager = ItemManager::getInstance();
 
     auto items = itemManager.getItems();
-    auto it = std::find_if(items.begin(), items.end(), [this](const Item &item) {
-        return item.getCode() == this->order.first;
-    });
+    auto it = std::find_if(items.begin(), items.end(),
+                           [this](const Item &item) { return item.getCode() == this->itemcode; });
 
     if (it != items.end()) {
-        return it->getPrice() * order.second;
+        return it->getPrice() * this->quantity.value();
     }
 
     return 0;
