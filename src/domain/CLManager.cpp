@@ -6,7 +6,6 @@
 #include <iostream>
 #include <limits>
 
-/*
 int CLManager::readInt(std::string text) {
     while (true) {
         std::cout << text;
@@ -37,7 +36,7 @@ CLManager &CLManager::getInstance() {
 }
 
 void CLManager::run() {
-    
+
     std::string mainMenuText = "메뉴 선택\n1.음료 목록\n2.음료 주문\n3.선결제 코드 확인\n0.종료\n";
     std::string listMenutext = "1.음료 목록\n";
     std::string orderMenuText = "2.음료 주문\n";
@@ -70,9 +69,8 @@ void CLManager::run() {
 
             if (status == ORDER_STATUS::LOCAL) {
                 if (pay(payment)) {
-                    std::pair<int, int> items = payment->getOrder();
-                    int itemCode = items.first;
-                    int quantity = items.second;
+                    int itemCode = payment->getItemCode().value();
+                    int quantity = payment->getQuantity().value();
                     if (itemManager->decreaseStock(itemCode, quantity)) {
                         std::string itemName = itemManager->getName(itemCode);
                         std::cout << "음료 제공: " << itemName << " " << quantity << "개\n";
@@ -95,8 +93,9 @@ void CLManager::run() {
             cin >> certCode;
             optional<Payment> payment = enterCertCode(certCode);
             if (payment.has_value()) {
-                pair<int, int> order = payment.value().getOrder();
-                std::cout << "음료 제공: " << order.first << " " << order.second << "개\n";
+                int itemCode = payment.value().getItemCode().value();
+                int quantity = payment.value().getQuantity().value();
+                std::cout << "음료 제공: " << itemCode << " " << quantity << "개\n";
             } else {
                 cout << "음료 제공 실패";
             }
@@ -126,11 +125,12 @@ CLManager::prePay(std::unique_ptr<Payment> &payment) {
 
     payment->setCertCode(certCode);
 
-    std::pair<int, int> item = payment->getOrder();
+    int itemCode = payment->getItemCode().value();
+    int quantity = payment->getQuantity().value();
 
     for (const Dvm &dvm : *dvmNavigator) {
         std::string requestMessage =
-            messageFactory->createRequestPrepayJson(dvm.id, item.first, item.second, certCode);
+            messageFactory->createRequestPrepayJson(dvm.id, itemCode, quantity, certCode);
 
         std::string responseMessage = networkManager->sendMessage(requestMessage);
 
@@ -163,5 +163,3 @@ bool CLManager::pay(std::unique_ptr<Payment> &payment) {
 optional<Payment> CLManager::enterCertCode(string certCode) {
     return prepaymentStock->findPaymentBycertCode(certCode);
 }
-
-*/

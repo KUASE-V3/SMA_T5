@@ -20,5 +20,5 @@
 
 bool LocalItemValidateAdapter::validate(const Payment &p) const {
 
-    return itemManager->isValid(p.getItemCode().value(), p.getItemQuantity().value());
+    return itemManager->isValid(p.getItemCode().value(), p.getQuantity().value());
 }

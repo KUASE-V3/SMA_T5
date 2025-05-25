@@ -11,7 +11,8 @@ TEST(PaymentBasicFieldsTest, ItemsAndPrepay) {
     Payment payment(42, 3, std::move(method));
     payment.setCertCode("5AAAA");
 
-    auto [itemcode, quantity] = payment.getOrder();
+    auto itemcode = payment.getItemCode();
+    auto quantity = payment.getQuantity();
     EXPECT_EQ(itemcode, 42);
     EXPECT_EQ(quantity, 3);
     EXPECT_EQ(payment.getCertCode(), "5AAAA");

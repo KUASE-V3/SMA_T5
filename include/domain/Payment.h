@@ -24,9 +24,9 @@ class Payment {
     Payment(int itemcode);
     Payment(int itemcode, int quantity);
     std::optional<int> getItemCode() const;
-    std::optional<int> getItemQuantity() const;
-    void setCertCode(int code);
-    int getCertCode() const;
+    std::optional<int> getQuantity() const;
+    void setCertCode(std::string code);
+    std::string getCertCode() const;
     const PaymentMethod *getbuyContent() const;
     bool canLocalBuy() const;
     bool canRemoteBuy() const;

@@ -1,26 +1,23 @@
-#include <unistd.h>
 #include <thread>
+#include <unistd.h>
 
-#include "NetworkManager.h"
 #include "CLManager.h"
+#include "NetworkManager.h"
 
-int main(){
-  return 0;
-}
-/*
+// int main(){
+//   return 0;
+// }
 int main() {
-  NetworkManager& networkManager = NetworkManager::getInstance();
+    NetworkManager &networkManager = NetworkManager::getInstance();
 
-  CLManager& clManager = CLManager::getInstance();
+    CLManager &clManager = CLManager::getInstance();
 
-  std::thread serverThread(&NetworkManager::runServer, &networkManager);
+    std::thread serverThread(&NetworkManager::runServer, &networkManager);
 
-  sleep(1);
+    sleep(1);
 
-  clManager.run();
+    clManager.run();
 
-  serverThread.detach();
-  return 0;
+    serverThread.detach();
+    return 0;
 }
-
-*/

@@ -17,7 +17,7 @@ std::optional<int> Payment::getItemCode() const {
     return itemcode;
 }
 
-std::optional<int> Payment::getItemQuantity() const {
+std::optional<int> Payment::getQuantity() const {
     return quantity;
 }
 
@@ -61,17 +61,17 @@ const PaymentMethod *Payment::getbuyContent() const {
 Payment::Payment(int itemcode, int quantity, std::unique_ptr<PaymentMethod> buytype)
     : itemcode(itemcode), quantity(quantity),
       validatorList(std::move(ValidatorFactory::getInstance().setValidatorFullList())),
-      buyContent(std::move(buytype)), certCode(0) {}
+      buyContent(std::move(buytype)), certCode("") {}
 
 Payment::Payment(int itemcode)
     : itemcode(itemcode),
       validatorList(std::move(ValidatorFactory::getInstance().setValidatorItemList())),
-      certCode(0) {}
+      certCode("") {}
 
 Payment::Payment(int itemcode, int quantity)
     : itemcode(itemcode), quantity(quantity),
       validatorList(std::move(ValidatorFactory::getInstance().setValidatorItemList())),
-      certCode(0) {}
+      certCode("") {}
 
 bool Payment::pay() {
     Bank &bank = Bank::getInstance();
