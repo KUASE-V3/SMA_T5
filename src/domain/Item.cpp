@@ -10,7 +10,7 @@ Item::Item(int code, const std::string &name, int price, int count)
 
 std::string Item::toString() const {
   char buf[100];
-  sprintf(buf, "%2d) %-20s     가격 : %d    재고 : %d", code, name.c_str(), price, count);
+  snprintf(buf, 100, "%2d) %-20s     가격 : %d    재고 : %d", code, name.c_str(), price, count);
   std::string str(buf);
   return str;
 }
