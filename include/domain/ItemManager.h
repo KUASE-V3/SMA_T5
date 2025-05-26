@@ -4,6 +4,7 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <optional>
 
 class ItemManager : public ItemValidator {
   private:
@@ -17,7 +18,7 @@ class ItemManager : public ItemValidator {
     static ItemManager &getInstance();
 
     std::vector<Item> getItems() const;
-    bool isValid(int itemcode, int quantity) const;
+    bool isValid(std::optional<int> itemcode, std::optional<int> quantity) const override;
     bool increaseStock(const int itemCode, int quantity);
     bool decreaseStock(const int itemCode, int quantity);
     std::string getName(int itemCode) const;

@@ -1,10 +1,10 @@
-#include <unistd.h>
 #include <thread>
+#include <unistd.h>
 #include <fstream>
 #include <iostream>
 
-#include "NetworkManager.h"
 #include "CLManager.h"
+#include "NetworkManager.h"
 #include "ItemManager.h"
 #include "ItemFactory.h"
 
@@ -58,15 +58,13 @@ int main(int argc, char* argv[]) {
   NetworkManager& networkManager = NetworkManager::getInstance();
   CLManager& clManager = CLManager::getInstance();
 
-  std::thread serverThread(&NetworkManager::runServer, &networkManager);
+    std::thread serverThread(&NetworkManager::runServer, &networkManager);
 
-  sleep(1);
+    sleep(1);
 
-  clManager.run();
+    clManager.run();
 
-  serverThread.detach();
+    serverThread.detach();
+    return 0;
 
-  updateJson(argv[1]);
-  return 0;
 }
-
