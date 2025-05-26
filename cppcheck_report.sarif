@@ -1,0 +1,1345 @@
+{
+  "$schema": "https:\/\/docs.oasis-open.org\/sarif\/sarif\/v2.1.0\/errata01\/os\/schemas\/sarif-schema-2.1.0.json",
+  "runs": [
+    {
+      "results": [
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/domain\/CLManager.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 1,
+                  "startColumn": 0,
+                  "startLine": 1
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"CLManager.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/domain\/CLManager.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 2,
+                  "startColumn": 0,
+                  "startLine": 2
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"CardPay.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/domain\/CLManager.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 3,
+                  "startColumn": 0,
+                  "startLine": 3
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"CertificationCodeFactory.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/domain\/CLManager.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 4,
+                  "startColumn": 0,
+                  "startLine": 4
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"MessageFactory.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/domain\/CLManager.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 5,
+                  "startColumn": 0,
+                  "startLine": 5
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"NetworkManager.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/domain\/CLManager.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 0,
+                  "startColumn": 0,
+                  "startLine": 0
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Limiting analysis of branches. Use --check-level=exhaustive to analyze all branches."
+          },
+          "ruleId": "normalCheckLevelMaxBranches"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/domain\/CLManager.cpp"
+                },
+                "region": {
+                  "endColumn": 17,
+                  "endLine": 57,
+                  "startColumn": 17,
+                  "startLine": 57
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/domain\/CLManager.cpp"
+                },
+                "region": {
+                  "endColumn": 25,
+                  "endLine": 72,
+                  "startColumn": 25,
+                  "startLine": 72
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Local variable 'itemCode' shadows outer variable"
+          },
+          "ruleId": "shadowVariable"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/domain\/CLManager.cpp"
+                },
+                "region": {
+                  "endColumn": 17,
+                  "endLine": 58,
+                  "startColumn": 17,
+                  "startLine": 58
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/domain\/CLManager.cpp"
+                },
+                "region": {
+                  "endColumn": 25,
+                  "endLine": 73,
+                  "startColumn": 25,
+                  "startLine": 73
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Local variable 'quantity' shadows outer variable"
+          },
+          "ruleId": "shadowVariable"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/domain\/CLManager.cpp"
+                },
+                "region": {
+                  "endColumn": 13,
+                  "endLine": 48,
+                  "startColumn": 13,
+                  "startLine": 48
+                }
+              }
+            },
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/domain\/CLManager.cpp"
+                },
+                "region": {
+                  "endColumn": 19,
+                  "endLine": 86,
+                  "startColumn": 19,
+                  "startLine": 86
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Local variable 'select' shadows outer variable"
+          },
+          "ruleId": "shadowVariable"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/domain\/CardPay.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 1,
+                  "startColumn": 0,
+                  "startLine": 1
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"CardPay.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/domain\/CertificationCodeFactory.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 1,
+                  "startColumn": 0,
+                  "startLine": 1
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"CertificationCodeFactory.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/domain\/Item.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 1,
+                  "startColumn": 0,
+                  "startLine": 1
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"Item.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/domain\/ItemFactory.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 1,
+                  "startColumn": 0,
+                  "startLine": 1
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"ItemFactory.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/domain\/ItemManager.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 1,
+                  "startColumn": 0,
+                  "startLine": 1
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"ItemManager.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/domain\/ItemManager.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 2,
+                  "startColumn": 0,
+                  "startLine": 2
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"ItemFactory.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/domain\/ItemManager.cpp"
+                },
+                "region": {
+                  "endColumn": 22,
+                  "endLine": 23,
+                  "startColumn": 22,
+                  "startLine": 23
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Logical conjunction always evaluates to false: itemcode < 1 && itemcode > 20."
+          },
+          "ruleId": "incorrectLogicOperator"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/domain\/Payment.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 1,
+                  "startColumn": 0,
+                  "startLine": 1
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"Payment.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/domain\/Payment.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 2,
+                  "startColumn": 0,
+                  "startLine": 2
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"ItemManager.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/domain\/Payment.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 3,
+                  "startColumn": 0,
+                  "startLine": 3
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"LocalValidator.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/domain\/Payment.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 4,
+                  "startColumn": 0,
+                  "startLine": 4
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"RemoteValidator.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/domain\/Payment.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 5,
+                  "startColumn": 0,
+                  "startLine": 5
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"ValidatorFactory.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/domain\/PrepaymentStock.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 1,
+                  "startColumn": 0,
+                  "startLine": 1
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"PrepaymentStock.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/external\/Bank.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 1,
+                  "startColumn": 0,
+                  "startLine": 1
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"Bank.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/external\/Bank.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 2,
+                  "startColumn": 0,
+                  "startLine": 2
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"CardPay.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/external\/Bank.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 3,
+                  "startColumn": 0,
+                  "startLine": 3
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"Payment.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/main.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 6,
+                  "startColumn": 0,
+                  "startLine": 6
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"CLManager.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/main.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 7,
+                  "startColumn": 0,
+                  "startLine": 7
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"NetworkManager.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/main.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 8,
+                  "startColumn": 0,
+                  "startLine": 8
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"ItemManager.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/main.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 9,
+                  "startColumn": 0,
+                  "startLine": 9
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"ItemFactory.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/network\/Dvm.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 1,
+                  "startColumn": 0,
+                  "startLine": 1
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"Dvm.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/network\/MessageFactory.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 1,
+                  "startColumn": 0,
+                  "startLine": 1
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"MessageFactory.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/network\/MessageFactory.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 2,
+                  "startColumn": 0,
+                  "startLine": 2
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"Dvm.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/network\/NetworkManager.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 1,
+                  "startColumn": 0,
+                  "startLine": 1
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"NetworkManager.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/network\/NetworkManager.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 8,
+                  "startColumn": 0,
+                  "startLine": 8
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"json.hpp\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/network\/NetworkManager.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 9,
+                  "startColumn": 0,
+                  "startLine": 9
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"Payment.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/network\/NetworkManager.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 10,
+                  "startColumn": 0,
+                  "startLine": 10
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"LocalItemValidateAdapter.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/network\/NetworkManager.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 11,
+                  "startColumn": 0,
+                  "startLine": 11
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"Dvm.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/network\/NetworkManager.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 0,
+                  "startColumn": 0,
+                  "startLine": 0
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Limiting analysis of branches. Use --check-level=exhaustive to analyze all branches."
+          },
+          "ruleId": "normalCheckLevelMaxBranches"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/network\/NetworkManager.cpp"
+                },
+                "region": {
+                  "endColumn": 21,
+                  "endLine": 63,
+                  "startColumn": 21,
+                  "startLine": 63
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "C-style pointer casting"
+          },
+          "ruleId": "cstyleCast"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/network\/NetworkManager.cpp"
+                },
+                "region": {
+                  "endColumn": 23,
+                  "endLine": 103,
+                  "startColumn": 23,
+                  "startLine": 103
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "C-style pointer casting"
+          },
+          "ruleId": "cstyleCast"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/network\/NetworkManager.cpp"
+                },
+                "region": {
+                  "endColumn": 23,
+                  "endLine": 142,
+                  "startColumn": 23,
+                  "startLine": 142
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "C-style pointer casting"
+          },
+          "ruleId": "cstyleCast"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/network\/NetworkManager.cpp"
+                },
+                "region": {
+                  "endColumn": 35,
+                  "endLine": 150,
+                  "startColumn": 35,
+                  "startLine": 150
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "C-style pointer casting"
+          },
+          "ruleId": "cstyleCast"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/network\/NetworkManager.cpp"
+                },
+                "region": {
+                  "endColumn": 18,
+                  "endLine": 127,
+                  "startColumn": 18,
+                  "startLine": 127
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The scope of the variable 'client_fd' can be reduced."
+          },
+          "ruleId": "variableScope"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/network\/NetworkManager.cpp"
+                },
+                "region": {
+                  "endColumn": 20,
+                  "endLine": 47,
+                  "startColumn": 20,
+                  "startLine": 47
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Variable 'ipAddress' is assigned a value that is never used."
+          },
+          "ruleId": "unreadVariable"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/validator\/CardPayValidateAdapter.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 1,
+                  "startColumn": 0,
+                  "startLine": 1
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"CardPayValidateAdapter.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/validator\/CardPayValidateAdapter.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 2,
+                  "startColumn": 0,
+                  "startLine": 2
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"Payment.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/validator\/LocalItemValidateAdapter.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 1,
+                  "startColumn": 0,
+                  "startLine": 1
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"LocalItemValidateAdapter.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/validator\/RemoteItemValidateAdapter.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 1,
+                  "startColumn": 0,
+                  "startLine": 1
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"RemoteItemValidateAdapter.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/validator\/ValidatorFactory.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 1,
+                  "startColumn": 0,
+                  "startLine": 1
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"ValidatorFactory.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/validator\/ValidatorFactory.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 6,
+                  "startColumn": 0,
+                  "startLine": 6
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"LocalItemValidateAdapter.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/validator\/ValidatorFactory.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 7,
+                  "startColumn": 0,
+                  "startLine": 7
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"RemoteItemValidateAdapter.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "note",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/validator\/ValidatorFactory.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 8,
+                  "startColumn": 0,
+                  "startLine": 8
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "Include file: \"CardPayValidateAdapter.h\" not found."
+          },
+          "ruleId": "missingInclude"
+        },
+        {
+          "level": "warning",
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src\/main.cpp"
+                },
+                "region": {
+                  "endColumn": 0,
+                  "endLine": 32,
+                  "startColumn": 0,
+                  "startLine": 32
+                }
+              }
+            }
+          ],
+          "message": {
+            "text": "The function 'updateJson' is never used."
+          },
+          "ruleId": "unusedFunction"
+        }
+      ],
+      "tool": {
+        "driver": {
+          "informationUri": "https:\/\/cppcheck.sourceforge.io",
+          "name": "Cppcheck",
+          "rules": [
+            {
+              "fullDescription": {
+                "text": "Include file: \"CLManager.h\" not found."
+              },
+              "help": {
+                "text": "Include file: \"CLManager.h\" not found."
+              },
+              "id": "missingInclude",
+              "properties": {
+                "precision": "high"
+              },
+              "shortDescription": {
+                "text": "Include file: \"CLManager.h\" not found."
+              }
+            },
+            {
+              "fullDescription": {
+                "text": "Limiting analysis of branches. Use --check-level=exhaustive to analyze all branches."
+              },
+              "help": {
+                "text": "Limiting analysis of branches. Use --check-level=exhaustive to analyze all branches."
+              },
+              "id": "normalCheckLevelMaxBranches",
+              "properties": {
+                "precision": "high"
+              },
+              "shortDescription": {
+                "text": "Limiting analysis of branches. Use --check-level=exhaustive to analyze all branches."
+              }
+            },
+            {
+              "fullDescription": {
+                "text": "Local variable 'itemCode' shadows outer variable"
+              },
+              "help": {
+                "text": "Local variable 'itemCode' shadows outer variable"
+              },
+              "id": "shadowVariable",
+              "properties": {
+                "precision": "high"
+              },
+              "shortDescription": {
+                "text": "Local variable 'itemCode' shadows outer variable"
+              }
+            },
+            {
+              "fullDescription": {
+                "text": "Logical conjunction always evaluates to false: itemcode < 1 && itemcode > 20. Are these conditions necessary? Did you intend to use || instead? Are the numbers correct? Are you comparing the correct variables?"
+              },
+              "help": {
+                "text": "Logical conjunction always evaluates to false: itemcode < 1 && itemcode > 20. Are these conditions necessary? Did you intend to use || instead? Are the numbers correct? Are you comparing the correct variables?"
+              },
+              "id": "incorrectLogicOperator",
+              "properties": {
+                "precision": "high"
+              },
+              "shortDescription": {
+                "text": "Logical conjunction always evaluates to false: itemcode < 1 && itemcode > 20."
+              }
+            },
+            {
+              "fullDescription": {
+                "text": "C-style pointer casting detected. C++ offers four different kinds of casts as replacements: static_cast, const_cast, dynamic_cast and reinterpret_cast. A C-style cast could evaluate to any of those automatically, thus it is considered safer if the programmer explicitly states which kind of cast is expected."
+              },
+              "help": {
+                "text": "C-style pointer casting detected. C++ offers four different kinds of casts as replacements: static_cast, const_cast, dynamic_cast and reinterpret_cast. A C-style cast could evaluate to any of those automatically, thus it is considered safer if the programmer explicitly states which kind of cast is expected."
+              },
+              "id": "cstyleCast",
+              "properties": {
+                "precision": "high"
+              },
+              "shortDescription": {
+                "text": "C-style pointer casting"
+              }
+            },
+            {
+              "fullDescription": {
+                "text": "The scope of the variable 'client_fd' can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for 'i' can be reduced:\nvoid f(int x)\n{\n    int i = 0;\n    if (x) {\n        \/\/ it's safe to move 'int i = 0;' here\n        for (int n = 0; n < 10; ++n) {\n            \/\/ it is possible but not safe to move 'int i = 0;' here\n            do_something(&i);\n        }\n    }\n}\nWhen you see this message it is always safe to reduce the variable scope 1 level."
+              },
+              "help": {
+                "text": "The scope of the variable 'client_fd' can be reduced. Warning: Be careful when fixing this message, especially when there are inner loops. Here is an example where cppcheck will write that the scope for 'i' can be reduced:\nvoid f(int x)\n{\n    int i = 0;\n    if (x) {\n        \/\/ it's safe to move 'int i = 0;' here\n        for (int n = 0; n < 10; ++n) {\n            \/\/ it is possible but not safe to move 'int i = 0;' here\n            do_something(&i);\n        }\n    }\n}\nWhen you see this message it is always safe to reduce the variable scope 1 level."
+              },
+              "id": "variableScope",
+              "properties": {
+                "precision": "high"
+              },
+              "shortDescription": {
+                "text": "The scope of the variable 'client_fd' can be reduced."
+              }
+            },
+            {
+              "fullDescription": {
+                "text": "Variable 'ipAddress' is assigned a value that is never used."
+              },
+              "help": {
+                "text": "Variable 'ipAddress' is assigned a value that is never used."
+              },
+              "id": "unreadVariable",
+              "properties": {
+                "precision": "high"
+              },
+              "shortDescription": {
+                "text": "Variable 'ipAddress' is assigned a value that is never used."
+              }
+            },
+            {
+              "fullDescription": {
+                "text": "The function 'updateJson' is never used."
+              },
+              "help": {
+                "text": "The function 'updateJson' is never used."
+              },
+              "id": "unusedFunction",
+              "properties": {
+                "precision": "high"
+              },
+              "shortDescription": {
+                "text": "The function 'updateJson' is never used."
+              }
+            }
+          ],
+          "semanticVersion": "2.17.1"
+        }
+      }
+    }
+  ],
+  "version": "2.1.0"
+}
+
