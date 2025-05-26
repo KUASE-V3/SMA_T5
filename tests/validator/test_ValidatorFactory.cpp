@@ -6,7 +6,7 @@
 
 TEST(ValidatorFactoryTest, AllValidatorsAreRegistered) {
     ValidatorFactory& factory = ValidatorFactory::getInstance();
-    auto map = factory.setValidatorList();
+    auto map = factory.setValidatorFullList();
 
     // map 크기 검사
     EXPECT_EQ(map.size(), 3);
@@ -23,7 +23,7 @@ TEST(ValidatorFactoryTest, AllValidatorsAreRegistered) {
 
 TEST(ValidatorFactoryTest, ValidatorsHaveCorrectRuntimeType) {
     ValidatorFactory& factory = ValidatorFactory::getInstance();
-    auto map = factory.setValidatorList();
+    auto map = factory.setValidatorFullList();
 
     EXPECT_TRUE(dynamic_cast<LocalItemValidateAdapter*>(map[typeid(LocalItemValidateAdapter)].get()) != nullptr);
     EXPECT_TRUE(dynamic_cast<RemoteItemValidateAdapter*>(map[typeid(RemoteItemValidateAdapter)].get()) != nullptr);

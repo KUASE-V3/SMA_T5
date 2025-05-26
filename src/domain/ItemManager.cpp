@@ -2,6 +2,7 @@
 #include "ItemFactory.h"
 #include <algorithm>
 #include <iostream>
+#include <optional>
 
 ItemManager::ItemManager() {
     for (const auto &item : ItemFactory::createInitialItems()) {
@@ -18,12 +19,18 @@ std::vector<Item> ItemManager::getItems() const {
     return items;
 }
 
-bool ItemManager::isValid(int itemcode, int quantity) const {
+bool ItemManager::isValid(std::optional<int> itemcode, std::optional<int> quantity) const {
+    if (itemcode < 1 && itemcode > 20){
+        return false;
+    }
     auto it = std::find_if(items.begin(), items.end(),
                            [&itemcode](const Item &item) { return item.getCode() == itemcode; });
-
+    
     if (it != items.end()) {
-        return it->isValid(quantity);
+        if (!quantity.has_value()){
+            return true;
+        }
+        return it->isValid(quantity.value());
     }
     return false;
 }
