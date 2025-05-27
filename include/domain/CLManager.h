@@ -34,10 +34,8 @@ class CLManager {
     void run();
     void showItems();
     // CLManager.h
-    ORDER_STATUS order(int itemCode, int quantity, const std::string &card,
-                       std::unique_ptr<Payment> &payment);
+    ORDER_STATUS order(std::unique_ptr<Payment> &payment);
     bool pay(std::unique_ptr<Payment> &payment);
-    std::optional < std::reference_wrapper<const Dvm>> prePay(
-                        std::unique_ptr<Payment> &payment);
+    std::optional<std::reference_wrapper<const Dvm>> prePay(std::unique_ptr<Payment> &payment);
     optional<Payment> enterCertCode(string certCode);
 };
