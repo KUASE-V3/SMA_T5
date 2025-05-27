@@ -1,18 +1,20 @@
 #include <gtest/gtest.h>
 
 #include "CertificationCodeFactory.h"
+#include "Dvm.h"
 #include <cmath>
 
 TEST(CertificationCodeFactoryTest, CreateCertificationCode) {
     CertificationCodeFactory &certificationCodeFactory = CertificationCodeFactory::getInstance();
-  string certCode1 = certificationCodeFactory.createCertificationCode();
-  string certCode2 = certificationCodeFactory.createCertificationCode();
+    Dvm::vmId = 5;
+    string certCode1 = certificationCodeFactory.createCertificationCode();
+    string certCode2 = certificationCodeFactory.createCertificationCode();
 
-  int cycle = pow(62, 4);
+    int cycle = pow(62, 4);
 
-  for (int i = 0; i < cycle; i++) {
-    certificationCodeFactory.createCertificationCode();
-  }
+    for (int i = 0; i < cycle; i++) {
+      certificationCodeFactory.createCertificationCode();
+    }
 
   string certCode3 = certificationCodeFactory.createCertificationCode();
 

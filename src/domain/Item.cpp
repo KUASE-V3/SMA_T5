@@ -15,9 +15,30 @@ std::string Item::toString() const {
   return str;
 }
 
-std::string Item::getName() const {
-    return name;
+Item::Item(const Item& other)
+    : code(other.code),
+      name(other.name),
+      price(other.price),
+      count(other.count) {
 }
+
+Item::Item(Item&& other) noexcept
+    : code(other.code),
+      name(std::move(other.name)),
+      price(other.price),
+      count(other.count) {}
+
+Item& Item::operator=(Item&& other) noexcept {
+  if (this != &other) {
+    code = other.code;
+    name = std::move(other.name);
+    price = other.price;
+    count = other.count;
+  }
+  return *this;
+}
+
+std::string Item::getName() const { return name; }
 
 int Item::getPrice() const {
     return price;
@@ -31,15 +52,17 @@ int Item::getCode() const {
     return code;
 }
 bool Item::add(int addCount) {
-    if (addCount <= 0) return false;
-    count += addCount;
-    return true;
+  std::lock_guard<std::mutex> lock(mtx);
+  if (addCount <= 0) return false;
+  count += addCount;
+  return true;
 }
 
 bool Item::consume(int reqCount) {
-    if (reqCount <= 0 || count < reqCount) return false;
-    count -= reqCount;
-    return true;
+  std::lock_guard<std::mutex> lock(mtx);
+  if (reqCount <= 0 || count < reqCount) return false;
+  count -= reqCount;
+  return true;
 }
 
 int Item::getCount() const {

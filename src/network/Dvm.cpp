@@ -4,7 +4,6 @@ int Dvm::vmX;
 int Dvm::vmY;
 // TODO: 팀명 T5
 int Dvm::vmId;
-int Dvm::portNumber;
 
 double Dvm::distance() const {
   return std::hypot(x - vmX, y - vmY);
