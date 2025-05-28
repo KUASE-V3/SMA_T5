@@ -24,4 +24,5 @@ class Item {
     bool add(int addCount);
     bool consume(int reqCount);
     int getCount() const;
+    bool isValidType(int reqCount) const;
 };

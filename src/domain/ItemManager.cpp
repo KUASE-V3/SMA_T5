@@ -19,17 +19,28 @@ std::vector<Item> ItemManager::getItems() const {
     return items;
 }
 
-bool ItemManager::isValid(std::optional<int> itemcode, std::optional<int> quantity) const {
-    if (itemcode < 1 && itemcode > 20){
+bool ItemManager::isValidType(std::optional<int> itemcode, std::optional<int> quantity) const{
+    if (itemcode < 1 || itemcode > 20){
         return false;
     }
+
+    auto it = std::find_if(items.begin(), items.end(),
+                           [&itemcode](const Item &item) { return item.getCode() == itemcode; });
+    
+    if (it != items.end()){
+        if (!quantity.has_value()){
+            return true;
+        }
+        return it -> isValidType(quantity.value());
+    }
+    
+    return true;
+}
+bool ItemManager::isValid(std::optional<int> itemcode, std::optional<int> quantity) const {
     auto it = std::find_if(items.begin(), items.end(),
                            [&itemcode](const Item &item) { return item.getCode() == itemcode; });
     
     if (it != items.end()) {
-        if (!quantity.has_value()){
-            return true;
-        }
         return it->isValid(quantity.value());
     }
     return false;

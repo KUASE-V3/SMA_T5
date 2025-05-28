@@ -6,6 +6,7 @@
 #include "LocalItemValidateAdapter.h"
 #include "RemoteItemValidateAdapter.h"
 #include "CardPayValidateAdapter.h"
+#include "ItemTypeValidateAdapter.h"
 
 std::map<std::type_index, std::unique_ptr<Validator>> ValidatorFactory::setValidatorFullList() const{
     std::map<std::type_index, std::unique_ptr<Validator>> map;
@@ -20,7 +21,7 @@ std::map<std::type_index, std::unique_ptr<Validator>> ValidatorFactory::setValid
 std::map<std::type_index, std::unique_ptr<Validator>> ValidatorFactory::setValidatorItemList() const{
     std::map<std::type_index, std::unique_ptr<Validator>> map;
 
-    map[typeid(LocalItemValidateAdapter)] = std::make_unique<LocalItemValidateAdapter>();
+    map[typeid(LocalItemValidateAdapter)] = std::make_unique<ItemTypeValidateAdapter>();
 
     return map;
 }
