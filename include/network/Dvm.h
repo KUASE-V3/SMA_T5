@@ -3,7 +3,7 @@
 #include <cmath>
 
 struct Dvm {
-  static int vmX, vmY, vmId, portNumber;
+  static int vmX, vmY, vmId;
   int x, y, id;
 
   double distance() const;
