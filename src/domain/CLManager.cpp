@@ -60,11 +60,13 @@ void CLManager::run() {
                 itemCode = readInt("음료 코드: ");
                 payment = std::make_unique<Payment>(itemCode);
                 if (payment->validate()) break;
+                std::cout << "범위 밖 입력입니다.\n";
             }
             while (true) {
                 quantity = readInt("개수 : ");
                 payment = std::make_unique<Payment>(itemCode, quantity);
                 if (payment->validate()) break;
+                std::cout << "범위 밖 입력입니다.\n";
             }
 
             std::cout << "카드 정보: ";
