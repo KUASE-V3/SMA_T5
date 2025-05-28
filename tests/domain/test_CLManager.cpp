@@ -1,10 +1,10 @@
+#include "ItemFactory.h"
 #include "domain/CLManager.h"
 #include "domain/CardPay.h"
-#include "ItemFactory.h"
 #include <climits> // INT_MAX
+#include <fstream>
 #include <gtest/gtest.h>
 #include <iostream>
-#include <fstream>
 #include <sstream>
 
 using json = nlohmann::json;
@@ -12,22 +12,22 @@ using json = nlohmann::json;
 using namespace std;
 
 class CLManagerTest : public ::testing::Test {
- protected:
-  void SetUp() override {
-    ifstream file("T5.json", std::ios::in);
+  protected:
+    void SetUp() override {
+        ifstream file("T5.json", std::ios::in);
 
-    json j;
+        json j;
 
-    if (!file.is_open()) {
-      std::cerr << "Error opening file.\n";
-      return;
+        if (!file.is_open()) {
+            std::cerr << "Error opening file.\n";
+            return;
+        }
+        file >> j;
+        ItemFactory::itemList = j;
     }
-    file >> j;
-    ItemFactory::itemList = j;
-  }
 };
 
-  TEST_F(CLManagerTest, ShowItemsPrintsCorrectly) {
+TEST_F(CLManagerTest, ShowItemsPrintsCorrectly) {
     CLManager &clManager = CLManager::getInstance();
 
     // 출력 캡처
@@ -69,8 +69,10 @@ TEST_F(CLManagerTest, OrderReturnsLocalWhenCanLocalBuyIsTrue) {
     std::string validCard = "1234567812345678"; // Bank에 등록된 카드, 잔액 충분
     ItemManager::getInstance().increaseStock(itemCode, quantity);
 
-    std::unique_ptr<Payment> payment;
-    ORDER_STATUS status = manager.order(itemCode, quantity, validCard, payment);
+    auto method = std::make_unique<CardPay>(validCard);
+    std::unique_ptr<Payment> payment =
+        std::make_unique<Payment>(itemCode, quantity, std::move(method));
+    ORDER_STATUS status = manager.order(payment);
 
     EXPECT_EQ(status, ORDER_STATUS::LOCAL);
     EXPECT_NE(payment, nullptr); // payment 객체는 생성되어야 함
@@ -99,8 +101,10 @@ TEST_F(CLManagerTest, OrderReturnsFailWhenNeitherLocalNorRemoteValid) {
     int itemCode = 1;         // 정상 아이템 코드
     int quantity = 999999999; // 어디서도 구매 불가한 재고
 
-    std::unique_ptr<Payment> payment;
-    ORDER_STATUS status = manager.order(itemCode, quantity, invalidCard, payment);
+    auto method = std::make_unique<CardPay>(invalidCard);
+    std::unique_ptr<Payment> payment =
+        std::make_unique<Payment>(itemCode, quantity, std::move(method));
+    ORDER_STATUS status = manager.order(payment);
 
     EXPECT_EQ(status, ORDER_STATUS::FAIL);
 }

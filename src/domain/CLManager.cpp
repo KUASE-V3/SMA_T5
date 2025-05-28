@@ -54,18 +54,31 @@ void CLManager::run() {
         } else if (select == 2) {
             std::cout << orderMenuText;
 
-            int itemCode = readInt("음료 코드: ");
-            int quantity = readInt("개수 : ");
+            std::unique_ptr<Payment> payment;
+            int itemCode, quantity;
+            while (true) {
+                itemCode = readInt("음료 코드: ");
+                payment = std::make_unique<Payment>(itemCode);
+                if (payment->validate()) break;
+                std::cout << "범위 밖 입력입니다.\n";
+            }
+            while (true) {
+                quantity = readInt("개수 : ");
+                payment = std::make_unique<Payment>(itemCode, quantity);
+                if (payment->validate()) break;
+                std::cout << "범위 밖 입력입니다.\n";
+            }
 
             std::cout << "카드 정보: ";
             std::string card;
             std::cin >> card;
-            std::unique_ptr<Payment> payment;
+            auto method = std::make_unique<CardPay>(card);
+            payment = std::make_unique<Payment>(itemCode, quantity, std::move(method));
 
             dvmNavigator = std::make_unique<std::set<Dvm>>();
             networkManager->setDvmNavigator(dvmNavigator.get());
 
-            ORDER_STATUS status = order(itemCode, quantity, card, payment);
+            ORDER_STATUS status = order(payment);
 
             if (status == ORDER_STATUS::LOCAL) {
                 if (pay(payment)) {
@@ -77,31 +90,31 @@ void CLManager::run() {
                     } else {
                         std::cout << "음료 제공 실패";
                     }
+                } else {
+                    std::cout << "결제 실패\n";
                 }
             } else if (status == ORDER_STATUS::REMOTE) {
 
-              std::cout << "선결제 하시겠습니까?" << endl
-                        << "1. 네" << endl
-                        << "2. 아니오" << endl;
-              int select = readInt("입력:");
-              if(select == 1) {
-                auto result = prePay(payment);
-                if (result.has_value()) {
-                  const Dvm &dvm = result->get();
-                  std::cout << "가장 가까운 자판기 좌표는 ("
-                            << dvmNavigator->begin()->x << ", "
-                            << dvmNavigator->begin()->y << ")입니다." << endl
-                            << "인증 코드는 "  << payment->getCertCode() << "입니다." << endl;
+                std::cout << "선결제 하시겠습니까?" << endl
+                          << "1. 네" << endl
+                          << "2. 아니오" << endl;
+                int select = readInt("입력:");
+                if (select == 1) {
+                    auto result = prePay(payment);
+                    if (result.has_value()) {
+                        const Dvm &dvm = result->get();
+                        std::cout << "가장 가까운 자판기 좌표는 (" << dvmNavigator->begin()->x
+                                  << ", " << dvmNavigator->begin()->y << ")입니다." << endl
+                                  << "인증 코드는 " << payment->getCertCode() << "입니다." << endl;
+                    } else {
+                        std::cout << "선결제 실패\n";
+                    }
+                } else if (select == 2) {
+                    std::cout << "가장 가까운 자판기 좌표는 (" << dvmNavigator->begin()->x << ", "
+                              << dvmNavigator->begin()->y << ")입니다." << endl;
                 } else {
-                  // 선결제 실패 재고 없어서 or 통신 실패
+                    std::cout << invalidMenuMsg << std::endl;
                 }
-              } else if(select == 2) {
-                std::cout << "가장 가까운 자판기 좌표는 ("
-                          << dvmNavigator->begin()->x << ", "
-                          << dvmNavigator->begin()->y << ")입니다." << endl;
-              } else {
-                std::cout << invalidMenuMsg << std::endl;
-              }
             } else if (status == ORDER_STATUS::FAIL) {
                 std::cout << orderFailMsg;
             }
@@ -161,11 +174,7 @@ CLManager::prePay(std::unique_ptr<Payment> &payment) {
     return nullopt;
 }
 
-ORDER_STATUS CLManager::order(int itemCode, int quantity, const std::string &card,
-                              std::unique_ptr<Payment> &payment) {
-    auto method = std::make_unique<CardPay>(card);
-    payment = std::make_unique<Payment>(itemCode, quantity, std::move(method));
-
+ORDER_STATUS CLManager::order(std::unique_ptr<Payment> &payment) {
     if (payment->canLocalBuy()) {
         return ORDER_STATUS::LOCAL;
     } else if (payment->canRemoteBuy()) {
