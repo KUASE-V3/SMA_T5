@@ -90,6 +90,8 @@ void CLManager::run() {
                     } else {
                         std::cout << "음료 제공 실패";
                     }
+                } else {
+                    std::cout << "결제 실패\n";
                 }
             } else if (status == ORDER_STATUS::REMOTE) {
 
@@ -105,7 +107,7 @@ void CLManager::run() {
                                   << ", " << dvmNavigator->begin()->y << ")입니다." << endl
                                   << "인증 코드는 " << payment->getCertCode() << "입니다." << endl;
                     } else {
-                        // 선결제 실패 재고 없어서 or 통신 실패
+                        std::cout << "선결제 실패\n";
                     }
                 } else if (select == 2) {
                     std::cout << "가장 가까운 자판기 좌표는 (" << dvmNavigator->begin()->x << ", "
