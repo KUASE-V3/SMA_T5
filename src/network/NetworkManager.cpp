@@ -91,7 +91,7 @@ bool NetworkManager::sendBroadcastMessage(string message) {
     }
 
     serverAddress.sin_family = AF_INET;
-    serverAddress.sin_port = htons(PORT);
+    serverAddress.sin_port = htons(iter.second.portNumber);
 
     const char *address = iter.second.address.c_str();
 
@@ -135,9 +135,11 @@ void NetworkManager::runServer() {
     return;
   }
 
+  auto myAddress = addresses.find(Dvm::vmId);
+
   address.sin_family = AF_INET;
   address.sin_addr.s_addr = INADDR_ANY;
-  address.sin_port = htons(Dvm::portNumber);
+  address.sin_port = htons(myAddress->second.portNumber);
 
   if (bind(server_fd, (sockaddr*)&address, sizeof(address)) < 0) {
     perror("bind failed");

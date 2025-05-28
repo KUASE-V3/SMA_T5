@@ -21,7 +21,6 @@ std::map<std::type_index, std::unique_ptr<Validator>> ValidatorFactory::setValid
     std::map<std::type_index, std::unique_ptr<Validator>> map;
 
     map[typeid(LocalItemValidateAdapter)] = std::make_unique<LocalItemValidateAdapter>();
-    map[typeid(RemoteItemValidateAdapter)] = std::make_unique<RemoteItemValidateAdapter>();
 
     return map;
 }

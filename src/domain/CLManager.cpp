@@ -116,6 +116,8 @@ void CLManager::run() {
             }
         } else if (select == 3) {
             string certCode;
+            cout << "선결제 코드를 입력해주십시오" << endl;
+            cout << "입력:";
             cin >> certCode;
             optional<Payment> payment = enterCertCode(certCode);
             if (payment.has_value()) {
@@ -123,7 +125,7 @@ void CLManager::run() {
                 int quantity = payment.value().getQuantity().value();
                 std::cout << "음료 제공: " << itemCode << " " << quantity << "개\n";
             } else {
-                cout << "음료 제공 실패";
+                cout << "음료 제공 실패" << endl;
             }
 
         } else {

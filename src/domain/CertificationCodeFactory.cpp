@@ -1,4 +1,5 @@
 #include "CertificationCodeFactory.h"
+#include "Dvm.h"
 #include <cmath>
 
 CertificationCodeFactory::CertificationCodeFactory() {
@@ -15,7 +16,7 @@ string CertificationCodeFactory::toBase62(int num) {
     num /= 62;
   }
 
-  result = "5" + result;
+  result = to_string(Dvm::vmId) + result;
   return result;
 }
 

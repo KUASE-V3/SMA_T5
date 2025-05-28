@@ -20,7 +20,6 @@ class NetworkManager {
      MessageFactory* messageFactory;
      set<Dvm>* dvmNavigator;
 
-     static const int PORT = 8080;
      NetworkManager();
      NetworkManager(const NetworkManager&) = delete;
      NetworkManager& operator=(const NetworkManager&) = delete;

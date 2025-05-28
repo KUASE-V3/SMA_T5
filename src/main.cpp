@@ -24,7 +24,6 @@ void init(char* fileName) {
   Dvm::vmId = j["dvm_id"];
   Dvm::vmX = j["dvm_x"];
   Dvm::vmY = j["dvm_y"];
-  Dvm::portNumber = j["port_number"];
 
   ItemFactory::itemList = j;
 }
@@ -50,7 +49,6 @@ void updateJson(char* fileName) {
 int main(int argc, char* argv[]) {
 
   if(argc != 2) {
-
     return -1;
   }
 
@@ -65,6 +63,7 @@ int main(int argc, char* argv[]) {
     clManager.run();
 
     serverThread.detach();
-    return 0;
 
+    updateJson(argv[1]);
+    return 0;
 }

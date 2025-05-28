@@ -4,6 +4,7 @@
 #include "Payment.h"
 #include "RemoteItemValidateAdapter.h"
 #include "ValidatorFactory.h"
+#include <optional>
 #include <gtest/gtest.h>
 
 TEST(PaymentBasicFieldsTest, ItemsAndPrepay) {
@@ -114,6 +115,32 @@ TEST(PaymentTest, PayFailsWhenCardIsNotRegistered) {
     Payment payment(1, 1, std::move(method));
 
     bool result = payment.pay();
+
+    EXPECT_FALSE(result);
+}
+
+
+TEST(PaymentTest, isNotValidPaymentWithNoneQuantity){
+    // 아이템 개수 없고 코드 맞을 떄
+
+    Payment payment(1);
+    bool result = payment.validate();
+
+    EXPECT_TRUE(result);
+}
+
+TEST(PaymentTest, isNotValidPaymentWithERRORCode){
+
+    Payment payment(0);
+    bool result = payment.validate();
+
+    EXPECT_FALSE(result);
+}
+
+TEST(PaymentTest, isNotValidPaymentWithERRORQuantity){
+
+    Payment payment(1, 1000);
+    bool result = payment.validate();
 
     EXPECT_FALSE(result);
 }
