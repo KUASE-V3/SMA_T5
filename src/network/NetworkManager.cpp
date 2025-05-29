@@ -15,12 +15,12 @@ using namespace std;
 using json = nlohmann::json;
 
 NetworkManager::NetworkManager() {
-  addresses.emplace(1, Address{"127.0.0.1", 8080});
-  addresses.emplace(2, Address{"127.0.0.1", 8080});
-  addresses.emplace(3, Address{"127.0.0.1", 8080});
-  addresses.emplace(4, Address{"127.0.0.1", 8080});
-  addresses.emplace(5, Address{"127.0.0.1", 8080});
-  addresses.emplace(6, Address{"127.0.0.1", 9090});
+  // addresses.emplace(1, Address{"127.0.0.1", 1111});
+  // addresses.emplace(2, Address{"127.0.0.1", 2020});
+  // addresses.emplace(3, Address{"127.0.0.1", 3030});
+  // addresses.emplace(4, Address{"127.0.0.1", 4040});
+  addresses.emplace(5, Address{"127.0.0.1", 5050});
+  addresses.emplace(6, Address{"127.0.0.1", 6060});
   addresses.emplace(7, Address{"127.0.0.1", 7070});
   itemManager = &ItemManager::getInstance();
   prepaymentStock = &PrepaymentStock::getInstance();
