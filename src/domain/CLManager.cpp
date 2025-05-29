@@ -22,6 +22,21 @@ int CLManager::readInt(std::string text) {
     }
 }
 
+std::string CLManager::readString(std::string text) {
+    while (true) {
+        std::cout << text;
+        std::string line;
+        std::getline(std::cin >> std::ws, line); // 앞 공백 제거 후 전체 입력
+
+        // 공백이 포함되어 있으면 잘못된 입력
+        if (!line.empty() && line.find(' ') == std::string::npos) {
+            return line;
+        }
+
+        std::cout << "유효하지 않은 입력입니다. 공백 없는 문자열을 입력하세요.\n";
+    }
+}
+
 CLManager::CLManager() {
     itemManager = &ItemManager::getInstance();
     prepaymentStock = &PrepaymentStock::getInstance();
@@ -69,9 +84,7 @@ void CLManager::run() {
                 std::cout << "범위 밖 입력입니다.\n";
             }
 
-            std::cout << "카드 정보: ";
-            std::string card;
-            std::cin >> card;
+            std::string card = readString("카드 정보: ");
             auto method = std::make_unique<CardPay>(card);
             payment = std::make_unique<Payment>(itemCode, quantity, std::move(method));
 
@@ -119,10 +132,7 @@ void CLManager::run() {
                 std::cout << orderFailMsg;
             }
         } else if (select == 3) {
-            string certCode;
-            cout << "선결제 코드를 입력해주십시오" << endl;
-            cout << "입력:";
-            cin >> certCode;
+            string certCode = readString("선결제 코드 입력: ");
             optional<Payment> payment = enterCertCode(certCode);
             if (payment.has_value()) {
                 int itemCode = payment.value().getItemCode().value();
