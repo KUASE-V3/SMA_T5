@@ -22,6 +22,7 @@ class CLManager {
     std::unique_ptr<std::set<Dvm>> dvmNavigator;
 
     int readInt(std::string text);
+    std::string readString(std::string text);
 
     // 싱글톤
     CLManager();
