@@ -137,7 +137,8 @@ void CLManager::run() {
             if (payment.has_value()) {
                 int itemCode = payment.value().getItemCode().value();
                 int quantity = payment.value().getQuantity().value();
-                std::cout << "음료 제공: " << itemCode << " " << quantity << "개\n";
+                string itemName = itemManager->getItems()[itemCode - 1].getName();
+                std::cout << "음료 제공: " << itemName << " " << quantity << "개\n";
             } else {
                 cout << "음료 제공 실패" << endl;
             }
