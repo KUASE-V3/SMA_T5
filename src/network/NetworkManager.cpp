@@ -21,7 +21,7 @@ NetworkManager::NetworkManager() {
   addresses.emplace(4, Address{"127.0.0.1", 8080});
   addresses.emplace(5, Address{"127.0.0.1", 8080});
   addresses.emplace(6, Address{"127.0.0.1", 9090});
-  addresses.emplace(7, Address{"127.0.0.1", 8080});
+  addresses.emplace(7, Address{"127.0.0.1", 7070});
   itemManager = &ItemManager::getInstance();
   prepaymentStock = &PrepaymentStock::getInstance();
   messageFactory = &MessageFactory::getInstance();
