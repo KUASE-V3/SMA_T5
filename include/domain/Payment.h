@@ -21,9 +21,9 @@ class Payment {
     std::string certCode;
 
   public:
-    Payment(int itemcode, int quantity, std::unique_ptr<PaymentMethod> buyContent);
-    Payment(int itemcode);
-    Payment(int itemcode, int quantity);
+    explicit Payment(int itemcode, int quantity, std::unique_ptr<PaymentMethod> buyContent);
+    explicit Payment(int itemcode);
+    explicit Payment(int itemcode, int quantity);
     std::optional<int> getItemCode() const;
     std::optional<int> getQuantity() const;
     void setCertCode(std::string code);

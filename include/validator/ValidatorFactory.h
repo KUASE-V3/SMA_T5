@@ -19,4 +19,5 @@ class ValidatorFactory{
     std::map<std::type_index, std::unique_ptr<Validator>> setValidatorFullList() const;
     std::map<std::type_index, std::unique_ptr<Validator>> setValidatorItemList() const;
     std::map<std::type_index, std::unique_ptr<Validator>> setValidatorTypeList() const;
+
 };
