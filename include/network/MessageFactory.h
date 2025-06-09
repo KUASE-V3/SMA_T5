@@ -14,11 +14,11 @@ class MessageFactory {
         
     public:
          static MessageFactory& getInstance();
-         std::string createRequestStockJson(int code, int num);
+         std::string createRequestStockJson(int code, int num) const;
 
-        std::string createRequestPrepayJson(int destination, int code, int num, std::string certificationCode);
+        std::string createRequestPrepayJson(int destination, int code, int num, std::string certificationCode) const;
 
-        std::string createResponseStockJson(int destination, int code, int num, int xCoor, int yCoor);
+        std::string createResponseStockJson(int destination, int code, int num, int xCoor, int yCoor) const;
 
-        std::string createResponsePrepayJson(int destination, int code, int num, bool availability);
+        std::string createResponsePrepayJson(int destination, int code, int num, bool availability) const;
 };
