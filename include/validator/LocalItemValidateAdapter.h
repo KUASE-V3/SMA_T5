@@ -9,6 +9,5 @@ class LocalItemValidateAdapter : public LocalValidator {
     ItemValidator* itemManager = &ItemManager::getInstance();
 
   public:
-    // LocalItemValidateAdapter(ItemManager& manager);
     bool validate(const Payment& p) const override;
 };

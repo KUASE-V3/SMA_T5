@@ -7,7 +7,7 @@ class CardPay : public PaymentMethod {
     std::string cardInfo;
 
   public:
-    CardPay(const std::string &cardNum);
+    explicit CardPay(const std::string &cardNum);
     std::string getCardInfo() const;
     bool isValid() const override;
 };
