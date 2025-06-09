@@ -7,5 +7,5 @@ std::string CardPay::getCardInfo() const {
 }
 
 bool CardPay::isValid() const {
-    return !cardInfo.empty() && cardInfo.length() >= 16;
+    return cardInfo.length() == 16;
 }

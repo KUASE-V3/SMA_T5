@@ -83,11 +83,11 @@ void CLManager::run() {
                 if (payment->validate()) break;
                 std::cout << "범위 밖 입력입니다.\n";
             }
-
+            
             std::string card = readString("카드 정보: ");
             auto method = std::make_unique<CardPay>(card);
             payment = std::make_unique<Payment>(itemCode, quantity, std::move(method));
-
+        
             dvmNavigator = std::make_unique<std::set<Dvm>>();
             networkManager->setDvmNavigator(dvmNavigator.get());
 

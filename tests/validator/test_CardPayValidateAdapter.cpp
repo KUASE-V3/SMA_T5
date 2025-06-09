@@ -4,7 +4,7 @@
 #include "Payment.h"
 
 TEST(CardPayValidateAdapterTest, ValidCardReturnsTrue) {
-    auto method = std::make_unique<CardPay>("12345678123456789");
+    auto method = std::make_unique<CardPay>("1234567812345678");
     Payment payment(1, 1, std::move(method));
     CardPayValidateAdapter adapter;
 
