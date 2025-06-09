@@ -15,6 +15,7 @@ class Payment {
     std::optional<int> itemcode;
     std::optional<int> quantity;
     std::map<std::type_index, std::unique_ptr<Validator>> validatorList;
+    std::map<std::type_index, std::unique_ptr<Validator>> validatorTypeList;
     // buy type
     std::unique_ptr<PaymentMethod> buyContent;
     std::string certCode;
