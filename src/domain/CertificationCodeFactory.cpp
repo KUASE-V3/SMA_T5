@@ -2,10 +2,11 @@
 #include "Dvm.h"
 #include <cmath>
 
+using namespace std;
+
 CertificationCodeFactory::CertificationCodeFactory() {
 
 };
-
 string const CertificationCodeFactory::base62 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
 string CertificationCodeFactory::toBase62(int num) {

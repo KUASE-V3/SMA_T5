@@ -7,8 +7,8 @@
 TEST(CertificationCodeFactoryTest, CreateCertificationCode) {
     CertificationCodeFactory &certificationCodeFactory = CertificationCodeFactory::getInstance();
     Dvm::vmId = 5;
-    string certCode1 = certificationCodeFactory.createCertificationCode();
-    string certCode2 = certificationCodeFactory.createCertificationCode();
+    std::string certCode1 = certificationCodeFactory.createCertificationCode();
+    std::string certCode2 = certificationCodeFactory.createCertificationCode();
 
     int cycle = pow(62, 4);
 
@@ -16,7 +16,7 @@ TEST(CertificationCodeFactoryTest, CreateCertificationCode) {
       certificationCodeFactory.createCertificationCode();
     }
 
-  string certCode3 = certificationCodeFactory.createCertificationCode();
+  std::string certCode3 = certificationCodeFactory.createCertificationCode();
 
   EXPECT_EQ(certCode1, "5AAAA");
   EXPECT_EQ(certCode2, "5AAAB");

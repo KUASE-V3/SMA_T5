@@ -4,18 +4,16 @@
 #include <optional>
 #include <map>
 
-using namespace std;
-
 class PrepaymentStock {
 
     private:
-     map<string, Payment> prepayments;
+     std::map<std::string, Payment> prepayments;
      PrepaymentStock();
      PrepaymentStock(const PrepaymentStock&) = delete;
      PrepaymentStock& operator=(const PrepaymentStock&) = delete;
 
     public:
      static PrepaymentStock& getInstance();
-     void addPayment(string certCode, Payment& payment);
-     optional<Payment> findPaymentBycertCode(string certCode);
+     void addPayment(std::string certCode, Payment& payment);
+     std::optional<Payment> findPaymentBycertCode(std::string certCode);
 };

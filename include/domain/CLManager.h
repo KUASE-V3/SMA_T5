@@ -38,5 +38,5 @@ class CLManager {
     ORDER_STATUS order(std::unique_ptr<Payment> &payment);
     bool pay(std::unique_ptr<Payment> &payment);
     std::optional<std::reference_wrapper<const Dvm>> prePay(std::unique_ptr<Payment> &payment);
-    optional<Payment> enterCertCode(string certCode);
+    std::optional<Payment> enterCertCode(std::string certCode);
 };

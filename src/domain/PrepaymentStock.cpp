@@ -1,6 +1,8 @@
 #include "PrepaymentStock.h"
 #include <optional>
 
+using namespace std;
+
 PrepaymentStock::PrepaymentStock() {};
 
 PrepaymentStock& PrepaymentStock::getInstance() {

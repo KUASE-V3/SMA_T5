@@ -1,6 +1,8 @@
 #include "MessageFactory.h"
 #include "Dvm.h"
 
+using namespace std;
+
 MessageFactory::MessageFactory() {
 
 }
