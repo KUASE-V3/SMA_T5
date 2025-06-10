@@ -1,16 +1,16 @@
 #include "MessageFactory.h"
 #include "Dvm.h"
 
-MessageFactory::MessageFactory() {
+using namespace std;
 
-}
+MessageFactory::MessageFactory() = default;
 
 MessageFactory& MessageFactory::getInstance() {
   static MessageFactory instance;
   return instance;
 }
 
-string MessageFactory::createRequestStockJson(int code, int num) {
+string MessageFactory::createRequestStockJson(int code, int num) const {
   json requestStockJson = {
       {"msg_type", "req_stock"},
       {"src_id", Dvm::vmId},
@@ -19,7 +19,7 @@ string MessageFactory::createRequestStockJson(int code, int num) {
   return requestStockJson.dump();
 }
 
-string MessageFactory::createRequestPrepayJson(int destination, int code, int num, string certificationCode) {
+string MessageFactory::createRequestPrepayJson(int destination, int code, int num, string certificationCode) const {
     json requestPrepayJson = {
             {"msg_type", "req_prepay"},
             {"src_id", Dvm::vmId},
@@ -32,7 +32,7 @@ string MessageFactory::createRequestPrepayJson(int destination, int code, int nu
     return requestPrepayJson.dump();
 }
 
-string MessageFactory::createResponseStockJson(int destination, int code, int num, int xCoor, int yCoor) {
+string MessageFactory::createResponseStockJson(int destination, int code, int num, int xCoor, int yCoor) const {
     json responseStockJson = {
             {"msg_type", "resp_stock"},
             {"src_id", Dvm::vmId},
@@ -47,7 +47,7 @@ string MessageFactory::createResponseStockJson(int destination, int code, int nu
     return responseStockJson.dump();
 }
 
-string MessageFactory::createResponsePrepayJson(int destination, int code, int num, bool availability) {
+string MessageFactory::createResponsePrepayJson(int destination, int code, int num, bool availability) const {
     json responsePrepayJson = {
             {"msg_type", "resp_prepay"},
             {"src_id", Dvm::vmId},

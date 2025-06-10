@@ -8,6 +8,8 @@
 #include "ItemManager.h"
 #include "ItemFactory.h"
 
+using namespace std;
+
 using json = nlohmann::json;
 
 void init(char* fileName) {

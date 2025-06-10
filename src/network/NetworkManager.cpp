@@ -14,18 +14,13 @@ using namespace std;
 
 using json = nlohmann::json;
 
-NetworkManager::NetworkManager() {
-  // addresses.emplace(1, Address{"127.0.0.1", 1111});
-  // addresses.emplace(2, Address{"127.0.0.1", 2020});
-  // addresses.emplace(3, Address{"127.0.0.1", 3030});
-  // addresses.emplace(4, Address{"127.0.0.1", 4040});
-  addresses.emplace(5, Address{"127.0.0.1", 5050});
-  addresses.emplace(6, Address{"127.0.0.1", 6060});
-  addresses.emplace(7, Address{"127.0.0.1", 7070});
+NetworkManager::NetworkManager() : dvmNavigator(nullptr) {
+  addresses.try_emplace(5, Address{"localhost", 5050});
+  addresses.try_emplace(6, Address{"localhost", 6060});
+
   itemManager = &ItemManager::getInstance();
   prepaymentStock = &PrepaymentStock::getInstance();
   messageFactory = &MessageFactory::getInstance();
-  dvmNavigator = nullptr;
 }
 
 NetworkManager& NetworkManager::getInstance() {
@@ -35,7 +30,7 @@ NetworkManager& NetworkManager::getInstance() {
 
 void NetworkManager::setDvmNavigator(std::set<Dvm>* dvmNav) { dvmNavigator = dvmNav; }
 
-string NetworkManager::sendMessage(string message) {
+string NetworkManager::sendMessage(const std::string& message) {
   int sock = 0;
   char buffer[1024] = {0};
   sockaddr_in serverAddress{};
@@ -76,10 +71,10 @@ string NetworkManager::sendMessage(string message) {
   return buffer;
 }
 
-bool NetworkManager::sendBroadcastMessage(string message) {
+bool NetworkManager::sendBroadcastMessage(const std::string& message) {
   bool canPrepay = false;
-  for (pair<int, Address> iter : addresses) {
-    if (iter.first == Dvm::vmId) continue;
+  for (auto [id, vmAddress] : addresses) {
+    if (id == Dvm::vmId) continue;
     int sock = 0;
     char buffer[1024] = {0};
     sockaddr_in serverAddress{};
@@ -91,9 +86,9 @@ bool NetworkManager::sendBroadcastMessage(string message) {
     }
 
     serverAddress.sin_family = AF_INET;
-    serverAddress.sin_port = htons(iter.second.portNumber);
+    serverAddress.sin_port = htons(vmAddress.portNumber);
 
-    const char *address = iter.second.address.c_str();
+    const char *address = vmAddress.address.c_str();
 
     if (inet_pton(AF_INET, address, &serverAddress.sin_addr) <= 0) {
       perror("Invalid address / Address not supported");
@@ -182,13 +177,11 @@ void NetworkManager::runServer() {
 
       bool availability = itemManager->isValid(code, num);
 
-      if(availability) {
-        if (itemManager->decreaseStock(code, num)) {
-          string certCode = requestMessage["msg_content"]["cert_code"];
-          prepaymentStock->addPayment(certCode, payment);
-        } else {
-          availability = false;
-        }
+      if(availability && itemManager->decreaseStock(code, num)) {
+        string certCode = requestMessage["msg_content"]["cert_code"];
+        prepaymentStock->addPayment(certCode, payment);
+      } else {
+        availability = false;
       }
 
       responseMessage = messageFactory->createResponsePrepayJson(requestMessage["src_id"],

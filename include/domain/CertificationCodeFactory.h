@@ -2,19 +2,17 @@
 
 #include <string>
 
-using namespace std;
-
 class CertificationCodeFactory {
     private:
      static int prepaymentQuantity;
-     static const string base62;
+     static const std::string base62;
 
-     string toBase62(int num);
+     std::string toBase62(int num) const ;
      CertificationCodeFactory();
      CertificationCodeFactory(const CertificationCodeFactory&) = delete;
      CertificationCodeFactory& operator=(const CertificationCodeFactory&) = delete;
 
     public:
      static CertificationCodeFactory& getInstance();
-     string createCertificationCode();
+     std::string createCertificationCode() const;
 };

@@ -5,8 +5,6 @@
 
 using json = nlohmann::json;
 
-using namespace std;
-
 class MessageFactory {
     private:
         MessageFactory();
@@ -16,11 +14,11 @@ class MessageFactory {
         
     public:
          static MessageFactory& getInstance();
-         string createRequestStockJson(int code, int num);
+         std::string createRequestStockJson(int code, int num) const;
 
-        string createRequestPrepayJson(int destination, int code, int num, string certificationCode);
+        std::string createRequestPrepayJson(int destination, int code, int num, std::string certificationCode) const;
 
-        string createResponseStockJson(int destination, int code, int num, int xCoor, int yCoor);
+        std::string createResponseStockJson(int destination, int code, int num, int xCoor, int yCoor) const;
 
-        string createResponsePrepayJson(int destination, int code, int num, bool availability);
+        std::string createResponsePrepayJson(int destination, int code, int num, bool availability) const;
 };

@@ -10,24 +10,22 @@
 #include "Dvm.h"
 #include "Address.h"
 
-using namespace std;
-
 class NetworkManager {
     private:
-     map<int, Address> addresses;
+     std::map<int, Address> addresses;
      ItemManager* itemManager;
      PrepaymentStock* prepaymentStock;
      MessageFactory* messageFactory;
-     set<Dvm>* dvmNavigator;
+     std::set<Dvm>* dvmNavigator;
 
      NetworkManager();
      NetworkManager(const NetworkManager&) = delete;
      NetworkManager& operator=(const NetworkManager&) = delete;
 
     public:
-        static NetworkManager& getInstance();
-        string sendMessage(string message);
-        bool sendBroadcastMessage(string message);
-        void runServer();
-        void setDvmNavigator(std::set<Dvm>* dvmNav);
+     static NetworkManager& getInstance();
+     std::string sendMessage(const std::string& message);
+     bool sendBroadcastMessage(const std::string& message);
+     void runServer();
+     void setDvmNavigator(std::set<Dvm>* dvmNav);
 };

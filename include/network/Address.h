@@ -1,9 +1,7 @@
 #include <string>
 
-using namespace std;
-
 struct Address
 {
-  string address;
+  std::string address;
   int portNumber;
 };

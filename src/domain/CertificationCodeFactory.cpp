@@ -2,13 +2,12 @@
 #include "Dvm.h"
 #include <cmath>
 
-CertificationCodeFactory::CertificationCodeFactory() {
+using namespace std;
 
-};
-
+CertificationCodeFactory::CertificationCodeFactory() = default;
 string const CertificationCodeFactory::base62 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-string CertificationCodeFactory::toBase62(int num) {
+string CertificationCodeFactory::toBase62(int num) const {
   // 5번 Dvm이 생성하는 코드
   string result;
   for (int i = 0; i < 4; ++i) {
@@ -27,7 +26,7 @@ CertificationCodeFactory& CertificationCodeFactory::getInstance() {
 
 int CertificationCodeFactory::prepaymentQuantity = 0;
 
-string CertificationCodeFactory::createCertificationCode() {
+string CertificationCodeFactory::createCertificationCode() const {
   string certCode = toBase62(prepaymentQuantity);
   prepaymentQuantity++;
   prepaymentQuantity %= (int) pow(62, 4);
