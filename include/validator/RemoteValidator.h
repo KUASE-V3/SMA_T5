@@ -1,4 +1,4 @@
 #pragma once
 #include "Validator.h"
 
-class RemoteValidator : public virtual Validator {};
+class RemoteValidator : public Validator {};
