@@ -22,7 +22,16 @@ std::map<std::type_index, std::unique_ptr<Validator>> ValidatorFactory::setValid
     std::map<std::type_index, std::unique_ptr<Validator>> map;
 
     map[typeid(LocalItemValidateAdapter)] = std::make_unique<ItemTypeValidateAdapter>();
-
     return map;
 }
+
+std::map<std::type_index, std::unique_ptr<Validator>> ValidatorFactory::setValidatorTypeList() const{
+    std::map<std::type_index, std::unique_ptr<Validator>> map;
+
+    map[typeid(LocalItemValidateAdapter)] = std::make_unique<ItemTypeValidateAdapter>();
+    map[typeid(CardPayValidateAdapter)] = std::make_unique<ItemTypeValidateAdapter>();
+    return map;
+}
+
+
 

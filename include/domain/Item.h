@@ -16,6 +16,7 @@ class Item {
     Item(const Item& other);
     Item(Item&& other) noexcept;
     Item& operator=(Item&& other) noexcept;
+    Item& operator=(const Item& other);
     std::string toString() const;
     std::string getName() const;
     int getPrice() const;
@@ -25,4 +26,5 @@ class Item {
     bool consume(int reqCount);
     int getCount() const;
     bool isValidType(int reqCount) const;
+    ~Item();
 };

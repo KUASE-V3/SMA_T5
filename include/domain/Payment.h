@@ -15,14 +15,15 @@ class Payment {
     std::optional<int> itemcode;
     std::optional<int> quantity;
     std::map<std::type_index, std::unique_ptr<Validator>> validatorList;
+    std::map<std::type_index, std::unique_ptr<Validator>> validatorTypeList;
     // buy type
     std::unique_ptr<PaymentMethod> buyContent;
     std::string certCode;
 
   public:
-    Payment(int itemcode, int quantity, std::unique_ptr<PaymentMethod> buyContent);
-    Payment(int itemcode);
-    Payment(int itemcode, int quantity);
+    explicit Payment(int itemcode, int quantity, std::unique_ptr<PaymentMethod> buyContent);
+    explicit Payment(int itemcode);
+    explicit Payment(int itemcode, int quantity);
     std::optional<int> getItemCode() const;
     std::optional<int> getQuantity() const;
     void setCertCode(std::string code);

@@ -22,6 +22,9 @@ std::optional<int> Payment::getQuantity() const {
 }
 
 bool Payment::canLocalBuy() const {
+    if (!validate()){
+        return false;
+    }
     for (const auto &[type, ptr] : validatorList) {
         if (dynamic_cast<const RemoteValidator *>(ptr.get())) {
             continue;
@@ -34,6 +37,9 @@ bool Payment::canLocalBuy() const {
 }
 
 bool Payment::canRemoteBuy() const {
+    if (!validate()){
+        return false;
+    }
     for (const auto &[type, ptr] : validatorList) {
         if (dynamic_cast<const LocalValidator *>(ptr.get())) {
             continue;
@@ -46,7 +52,7 @@ bool Payment::canRemoteBuy() const {
 }
 
 bool Payment::validate() const {
-    for (const auto &[type, ptr] : validatorList) {
+    for (const auto &[type, ptr] : validatorTypeList) {
         if (!ptr->validate(*this)) {
             return false;
         }
@@ -61,16 +67,17 @@ const PaymentMethod *Payment::getbuyContent() const {
 Payment::Payment(int itemcode, int quantity, std::unique_ptr<PaymentMethod> buytype)
     : itemcode(itemcode), quantity(quantity),
       validatorList(std::move(ValidatorFactory::getInstance().setValidatorFullList())),
+      validatorTypeList(std::move(ValidatorFactory::getInstance().setValidatorTypeList())),
       buyContent(std::move(buytype)), certCode("") {}
 
 Payment::Payment(int itemcode)
     : itemcode(itemcode),
-      validatorList(std::move(ValidatorFactory::getInstance().setValidatorItemList())),
+      validatorTypeList(std::move(ValidatorFactory::getInstance().setValidatorItemList())),
       certCode("") {}
 
 Payment::Payment(int itemcode, int quantity)
     : itemcode(itemcode), quantity(quantity),
-      validatorList(std::move(ValidatorFactory::getInstance().setValidatorItemList())),
+      validatorTypeList(std::move(ValidatorFactory::getInstance().setValidatorItemList())),
       certCode("") {}
 
 bool Payment::pay() {

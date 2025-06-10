@@ -26,7 +26,6 @@ TEST(LocalItemValidateAdapterTest, NotEnoughStockReturnsFalse) {
 }
 
 TEST(LocalItemValidateAdapterTest, ItemNotFoundReturnsFalse) {
-    auto &manager = ItemManager::getInstance();
 
     Payment payment(21, 1, nullptr); // 음료 없음
     LocalItemValidateAdapter adapter;

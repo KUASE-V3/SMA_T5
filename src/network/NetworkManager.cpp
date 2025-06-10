@@ -15,8 +15,8 @@ using namespace std;
 using json = nlohmann::json;
 
 NetworkManager::NetworkManager() : dvmNavigator(nullptr) {
-  addresses.try_emplace(5, Address{"172.17.0.4", 5050});
-  addresses.try_emplace(6, Address{"172.17.0.5", 6060});
+  addresses.try_emplace(5, Address{"localhost", 5050});
+  addresses.try_emplace(6, Address{"localhost", 6060});
 
   itemManager = &ItemManager::getInstance();
   prepaymentStock = &PrepaymentStock::getInstance();

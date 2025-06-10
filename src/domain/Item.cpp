@@ -4,16 +4,20 @@
 #include <iostream>
 #include <cstdio>
 #include <string>
+#include <sstream>
 
 Item::Item(int code, const std::string &name, int price, int count)
     : code(code), name(name), price(price), count(count) {}
 
 std::string Item::toString() const {
-  char buf[100];
-  snprintf(buf, 100, "%2d) %-20s     가격 : %d    재고 : %d", code, name.c_str(), price, count);
-  std::string str(buf);
-  return str;
+    std::ostringstream oss;
+    oss << std::setw(2) << code << ") "
+        << std::left << std::setw(20) << name
+        << "     가격 : " << price
+        << "    재고 : " << count;
+    return oss.str();
 }
+
 
 Item::Item(const Item& other)
     : code(other.code),
@@ -38,6 +42,17 @@ Item& Item::operator=(Item&& other) noexcept {
   return *this;
 }
 
+Item& Item::operator=(const Item& other) {
+    if (this != &other) {
+        std::scoped_lock lock(mtx, other.mtx);
+        code = other.code;
+        name = other.name;
+        price = other.price;
+        count = other.count;
+    }
+    return *this;
+}
+
 std::string Item::getName() const { return name; }
 
 int Item::getPrice() const {
@@ -45,7 +60,7 @@ int Item::getPrice() const {
 }
 
 bool Item::isValidType(int reqCount) const{
-    return reqCount >= 1 && reqCount <= 100;
+    return reqCount >= 1 && reqCount < 100;
 }
 
 bool Item::isValid(int reqCount) const {
@@ -72,3 +87,5 @@ bool Item::consume(int reqCount) {
 int Item::getCount() const {
     return count;
 }
+
+Item::~Item() = default;
