@@ -5,7 +5,7 @@
 #include "CardPayValidateAdapter.h"
 
 TEST(ValidatorFactoryTest, AllValidatorsAreRegistered) {
-    ValidatorFactory& factory = ValidatorFactory::getInstance();
+    const ValidatorFactory& factory = ValidatorFactory::getInstance();
     auto map = factory.setValidatorFullList();
 
     // map 크기 검사
@@ -22,7 +22,7 @@ TEST(ValidatorFactoryTest, AllValidatorsAreRegistered) {
 }
 
 TEST(ValidatorFactoryTest, ValidatorsHaveCorrectRuntimeType) {
-    ValidatorFactory& factory = ValidatorFactory::getInstance();
+    const ValidatorFactory& factory = ValidatorFactory::getInstance();
     auto map = factory.setValidatorFullList();
 
     EXPECT_TRUE(dynamic_cast<LocalItemValidateAdapter*>(map[typeid(LocalItemValidateAdapter)].get()) != nullptr);
