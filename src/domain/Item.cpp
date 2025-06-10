@@ -88,4 +88,4 @@ int Item::getCount() const {
     return count;
 }
 
-Item::~Item(){}
+Item::~Item() = default;
