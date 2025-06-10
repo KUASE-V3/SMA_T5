@@ -2,8 +2,7 @@
 #include "Payment.h"
 
 bool CardPayValidateAdapter::validate(const Payment& p) const {
-    const CardPay* card = dynamic_cast<const CardPay*>(p.getbuyContent());
-    if (card){
+    if (const auto* card = dynamic_cast<const CardPay*>(p.getbuyContent())) {
         return card->isValid();
     }
     return true;
