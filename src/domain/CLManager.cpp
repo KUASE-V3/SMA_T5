@@ -6,9 +6,7 @@
 #include <iostream>
 #include <limits>
 
-using namespace std;
-
-int CLManager::readInt(std::string text) {
+int CLManager::readInt(const std::string &text) {
     while (true) {
         std::cout << text;
         std::string line;
@@ -24,7 +22,7 @@ int CLManager::readInt(std::string text) {
     }
 }
 
-std::string CLManager::readString(std::string text) {
+std::string CLManager::readString(const std::string &text) {
     while (true) {
         std::cout << text;
         std::string line;
@@ -162,14 +160,29 @@ void CLManager::handleRemotePayment(std::unique_ptr<Payment> payment) {
 }
 
 void CLManager::checkPrepaymentCode() {
+    // 1분 제한 검사
+    if (prepayFailCount >= 5) {
+        auto now = std::chrono::steady_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::seconds>(now - lastPrepayFailTime);
+        if (duration.count() < 60) {
+            std::cout << "실패 횟수가 너무 많습니다. 1분 후 다시 시도하세요.\n";
+            return;
+        } else {
+            prepayFailCount = 0;
+        }
+    }
+
     std::string certCode = readString("선결제 코드 입력: ");
     auto payment = enterCertCode(certCode);
     if (payment.has_value()) {
         int itemCode = payment.value().getItemCode().value();
         int quantity = payment.value().getQuantity().value();
         std::cout << "음료 제공: " << itemManager->getName(itemCode) << " " << quantity << "개\n";
+        prepayFailCount = 0;
     } else {
         std::cout << "음료 제공 실패\n";
+        prepayFailCount++;
+        lastPrepayFailTime = std::chrono::steady_clock::now();
     }
 }
 
@@ -184,10 +197,10 @@ std::optional<std::reference_wrapper<const Dvm>>
 CLManager::prePay(std::unique_ptr<Payment> &payment) {
     // 결제 성공 시
     if (!pay(payment)) {
-        return nullopt;
+        return std::nullopt;
     }
 
-    string certCode = certificationCodeFactory->createCertificationCode();
+    std::string certCode = certificationCodeFactory->createCertificationCode();
 
     payment->setCertCode(certCode);
 
@@ -205,7 +218,7 @@ CLManager::prePay(std::unique_ptr<Payment> &payment) {
             return dvm;
         }
     }
-    return nullopt;
+    return std::nullopt;
 }
 
 ORDER_STATUS CLManager::order(std::unique_ptr<Payment> &payment) {
@@ -222,6 +235,6 @@ bool CLManager::pay(std::unique_ptr<Payment> &payment) {
     return payment->pay();
 }
 
-std::optional<Payment> CLManager::enterCertCode(std::string certCode) {
+std::optional<Payment> CLManager::enterCertCode(const std::string &certCode) {
     return prepaymentStock->findPaymentBycertCode(certCode);
 }
