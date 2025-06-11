@@ -160,14 +160,29 @@ void CLManager::handleRemotePayment(std::unique_ptr<Payment> payment) {
 }
 
 void CLManager::checkPrepaymentCode() {
+    // 1분 제한 검사
+    if (prepayFailCount >= 5) {
+        auto now = std::chrono::steady_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::seconds>(now - lastPrepayFailTime);
+        if (duration.count() < 60) {
+            std::cout << "실패 횟수가 너무 많습니다. 1분 후 다시 시도하세요.\n";
+            return;
+        } else {
+            prepayFailCount = 0;
+        }
+    }
+
     std::string certCode = readString("선결제 코드 입력: ");
     auto payment = enterCertCode(certCode);
     if (payment.has_value()) {
         int itemCode = payment.value().getItemCode().value();
         int quantity = payment.value().getQuantity().value();
         std::cout << "음료 제공: " << itemManager->getName(itemCode) << " " << quantity << "개\n";
+        prepayFailCount = 0;
     } else {
         std::cout << "음료 제공 실패\n";
+        prepayFailCount++;
+        lastPrepayFailTime = std::chrono::steady_clock::now();
     }
 }
 

@@ -45,6 +45,9 @@ class CLManager {
     CLManager(const CLManager &) = delete;
     CLManager &operator=(const CLManager &) = delete;
 
+    int prepayFailCount = 0;
+    std::chrono::steady_clock::time_point lastPrepayFailTime = std::chrono::steady_clock::now();
+
   public:
     static CLManager &getInstance();
 
