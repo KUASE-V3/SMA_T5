@@ -1,62 +1,61 @@
-#include <thread>
-#include <unistd.h>
 #include <fstream>
 #include <iostream>
+#include <thread>
+#include <unistd.h>
 
 #include "CLManager.h"
-#include "NetworkManager.h"
-#include "ItemManager.h"
 #include "ItemFactory.h"
+#include "ItemManager.h"
+#include "NetworkManager.h"
 
 using namespace std;
 
 using json = nlohmann::json;
 
-void init(char* fileName) {
-  ifstream file(fileName, std::ios::in);
+void init(char *fileName) {
+    ifstream file(fileName, std::ios::in);
 
-  json j;
+    json j;
 
-  if (!file.is_open()) {
-    std::cerr << "Error opening file.\n";
-    return;
-  }
+    if (!file.is_open()) {
+        std::cerr << "Error opening file.\n";
+        return;
+    }
 
-  file >> j;
-  Dvm::vmId = j["dvm_id"];
-  Dvm::vmX = j["dvm_x"];
-  Dvm::vmY = j["dvm_y"];
+    file >> j;
+    Dvm::vmId = j["dvm_id"];
+    Dvm::vmX = j["dvm_x"];
+    Dvm::vmY = j["dvm_y"];
 
-  ItemFactory::itemList = j;
+    ItemFactory::itemList = j;
 }
 
-void updateJson(char* fileName) {
-  std::ofstream file(fileName);
+void updateJson(char *fileName) {
+    std::ofstream file(fileName);
 
-  if (!file) {
-    std::cerr << "Error opening file.\n";
-    return;
-  }
+    if (!file) {
+        std::cerr << "Error opening file.\n";
+        return;
+    }
 
-  ItemManager &itemManager = ItemManager::getInstance();
+    ItemManager &itemManager = ItemManager::getInstance();
 
-  for (auto item : itemManager.getItems()) {
-    ItemFactory::itemList["item_list"][to_string(item.getCode())]["item_num"] =
-        item.getCount();
-  }
+    for (const auto &item : itemManager.getItems()) {
+        ItemFactory::itemList["item_list"][to_string(item.getCode())]["item_num"] = item.getCount();
+    }
 
-  file << ItemFactory::itemList;
+    file << ItemFactory::itemList;
 }
 
-int main(int argc, char* argv[]) {
+int main(int argc, char *argv[]) {
 
-  if(argc != 2) {
-    return -1;
-  }
+    if (argc != 2) {
+        return -1;
+    }
 
-  init(argv[1]);
-  NetworkManager& networkManager = NetworkManager::getInstance();
-  CLManager& clManager = CLManager::getInstance();
+    init(argv[1]);
+    NetworkManager &networkManager = NetworkManager::getInstance();
+    CLManager &clManager = CLManager::getInstance();
 
     std::thread serverThread(&NetworkManager::runServer, &networkManager);
 
