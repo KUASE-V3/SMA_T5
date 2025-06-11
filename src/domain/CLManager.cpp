@@ -6,9 +6,7 @@
 #include <iostream>
 #include <limits>
 
-using namespace std;
-
-int CLManager::readInt(std::string text) {
+int CLManager::readInt(const std::string &text) {
     while (true) {
         std::cout << text;
         std::string line;
@@ -24,7 +22,7 @@ int CLManager::readInt(std::string text) {
     }
 }
 
-std::string CLManager::readString(std::string text) {
+std::string CLManager::readString(const std::string &text) {
     while (true) {
         std::cout << text;
         std::string line;
@@ -184,10 +182,10 @@ std::optional<std::reference_wrapper<const Dvm>>
 CLManager::prePay(std::unique_ptr<Payment> &payment) {
     // 결제 성공 시
     if (!pay(payment)) {
-        return nullopt;
+        return std::nullopt;
     }
 
-    string certCode = certificationCodeFactory->createCertificationCode();
+    std::string certCode = certificationCodeFactory->createCertificationCode();
 
     payment->setCertCode(certCode);
 
@@ -205,7 +203,7 @@ CLManager::prePay(std::unique_ptr<Payment> &payment) {
             return dvm;
         }
     }
-    return nullopt;
+    return std::nullopt;
 }
 
 ORDER_STATUS CLManager::order(std::unique_ptr<Payment> &payment) {
@@ -222,6 +220,6 @@ bool CLManager::pay(std::unique_ptr<Payment> &payment) {
     return payment->pay();
 }
 
-std::optional<Payment> CLManager::enterCertCode(std::string certCode) {
+std::optional<Payment> CLManager::enterCertCode(const std::string &certCode) {
     return prepaymentStock->findPaymentBycertCode(certCode);
 }

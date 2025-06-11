@@ -26,8 +26,8 @@ class CLManager {
     std::unique_ptr<std::set<Dvm>> dvmNavigator;
 
     // Input
-    int readInt(std::string text);
-    std::string readString(std::string text);
+    int readInt(const std::string &text);
+    std::string readString(const std::string &text);
     int promptValidItemCode();
     int promptValidQuantity(int itemCode);
 
@@ -54,5 +54,5 @@ class CLManager {
     ORDER_STATUS order(std::unique_ptr<Payment> &payment);
     bool pay(std::unique_ptr<Payment> &payment);
     std::optional<std::reference_wrapper<const Dvm>> prePay(std::unique_ptr<Payment> &payment);
-    std::optional<Payment> enterCertCode(std::string certCode);
+    std::optional<Payment> enterCertCode(const std::string &certCode);
 };
