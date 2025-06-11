@@ -23,10 +23,6 @@ class ItemManagerTest : public ::testing::Test {
     file >> j;
     ItemFactory::itemList = j;
   }
-
-//   void TearDown() override {
-
-//   }
 };
 
 TEST_F(ItemManagerTest, GetItemsReturnsCorrectData) {
@@ -103,8 +99,8 @@ TEST_F(ItemManagerTest, DecreaseStockFail_InsufficientStock) {
     ItemManager &manager = ItemManager::getInstance();
     int itemCode = 1;
 
-    // 재고를 10개 이하로
     while (manager.decreaseStock(itemCode, 10)) {
+        // 재고를 10개 이하로
     }
 
     const auto &items = manager.getItems();

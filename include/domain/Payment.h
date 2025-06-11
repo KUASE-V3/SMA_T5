@@ -18,7 +18,7 @@ class Payment {
     std::map<std::type_index, std::unique_ptr<Validator>> validatorTypeList;
     // buy type
     std::unique_ptr<PaymentMethod> buyContent;
-    std::string certCode;
+    std::string certCode = "";
 
   public:
     explicit Payment(int itemcode, int quantity, std::unique_ptr<PaymentMethod> buyContent);
@@ -26,12 +26,12 @@ class Payment {
     explicit Payment(int itemcode, int quantity);
     std::optional<int> getItemCode() const;
     std::optional<int> getQuantity() const;
-    void setCertCode(std::string code);
+    void setCertCode(const std::string& code);
     std::string getCertCode() const;
     const PaymentMethod *getbuyContent() const;
     bool canLocalBuy() const;
     bool canRemoteBuy() const;
-    bool pay();
+    bool pay() const;
     int getTotalPrice() const;
     bool validate() const;
 };

@@ -5,7 +5,7 @@
 #include "ValidatorFactory.h"
 #include <algorithm>
 
-void Payment::setCertCode(std::string code) {
+void Payment::setCertCode(const std::string& code) {
     certCode = code;
 }
 
@@ -66,21 +66,19 @@ const PaymentMethod *Payment::getbuyContent() const {
 
 Payment::Payment(int itemcode, int quantity, std::unique_ptr<PaymentMethod> buytype)
     : itemcode(itemcode), quantity(quantity),
-      validatorList(std::move(ValidatorFactory::getInstance().setValidatorFullList())),
-      validatorTypeList(std::move(ValidatorFactory::getInstance().setValidatorTypeList())),
-      buyContent(std::move(buytype)), certCode("") {}
+      validatorList(ValidatorFactory::getInstance().setValidatorFullList()),
+      validatorTypeList(ValidatorFactory::getInstance().setValidatorTypeList()),
+      buyContent(std::move(buytype)) {}
 
 Payment::Payment(int itemcode)
     : itemcode(itemcode),
-      validatorTypeList(std::move(ValidatorFactory::getInstance().setValidatorItemList())),
-      certCode("") {}
+      validatorTypeList(ValidatorFactory::getInstance().setValidatorItemList()) {}
 
 Payment::Payment(int itemcode, int quantity)
     : itemcode(itemcode), quantity(quantity),
-      validatorTypeList(std::move(ValidatorFactory::getInstance().setValidatorItemList())),
-      certCode("") {}
+      validatorTypeList(ValidatorFactory::getInstance().setValidatorItemList()) {}
 
-bool Payment::pay() {
+bool Payment::pay() const{
     Bank &bank = Bank::getInstance();
     return bank.pay(*this);
 }
