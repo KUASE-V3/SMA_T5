@@ -14,9 +14,9 @@ using namespace std;
 
 using json = nlohmann::json;
 
-NetworkManager::NetworkManager() : dvmNavigator(nullptr) {
-  addresses.try_emplace(5, Address{"localhost", 5050});
-  addresses.try_emplace(6, Address{"localhost", 6060});
+NetworkManager::NetworkManager() {
+  addresses.try_emplace(5, "localhost", 5050);
+  addresses.try_emplace(6, "localhost", 6060);
 
   itemManager = &ItemManager::getInstance();
   prepaymentStock = &PrepaymentStock::getInstance();
@@ -73,7 +73,7 @@ string NetworkManager::sendMessage(const std::string& message) {
 
 bool NetworkManager::sendBroadcastMessage(const std::string& message) {
   bool canPrepay = false;
-  for (auto [id, vmAddress] : addresses) {
+  for (const auto& [id, vmAddress] : addresses) {
     if (id == Dvm::vmId) continue;
     int sock = 0;
     char buffer[1024] = {0};

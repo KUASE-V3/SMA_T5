@@ -4,7 +4,6 @@
 
 using namespace std;
 
-CertificationCodeFactory::CertificationCodeFactory() = default;
 string const CertificationCodeFactory::base62 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
 string CertificationCodeFactory::toBase62(int num) const {
