@@ -7,6 +7,8 @@ Bank::Bank() {
     // 유효 카드 번호 추가
     cardBalanceMap["1234567812345678"] = 1000000000;
     cardBalanceMap["0000000000000000"] = 0;
+    cardBalanceMap["[][][][][][][][]"] = 1000000000;
+    cardBalanceMap["123-123-123-1234"] = 1000000000;
 }
 
 Bank &Bank::getInstance() {
