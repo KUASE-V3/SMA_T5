@@ -55,14 +55,6 @@ TEST(PaymentValidatorTest, CanLocalBuyFalseItem) {
     EXPECT_FALSE(payment.canLocalBuy());
 }
 
-// TODO
-// TEST(PaymentValidatorTest, CanRemoteBuyTrue) {
-//     auto method = std::make_unique<CardPay>("1111222233334444");
-//     Payment payment(1, 1, std::move(method));
-
-//     EXPECT_TRUE(payment.canRemoteBuy());
-// }
-
 TEST(PaymentValidatorTest, CanRemoteBuyFalseCard) {
     auto method = std::make_unique<CardPay>("1"); // 카드 번호 다름
     Payment payment(1, 3, std::move(method));
