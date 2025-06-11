@@ -6,7 +6,7 @@
 #include <iostream>
 #include <limits>
 
-int CLManager::readInt(std::string text) {
+int CLManager::readInt(const std::string &text) {
     while (true) {
         std::cout << text;
         std::string line;
@@ -22,7 +22,7 @@ int CLManager::readInt(std::string text) {
     }
 }
 
-std::string CLManager::readString(const std::string text) {
+std::string CLManager::readString(const std::string &text) {
     while (true) {
         std::cout << text;
         std::string line;
@@ -220,6 +220,6 @@ bool CLManager::pay(std::unique_ptr<Payment> &payment) {
     return payment->pay();
 }
 
-std::optional<Payment> CLManager::enterCertCode(const std::string certCode) {
+std::optional<Payment> CLManager::enterCertCode(const std::string &certCode) {
     return prepaymentStock->findPaymentBycertCode(certCode);
 }
