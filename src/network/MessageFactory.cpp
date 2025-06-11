@@ -3,8 +3,6 @@
 
 using namespace std;
 
-MessageFactory::MessageFactory() = default;
-
 MessageFactory& MessageFactory::getInstance() {
   static MessageFactory instance;
   return instance;

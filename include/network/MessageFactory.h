@@ -7,7 +7,7 @@ using json = nlohmann::json;
 
 class MessageFactory {
     private:
-        MessageFactory();
+        MessageFactory() = default;
 
         MessageFactory(const MessageFactory&) = delete;
         MessageFactory& operator=(const MessageFactory&) = delete;

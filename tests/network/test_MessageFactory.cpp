@@ -6,7 +6,7 @@ using namespace std;
 
 TEST(MessageFactoryTest, CreateRequestStockJson) {
 
-    MessageFactory &messageFactory = MessageFactory::getInstance();
+    const MessageFactory &messageFactory = MessageFactory::getInstance();
     string msgType = "req_stock";
     int code = 1;
     int num = 20;
@@ -23,7 +23,7 @@ TEST(MessageFactoryTest, CreateRequestStockJson) {
 
 TEST(MessageFactoryTest, CreateRequestPrepayJson) {
 
-    MessageFactory &messageFactory = MessageFactory::getInstance();
+    const MessageFactory &messageFactory = MessageFactory::getInstance();
     string msgType = "req_stock";
     int destination = 6;
     int code = 4;
@@ -47,7 +47,7 @@ TEST(MessageFactoryTest, CreateRequestPrepayJson) {
 }
 
 TEST(MessageFactoryTest, CreateResponseStockJson) {
-    MessageFactory &messageFactory = MessageFactory::getInstance();
+    const MessageFactory &messageFactory = MessageFactory::getInstance();
     string msgType = "resp_stock";
     int destination = 6;
     int code = 1;
@@ -73,7 +73,7 @@ TEST(MessageFactoryTest, CreateResponseStockJson) {
 }
 
 TEST(MessageFactoryTest, CreateResponsePrepayJson) {
-    MessageFactory &messageFactory = MessageFactory::getInstance();
+    const MessageFactory &messageFactory = MessageFactory::getInstance();
     string msgType = "resp_prepay";
     int destination = 6;
     int code = 4;

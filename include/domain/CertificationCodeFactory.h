@@ -8,7 +8,7 @@ class CertificationCodeFactory {
      static const std::string base62;
 
      std::string toBase62(int num) const ;
-     CertificationCodeFactory();
+     CertificationCodeFactory() = default;
      CertificationCodeFactory(const CertificationCodeFactory&) = delete;
      CertificationCodeFactory& operator=(const CertificationCodeFactory&) = delete;
 

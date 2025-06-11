@@ -16,7 +16,7 @@ class NetworkManager {
      ItemManager* itemManager;
      PrepaymentStock* prepaymentStock;
      MessageFactory* messageFactory;
-     std::set<Dvm>* dvmNavigator;
+     std::set<Dvm>* dvmNavigator = nullptr;
 
      NetworkManager();
      NetworkManager(const NetworkManager&) = delete;

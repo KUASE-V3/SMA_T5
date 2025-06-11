@@ -12,8 +12,9 @@ using namespace std;
 
 using json = nlohmann::json;
 
-void init(char *fileName) {
-    ifstream file(fileName, std::ios::in);
+
+void init(const char* fileName) {
+  ifstream file(fileName, std::ios::in);
 
     json j;
 
@@ -30,8 +31,10 @@ void init(char *fileName) {
     ItemFactory::itemList = j;
 }
 
-void updateJson(char *fileName) {
-    std::ofstream file(fileName);
+
+void updateJson(const char* fileName) {
+  std::ofstream file(fileName);
+
 
     if (!file) {
         std::cerr << "Error opening file.\n";
@@ -40,9 +43,10 @@ void updateJson(char *fileName) {
 
     ItemManager &itemManager = ItemManager::getInstance();
 
-    for (const auto &item : itemManager.getItems()) {
-        ItemFactory::itemList["item_list"][to_string(item.getCode())]["item_num"] = item.getCount();
-    }
+  for (const auto& item : itemManager.getItems()) {
+    ItemFactory::itemList["item_list"][to_string(item.getCode())]["item_num"] =
+        item.getCount();
+  }
 
     file << ItemFactory::itemList;
 }
